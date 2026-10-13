@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>INTEGUMENTS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --background: #b81920;
+    --poem-ink: #720407;
+    --title-ink: #a30c12;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--background);
+}
+
+body {
+    font-family: "Noto Serif KR", serif;
+}
+
+.scene {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--background);
+}
+
+/* =========================================
+   KOREAN POEM
+========================================= */
+
+.poem {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: min(53vw, 770px);
+
+    font-family: "Noto Serif KR", serif;
+    font-size: clamp(12px, 1.15vw, 17px);
+    font-weight: 500;
+    line-height: 2.2;
+    letter-spacing: .045em;
+    text-align: left;
+
+    color: var(--poem-ink);
+
+    /* Matte embossed poem */
+    text-shadow:
+        0 -1px 1px rgba(245, 122, 122, .46),
+        0 -2px 3px rgba(225, 75, 75, .15),
+        0 1px 1px rgba(55, 0, 0, .66),
+        0 2px 3px rgba(55, 0, 0, .24);
+
+    z-index: 3;
+    pointer-events: none;
+}
+
+.paragraph {
+    margin-bottom: 2.2em;
+}
+
+.paragraph:last-child {
+    margin-bottom: 0;
+}
+
+.word {
+    opacity: 0;
+}
+
+.word.visible {
+    opacity: 1;
+}
+
+/* =========================================
+   MORPH CANVAS
+========================================= */
+
+#morphCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+    pointer-events: none;
+}
+
+/* =========================================
+   FINAL EMBOSSED TITLE
+========================================= */
+
+.title-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 12;
+    text-decoration: none;
+    white-space: nowrap;
+    text-align: center;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.title-container.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.title {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-size: clamp(44px, 12.1vw, 190px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -.065em;
+
+    /* Red-on-red matte embossing */
+    color: var(--title-ink);
+
+    text-shadow:
+        0 -1px 0 rgba(255, 125, 125, .38),
+        0 -2px 1px rgba(245, 95, 95, .25),
+        0 -3px 3px rgba(225, 70, 70, .12),
+
+        0 1px 0 rgba(85, 0, 0, .75),
+        0 2px 1px rgba(75, 0, 0, .50),
+        0 4px 4px rgba(65, 0, 0, .25),
+        0 7px 9px rgba(65, 0, 0, .10);
+
+    filter: blur(.18px);
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+    .poem {
+        width: 87vw;
+        font-size: clamp(9px, 1.8vw, 12px);
+        line-height: 1.95;
+    }
+
+    .paragraph {
+        margin-bottom: 1.9em;
+    }
+
+    .title {
+        font-size: 12vw;
+        letter-spacing: -.07em;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="scene">
+
+<div class="poem" id="poem">
+
+<p class="paragraph">늘상 혼자였던 우리는 아직 닫힌 문을 열 준비가 안 되어 있었다. 아니, 그럴 용기를 내지 못하는 것이었다. 행복해지려 애쓰면 불행이 찾아오고, 그 노력은 내게 항상 다시 재앙으로 찾아오게 된다. 경멸하게 되는 그 마음조차 널 향한 애정 속에서 피어나며, 다시 난 너란 파도 속에서 잠겨 지내.</p>
+
+<p class="paragraph">눈 깜짝할 새 시간은 많이 지났고, 흘러간 시간 만큼의 거리를 두게 된다. 서로를 못 믿어서일까 아니면 살아온 세월들 때문에 겁을 먹은 걸까, 치유를 받겠다는 다짐으로 걸음걸이를 맞춰주고, 지독하게 꼬인 관계들은 평생 못 잊고 안고 가야 할 상처들로 시퍼렇게 멍이 피어난 채, 어떻게든 난 잘, 지내.</p>
+
+<p class="paragraph">애증으로 물든 가시밭 안에선 우린 또다시 날을 세우며, 우리들만의 방식으로 마음을 전하게 되겠지. 변치 않을 것이라 믿었던 모든 것에 균열이 생기고, 그 틈으로 스며든 경멸마저 오래된 애정의 흔적을 닮아간다.</p>
+
+<p class="paragraph">쉼 없이 서로를 떠나고 또 잡던 이들에게,</p>
+
+</div>
+
+<canvas id="morphCanvas"></canvas>
+
+<a
+    href="page2.html"
+    class="title-container"
+    id="titleContainer"
+    aria-label="Enter INTEGUMENTS"
+>
+    <div class="title" id="finalTitle">INTEGUMENTS</div>
+</a>
+
+</main>
+
+<script>
+/* =========================================
+   TIMING
+========================================= */
+
+const TYPE_DURATION = 7000;
+const HOLD_DURATION = 6000;
+const MORPH_DURATION = 5200;
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const poem = document.getElementById("poem");
+const titleContainer = document.getElementById("titleContainer");
+const finalTitle = document.getElementById("finalTitle");
+
+const canvas = document.getElementById("morphCanvas");
+const ctx = canvas.getContext("2d");
+
+const POEM_COLOR = "#720407";
+const TITLE_COLOR = "#a30c12";
+
+let W = 0;
+let H = 0;
+let dpr = 1;
+
+function resize() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+resize();
+window.addEventListener("resize", resize);
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function clamp(v) {
+    return Math.max(0, Math.min(1, v));
+}
+
+function smooth(t) {
+    t = clamp(t);
+    return t * t * (3 - 2 * t);
+}
+
+function lerp(a, b, t) {
+    return a + (b - a) * t;
+}
+
+/* =========================================
+   WORD-BY-WORD TYPING
+========================================= */
+
+const words = [];
+const characters = [];
+
+document.querySelectorAll(".paragraph").forEach(p => {
+    const parts = p.textContent.trim().split(/(\s+)/);
+    p.textContent = "";
+
+    parts.forEach(part => {
+        if (!part) return;
+
+        if (/^\s+$/.test(part)) {
+            p.appendChild(document.createTextNode(part));
+            return;
+        }
+
+        const word = document.createElement("span");
+        word.className = "word";
+
+        Array.from(part).forEach(char => {
+            const span = document.createElement("span");
+            span.textContent = char;
+            span.className = "character";
+
+            word.appendChild(span);
+            characters.push(span);
+        });
+
+        p.appendChild(word);
+        words.push(word);
+    });
+});
+
+function startTyping() {
+    const start = performance.now();
+
+    function frame(now) {
+        const progress = clamp(
+            (now - start) / TYPE_DURATION
+        );
+
+        const visibleCount = Math.floor(
+            progress * words.length
+        );
+
+        for (let i = 0; i < visibleCount; i++) {
+            words[i].classList.add("visible");
+        }
+
+        if (progress < 1) {
+            requestAnimationFrame(frame);
+        } else {
+            words.forEach(word => {
+                word.classList.add("visible");
+            });
+
+            setTimeout(startMorph, HOLD_DURATION);
+        }
+    }
+
+    requestAnimationFrame(frame);
+}
+
+/* =========================================
+   OFFSCREEN CANVAS
+========================================= */
+
+function createSurface() {
+    const surface = document.createElement("canvas");
+
+    surface.width = Math.round(W);
+    surface.height = Math.round(H);
+
+    return surface;
+}
+
+/* =========================================
+   CAPTURE KOREAN CHARACTERS
+========================================= */
+
+function capturePoem() {
+    const surface = createSurface();
+    const g = surface.getContext("2d");
+
+    const style = getComputedStyle(poem);
+
+    g.fillStyle = POEM_COLOR;
+    g.textBaseline = "middle";
+    g.textAlign = "center";
+
+    g.font =
+        `${style.fontWeight} ` +
+        `${style.fontSize} ` +
+        `${style.fontFamily}`;
+
+    characters.forEach(el => {
+        const rect = el.getBoundingClientRect();
+
+        if (!rect.width || !rect.height) return;
+
+        g.fillText(
+            el.textContent,
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2
+        );
+    });
+
+    return surface;
+}
+
+/* =========================================
+   CAPTURE INTEGUMENTS
+========================================= */
+
+function captureTitle() {
+    const surface = createSurface();
+    const g = surface.getContext("2d");
+
+    const style = getComputedStyle(finalTitle);
+
+    g.fillStyle = TITLE_COLOR;
+    g.textAlign = "center";
+    g.textBaseline = "middle";
+
+    g.font =
+        `${style.fontWeight} ` +
+        `${style.fontSize} ` +
+        `${style.fontFamily}`;
+
+    const letters = Array.from("INTEGUMENTS");
+    const fontSize = parseFloat(style.fontSize);
+    const spacing = -.065 * fontSize;
+
+    const widths = letters.map(letter =>
+        g.measureText(letter).width
+    );
+
+    const totalWidth =
+        widths.reduce((a, b) => a + b, 0) +
+        spacing * (letters.length - 1);
+
+    let x = W / 2 - totalWidth / 2;
+
+    g.textAlign = "left";
+
+    letters.forEach((letter, i) => {
+        g.fillText(letter, x, H / 2);
+        x += widths[i] + spacing;
+    });
+
+    return surface;
+}
+
+/* =========================================
+   SAMPLE INK
+========================================= */
+
+function sampleInk(surface, step = 4) {
+    const g = surface.getContext("2d", {
+        willReadFrequently: true
+    });
+
+    const image = g.getImageData(
+        0, 0, surface.width, surface.height
+    );
+
+    const data = image.data;
+    const points = [];
+
+    for (let y = 0; y < surface.height; y += step) {
+        for (let x = 0; x < surface.width; x += step) {
+            const index = (y * surface.width + x) * 4;
+
+            if (data[index + 3] > 110) {
+                points.push({ x, y });
+            }
+        }
+    }
+
+    return points;
+}
+
+/* =========================================
+   PREPARE LIQUID MORPH
+========================================= */
+
+let streams = [];
+let sourceImage;
+let targetImage;
+
+function prepareMorph() {
+    sourceImage = capturePoem();
+    targetImage = captureTitle();
+
+    const sources = sampleInk(sourceImage, 4);
+    const targets = sampleInk(targetImage, 4);
+
+    if (!sources.length || !targets.length) {
+        return false;
+    }
+
+    const spatialSort = (a, b) => {
+        const bandA = Math.floor(a.y / 24);
+        const bandB = Math.floor(b.y / 24);
+
+        if (bandA !== bandB) {
+            return bandA - bandB;
+        }
+
+        return bandA % 2 === 0
+            ? a.x - b.x
+            : b.x - a.x;
+    };
+
+    sources.sort(spatialSort);
+    targets.sort(spatialSort);
+
+    const count = Math.min(
+        6500,
+        Math.max(sources.length, targets.length)
+    );
+
+    streams = [];
+
+    for (let i = 0; i < count; i++) {
+        const sourceIndex = Math.min(
+            sources.length - 1,
+            Math.floor(i * sources.length / count)
+        );
+
+        const targetIndex = Math.min(
+            targets.length - 1,
+            Math.floor(i * targets.length / count)
+        );
+
+        const a = sources[sourceIndex];
+        const b = targets[targetIndex];
+
+        streams.push({
+            sx: a.x,
+            sy: a.y,
+            tx: b.x,
+            ty: b.y,
+            phase: i * .13,
+            delay: (i % 17) / 17 * .12
+        });
+    }
+
+    return true;
+}
+
+/* =========================================
+   LIQUID CANVAS
+========================================= */
+
+const fluidCanvas = document.createElement("canvas");
+const fluidCtx = fluidCanvas.getContext("2d");
+
+function setupFluidCanvas() {
+    fluidCanvas.width = Math.round(W);
+    fluidCanvas.height = Math.round(H);
+}
+
+setupFluidCanvas();
+
+function drawLiquid(progress) {
+    const t = clamp(progress);
+
+    ctx.clearRect(0, 0, W, H);
+    fluidCtx.clearRect(0, 0, W, H);
+
+    const movement = smooth((t - .10) / .78);
+    const resolve = smooth((t - .72) / .28);
+
+    if (t < .24) {
+        ctx.save();
+        ctx.globalAlpha = 1 - smooth(t / .24);
+        ctx.drawImage(sourceImage, 0, 0);
+        ctx.restore();
+    }
+
+    fluidCtx.lineCap = "round";
+    fluidCtx.lineJoin = "round";
+
+    const red = Math.round(
+        lerp(114, 163, resolve)
+    );
+
+    fluidCtx.strokeStyle = `rgb(${red}, 12, 18)`;
+
+    streams.forEach(p => {
+        const local = smooth(
+            (movement - p.delay) /
+            (1 - p.delay)
+        );
+
+        const middle = Math.sin(local * Math.PI);
+
+        const waveX =
+            Math.sin(p.sy * .018 + local * 5.2) *
+            18 * middle;
+
+        const waveY =
+            Math.sin(p.sx * .012 - local * 4.4) *
+            13 * middle;
+
+        const x =
+            lerp(p.sx, p.tx, local) + waveX;
+
+        const y =
+            lerp(p.sy, p.ty, local) + waveY;
+
+        const previous = clamp(local - .035);
+        const previousMiddle =
+            Math.sin(previous * Math.PI);
+
+        const px =
+            lerp(p.sx, p.tx, previous) +
+            Math.sin(p.sy * .018 + previous * 5.2) *
+            18 * previousMiddle;
+
+        const py =
+            lerp(p.sy, p.ty, previous) +
+            Math.sin(p.sx * .012 - previous * 4.4) *
+            13 * previousMiddle;
+
+        const thickness =
+            lerp(2.8, 4.4, middle) *
+            lerp(1, .85, resolve);
+
+        fluidCtx.lineWidth = thickness;
+
+        fluidCtx.beginPath();
+        fluidCtx.moveTo(px, py);
+
+        const controlX =
+            (px + x) / 2 +
+            Math.sin(p.sy * .02 + local * 4) *
+            4 * middle;
+
+        const controlY =
+            (py + y) / 2 +
+            Math.cos(p.sx * .02 + local * 4) *
+            4 * middle;
+
+        fluidCtx.quadraticCurveTo(
+            controlX,
+            controlY,
+            x,
+            y
+        );
+
+        fluidCtx.stroke();
+    });
+
+    fluidCtx.save();
+
+    fluidCtx.globalAlpha =
+        smooth((t - .67) / .30);
+
+    fluidCtx.drawImage(targetImage, 0, 0);
+    fluidCtx.restore();
+
+    ctx.save();
+
+    const blurAmount =
+        1.2 + Math.sin(t * Math.PI) * 2.5;
+
+    ctx.filter = `blur(${blurAmount}px)`;
+    ctx.drawImage(fluidCanvas, 0, 0);
+    ctx.restore();
+
+    if (t > .77) {
+        ctx.save();
+
+        ctx.globalAlpha = smooth(
+            (t - .77) / .23
+        );
+
+        ctx.drawImage(targetImage, 0, 0);
+        ctx.restore();
+    }
+}
+
+/* =========================================
+   RUN MORPH
+========================================= */
+
+let morphStarted = false;
+
+function startMorph() {
+    if (morphStarted) return;
+    morphStarted = true;
+
+    const ready = prepareMorph();
+
+    if (!ready) {
+        poem.style.opacity = "0";
+        titleContainer.classList.add("visible");
+        return;
+    }
+
+    const start = performance.now();
+
+    function frame(now) {
+        const t = clamp(
+            (now - start) / MORPH_DURATION
+        );
+
+        drawLiquid(t);
+
+        poem.style.opacity = "0";
+
+        if (t < 1) {
+            requestAnimationFrame(frame);
+        } else {
+            titleContainer.classList.add("visible");
+
+            ctx.clearRect(0, 0, W, H);
+            poem.style.display = "none";
+        }
+    }
+
+    requestAnimationFrame(frame);
+}
+
+/* =========================================
+   START
+========================================= */
+
+document.fonts.ready.then(startTyping);
+
+</script>
+
+</body>
+</html>

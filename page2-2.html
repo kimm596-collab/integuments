@@ -1,0 +1,1152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTEGUMENTS — Body</title>
+
+<style>
+*{box-sizing:border-box}
+
+html{
+  background:#000;
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:#000;
+  color:#a90000;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+
+.site-logo{
+  position:fixed;
+  top:42px;
+  right:34px;
+  width:220px;
+  z-index:2000;
+  display:block;
+}
+
+.site-logo img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+/* ORIGINAL BODY TEXT */
+
+.opening{
+  position:relative;
+  min-height:100vh;
+  background:#000;
+}
+
+.text-container{
+  padding-top:54vh;
+  padding-bottom:180px;
+}
+
+.body-text-wrap{
+  position:relative;
+  width:min(43vw,610px);
+  margin:0 auto;
+  isolation:isolate;
+  will-change:opacity;
+}
+
+.body-text{
+  position:relative;
+  z-index:3;
+  display:block;
+  width:100%;
+  margin:0;
+  color:#e00000;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:18px;
+  line-height:2.3;
+  font-weight:normal;
+}
+
+.text-shadow-field{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  overflow:visible;
+}
+
+.floating-word{
+  position:absolute;
+  color:#e00000;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:18px;
+  font-weight:normal;
+  white-space:pre;
+  line-height:1;
+  pointer-events:none;
+  transform-origin:center;
+  will-change:transform,opacity;
+  animation:floatWord var(--duration) ease-in-out infinite alternate;
+  animation-delay:var(--delay);
+  filter:drop-shadow(0 0 2px rgba(255,0,0,.35));
+}
+
+.floating-word.secondary{
+  animation-name:floatWordSecondary;
+  filter:drop-shadow(0 0 3px rgba(200,0,0,.25));
+}
+
+@keyframes floatWord{
+  0%{
+    transform:translate(calc(var(--dx)*-.45),calc(var(--dy)*-.45));
+    opacity:.12;
+  }
+  50%{
+    transform:translate(var(--dx),var(--dy));
+    opacity:.42;
+  }
+  100%{
+    transform:translate(calc(var(--dx)*-.75),calc(var(--dy)*.55));
+    opacity:.20;
+  }
+}
+
+@keyframes floatWordSecondary{
+  0%{
+    transform:translate(calc(var(--dx)*.5),calc(var(--dy)*-.7));
+    opacity:.08;
+  }
+  50%{
+    transform:translate(calc(var(--dx)*-1),calc(var(--dy)*.65));
+    opacity:.27;
+  }
+  100%{
+    transform:translate(calc(var(--dx)*.8),calc(var(--dy)*-.4));
+    opacity:.12;
+  }
+}
+
+/* SAME FILM GEOMETRY AS PAGE2-1 */
+
+.film-section{
+  position:relative;
+  height:72vh;
+  height:72dvh;
+  min-height:0;
+  overflow:hidden;
+  background:#000;
+}
+
+.film-stage{
+  position:absolute;
+  inset:0;
+  perspective:1000px;
+  perspective-origin:50% 50%;
+  overflow:hidden;
+  isolation:isolate;
+  opacity:0;
+  transition:opacity 1100ms ease-in-out;
+}
+
+.film-stage.revealed{
+  opacity:1;
+}
+
+.film-item{
+  position:absolute;
+  top:22dvh;
+  left:50%;
+  width:max-content;
+  height:300px;
+  transform-origin:center center;
+  backface-visibility:hidden;
+  will-change:transform,opacity,filter;
+  pointer-events:none;
+}
+
+.film-item img{
+  display:block;
+  width:auto;
+  height:100%;
+  max-width:none;
+  object-fit:contain;
+  backface-visibility:hidden;
+}
+
+/* PREVENT SCROLLING DURING THE FILM */
+
+html.film-locked{
+  scroll-behavior:auto!important;
+  overflow:hidden!important;
+  overscroll-behavior:none;
+}
+
+body.film-locked{
+  overflow:hidden!important;
+  overscroll-behavior:none;
+}
+
+/* ORIGINAL SEAMLESS RETURN */
+
+.return-scene{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  overflow:hidden;
+  background:transparent;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.return-scene.active{
+  visibility:visible;
+  opacity:1;
+}
+
+.return-catalogue{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  will-change:opacity;
+}
+
+.return-tile{
+  position:absolute;
+  overflow:hidden;
+  background:#000;
+}
+
+.return-tile img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.return-flight{
+  position:fixed;
+  z-index:5100;
+  overflow:hidden;
+  pointer-events:none;
+  transform-origin:top left;
+  will-change:transform,width,height;
+}
+
+.return-flight img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+
+@media(max-width:700px){
+  .site-logo{
+    top:26px;
+    right:20px;
+    width:170px;
+  }
+
+  .text-container{
+    padding-top:54vh;
+    padding-bottom:180px;
+  }
+
+  .body-text-wrap{
+    width:78vw;
+  }
+
+  .body-text{
+    font-size:15px;
+    line-height:2.15;
+  }
+
+  .floating-word{
+    font-size:15px;
+  }
+
+  .film-section{
+    height:75vh;
+    height:75dvh;
+  }
+
+  .film-item{
+    top:25dvh;
+    height:200px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .floating-word{
+    animation:none;
+    opacity:.12;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<a href="index.html" class="site-logo">
+  <img src="integuments-red-logo.png" alt="INTEGUMENTS">
+</a>
+
+<section class="opening" id="opening">
+  <div class="text-container">
+    <div class="body-text-wrap" id="body-text-wrap">
+
+      <div
+        class="text-shadow-field"
+        id="text-shadow-field"
+        aria-hidden="true"
+      ></div>
+
+      <p class="body-text" id="body-text">I recently forgot how to feel. maybe it was the days that kept on passing by. maybe it was the sun setting around 4:30 in the afternoon as it got cold outside. I closed my windows and our conversations stopped. she would be smiling and laughing from afar but somehow she lost that glint in her eyes. you locked me in without even knowing and behind those closed doors I’d call out your name. talk to me it’s always been just you and me. in that moment, the train stopped in the midst of its tracks, she stopped to catch a breath and her whole world fell apart. an avalanche of burning sensations swept over, bringing back everything she ever cared for. without a key that should have been what opened the lock. and that scared the shit out of her. where were you when I needed you. I’m lost and these endless flight of stairs aren’t showing me a way out. I’ve lost my sense of direction and now I’m swimming in an ocean full of memories. don’t forget. she’ll remember.</p>
+
+    </div>
+  </div>
+</section>
+
+<section class="film-section" id="film-section">
+  <div class="film-stage" id="film-stage"></div>
+</section>
+
+<div class="return-scene" id="return-scene">
+  <div class="return-catalogue" id="return-catalogue"></div>
+</div>
+
+<script>
+
+/* HELPERS */
+
+function clamp(value,min=0,max=1){
+  return Math.max(min,Math.min(max,value));
+}
+
+function smoothstep(value){
+  const t=clamp(value,0,1);
+  return t*t*(3-2*t);
+}
+
+function easeInOutCubic(t){
+  t=clamp(t,0,1);
+
+  return t<.5
+    ?4*t*t*t
+    :1-Math.pow(-2*t+2,3)/2;
+}
+
+function lerp(a,b,t){
+  return a+(b-a)*t;
+}
+
+/* ORIGINAL FLOATING WORD EFFECT */
+
+const bodyText=document.getElementById("body-text");
+const bodyTextWrap=document.getElementById("body-text-wrap");
+const shadowField=document.getElementById("text-shadow-field");
+
+function variation(n,offset){
+  const v=Math.sin(n*12.9898+offset*78.233)*43758.5453;
+  return v-Math.floor(v);
+}
+
+function buildFloatingWords(){
+  shadowField.innerHTML="";
+
+  const textNode=bodyText.firstChild;
+
+  if(!textNode||textNode.nodeType!==Node.TEXT_NODE){
+    return;
+  }
+
+  const fullText=textNode.textContent;
+  const wordPattern=/\S+/g;
+  const wrapRect=bodyTextWrap.getBoundingClientRect();
+  const computed=getComputedStyle(bodyText);
+
+  let match;
+  let index=0;
+
+  while((match=wordPattern.exec(fullText))!==null){
+    const word=match[0];
+
+    const range=document.createRange();
+    range.setStart(textNode,match.index);
+    range.setEnd(textNode,match.index+word.length);
+
+    Array.from(range.getClientRects()).forEach(rect=>{
+      if(rect.width<=0||rect.height<=0)return;
+
+      const x=rect.left-wrapRect.left;
+      const y=rect.top-wrapRect.top;
+
+      for(let layer=0;layer<2;layer++){
+        const shadow=document.createElement("span");
+
+        shadow.className=
+          "floating-word"+
+          (layer===1?" secondary":"");
+
+        shadow.textContent=word;
+        shadow.style.left=x+"px";
+        shadow.style.top=y+"px";
+        shadow.style.fontSize=computed.fontSize;
+        shadow.style.fontFamily=computed.fontFamily;
+        shadow.style.fontWeight=computed.fontWeight;
+
+        const seed=index*2+layer;
+
+        const dx=
+          (variation(seed,1)>.5?1:-1)*
+          (7+variation(seed,3)*10);
+
+        const dy=
+          (variation(seed,2)>.5?1:-1)*
+          (5+variation(seed,4)*9);
+
+        const duration=4.5+variation(seed,5)*4;
+        const delay=-variation(seed,6)*duration;
+
+        shadow.style.setProperty("--dx",dx+"px");
+        shadow.style.setProperty("--dy",dy+"px");
+        shadow.style.setProperty("--duration",duration+"s");
+        shadow.style.setProperty("--delay",delay+"s");
+
+        shadowField.appendChild(shadow);
+      }
+    });
+
+    index++;
+  }
+}
+
+if(document.fonts&&document.fonts.ready){
+  document.fonts.ready.then(buildFloatingWords);
+}else{
+  buildFloatingWords();
+}
+
+/* TEXT SCROLL — UNCHANGED */
+
+const opening=document.getElementById("opening");
+const section=document.getElementById("film-section");
+const stage=document.getElementById("film-stage");
+const returnScene=document.getElementById("return-scene");
+const returnCatalogue=document.getElementById("return-catalogue");
+
+function updateTextScroll(){
+  const scrollY=window.scrollY;
+  const viewport=window.innerHeight;
+
+  const openingBottom=
+    opening.offsetTop+opening.offsetHeight;
+
+  const fadeStart=
+    openingBottom-viewport*.75;
+
+  const fadeEnd=
+    openingBottom-viewport*.30;
+
+  const progress=smoothstep(
+    (scrollY-fadeStart)/(fadeEnd-fadeStart)
+  );
+
+  bodyTextWrap.style.opacity=1-progress;
+
+  return progress;
+}
+
+/* EXACT IMAGE ORDER FROM PAGE2-1 */
+
+const images=[
+  "guillem.jpg",
+  "body.jpg",
+  "jamie.jpg",
+  "abreale1.jpg",
+  "light1.jpg",
+  "annecy.jpg",
+  "paris.jpg",
+  "spiral.jpg",
+  "abreale2.jpg",
+  "soho.jpg",
+  "abreale3.jpg",
+  "abreale4.jpg",
+  "poles.jpg",
+  "light2.jpg",
+  "abreale5.jpg",
+  "amsterdam.jpg",
+  "morris.jpg",
+  "abreale6.jpg",
+  "ice.jpg",
+  "abreale7.jpg",
+  "nyc.jpg"
+];
+
+/* SAME FILM CARD CREATION AS PAGE2-1 */
+
+const cards=images.map(filename=>{
+  const card=document.createElement("div");
+  card.className="film-item";
+
+  const img=document.createElement("img");
+  img.src=filename;
+  img.alt=filename;
+  img.draggable=false;
+
+  card.appendChild(img);
+  stage.appendChild(card);
+
+  return card;
+});
+
+const total=cards.length;
+
+/* BODY IS THE FINAL PHOTOGRAPH */
+
+const FOCUS_INDEX=1;
+
+/* SAME MOVEMENT TIMING AS PAGE2-1 */
+
+const RUN_DURATION=3200;
+const EXPAND_DURATION=1800;
+
+/* ORIGINAL RETURN TIMING */
+
+const HOLD_DURATION=300;
+const RETURN_DURATION=2000;
+
+/*
+  START THE FILM ALREADY IN MOTION.
+
+  The first 450ms of rotation happens invisibly.
+  This prevents a still centered photograph from
+  being the first thing the user sees.
+*/
+
+const REVEAL_HEAD_START=450;
+
+let animationStarted=false;
+let animationStart=null;
+
+let currentPosition=FOCUS_INDEX;
+let finished=false;
+let expanding=false;
+let expansionProgress=0;
+
+let scrollLocked=false;
+let lockedScrollY=0;
+let returning=false;
+
+/* CIRCULAR DISTANCE — PAGE2-1 */
+
+function getDistance(index,position){
+  let distance=index-position;
+
+  while(distance<-total/2){
+    distance+=total;
+  }
+
+  while(distance>total/2){
+    distance-=total;
+  }
+
+  return distance;
+}
+
+/* FEATHERED FILM EDGES — PAGE2-1 */
+
+function updateRevealMask(img,distance){
+  const reveal=smoothstep((distance+.35)/1.65);
+  const width=45*reveal;
+
+  if(width<.1){
+    img.style.webkitMaskImage="none";
+    img.style.maskImage="none";
+    return;
+  }
+
+  const gradient=`linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,.12) ${width*.18}%,
+    rgba(0,0,0,.32) ${width*.40}%,
+    rgba(0,0,0,.62) ${width*.68}%,
+    rgba(0,0,0,.85) ${width*.88}%,
+    black ${width}%,
+    black 100%
+  )`;
+
+  img.style.webkitMaskImage=gradient;
+  img.style.maskImage=gradient;
+}
+
+/* REVOLVING FILM RENDER — PAGE2-1 */
+
+function render(position,finalMode=false,expansion=0){
+  currentPosition=position;
+
+  const mobile=window.innerWidth<=700;
+
+  const spacing=mobile?112:175;
+  const baseHeight=mobile?200:300;
+
+  cards.forEach((card,index)=>{
+    const distance=getDistance(
+      index,
+      finalMode?FOCUS_INDEX:position
+    );
+
+    const abs=Math.abs(distance);
+
+    const x=distance*spacing;
+    const y=Math.min(abs*abs*3.5,65);
+    const z=-abs*125;
+
+    const rotateY=clamp(-distance*15,-65,65);
+    const scale=Math.max(.55,1-abs*.055);
+    const opacity=clamp(1-abs*.095,0,1);
+    const brightness=clamp(1-abs*.085,.22,1);
+
+    const img=card.querySelector("img");
+
+    card.style.height=baseHeight+"px";
+
+    updateRevealMask(img,distance);
+
+    card.style.opacity=opacity;
+    card.style.filter=`brightness(${brightness})`;
+
+    card.style.transform=`
+      translate(-50%,-50%)
+      translate3d(${x}px,${y}px,${z}px)
+      rotateY(${rotateY}deg)
+      scale(${scale})
+    `;
+
+    card.style.zIndex=String(
+      1000-Math.round(abs*10)
+    );
+
+    card.style.visibility=
+      opacity<=0?"hidden":"visible";
+  });
+
+  /* FINAL BODY ENLARGEMENT */
+
+  if(finalMode){
+    const focus=cards[FOCUS_INDEX];
+    const img=focus.querySelector("img");
+    const eased=easeInOutCubic(expansion);
+
+    const sectionHeight=section.clientHeight;
+
+    const centerY=mobile
+      ?window.innerHeight*.25
+      :window.innerHeight*.22;
+
+    const safeHeight=Math.max(
+      100,
+      Math.min(
+        sectionHeight*.70,
+        centerY*2-24,
+        (sectionHeight-centerY)*2-24
+      )
+    );
+
+    const finalHeight=mobile
+      ?Math.min(safeHeight,380)
+      :Math.min(safeHeight,476);
+
+    focus.style.height=(
+      baseHeight+
+      (finalHeight-baseHeight)*eased
+    )+"px";
+
+    img.style.webkitMaskImage="none";
+    img.style.maskImage="none";
+
+    focus.style.transform=`
+      translate(-50%,-50%)
+      translate3d(0px,0px,0px)
+      rotateY(0deg)
+      scale(1)
+    `;
+
+    focus.style.opacity="1";
+    focus.style.filter="brightness(1)";
+    focus.style.zIndex="1100";
+    focus.style.visibility="visible";
+  }
+}
+
+/*
+  INITIAL FRAME IS HIDDEN.
+
+  The stage opacity is zero.
+  No static frame is revealed before animation.
+*/
+
+render(FOCUS_INDEX);
+
+/* BLOCK ALL SCROLL INPUT WHILE FILM IS ACTIVE */
+
+function preventFilmWheel(event){
+  if(!scrollLocked)return;
+
+  if(event.cancelable){
+    event.preventDefault();
+  }
+}
+
+function preventFilmKeys(event){
+  if(!scrollLocked)return;
+
+  const blockedKeys=[
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "PageUp",
+    "PageDown",
+    "Home",
+    "End",
+    " ",
+    "Spacebar"
+  ];
+
+  if(blockedKeys.includes(event.key)){
+    event.preventDefault();
+  }
+}
+
+window.addEventListener(
+  "wheel",
+  preventFilmWheel,
+  {passive:false,capture:true}
+);
+
+window.addEventListener(
+  "touchmove",
+  preventFilmWheel,
+  {passive:false,capture:true}
+);
+
+window.addEventListener(
+  "keydown",
+  preventFilmKeys,
+  {capture:true}
+);
+
+/* KEEP VIEWPORT FIXED DURING ANIMATION */
+
+function enforceFilmPosition(){
+  if(!scrollLocked)return;
+
+  if(Math.abs(window.scrollY-lockedScrollY)>1){
+    window.scrollTo(0,lockedScrollY);
+  }
+}
+
+function lockFilmScroll(){
+  if(scrollLocked)return;
+
+  /*
+    Set the final scroll position before locking
+    so the film is centered exactly like page2-1.
+  */
+
+  const finalScroll=Math.max(
+    0,
+    document.documentElement.scrollHeight-
+    window.innerHeight
+  );
+
+  document.documentElement.style.scrollBehavior="auto";
+  document.body.style.scrollBehavior="auto";
+
+  window.scrollTo(0,finalScroll);
+
+  lockedScrollY=window.scrollY;
+  scrollLocked=true;
+
+  document.documentElement.classList.add("film-locked");
+  document.body.classList.add("film-locked");
+}
+
+/*
+  FIXED REVEAL.
+
+  1. Lock scrolling.
+  2. Advance film to an already-moving position.
+  3. Start continuous rotation.
+  4. Only then reveal the stage.
+*/
+
+function startFilmAnimation(){
+  if(animationStarted)return;
+
+  animationStarted=true;
+
+  lockFilmScroll();
+
+  animationStart=
+    performance.now()-REVEAL_HEAD_START;
+
+  render(
+    FOCUS_INDEX+
+    (REVEAL_HEAD_START/RUN_DURATION)*total
+  );
+
+  requestAnimationFrame(now=>{
+    animateFilm(now);
+
+    requestAnimationFrame(()=>{
+      stage.classList.add("revealed");
+    });
+  });
+}
+
+/*
+  SAME TIME-BASED ROTATION AS PAGE2-1.
+
+  The user's scroll position does not determine
+  film movement. Only elapsed time does.
+*/
+
+function animateFilm(now){
+  enforceFilmPosition();
+
+  const elapsed=now-animationStart;
+
+  if(elapsed<RUN_DURATION){
+    render(
+      FOCUS_INDEX+
+      (elapsed/RUN_DURATION)*total
+    );
+
+    requestAnimationFrame(animateFilm);
+    return;
+  }
+
+  expanding=true;
+
+  expansionProgress=clamp(
+    (elapsed-RUN_DURATION)/EXPAND_DURATION,
+    0,
+    1
+  );
+
+  render(
+    FOCUS_INDEX+total,
+    true,
+    expansionProgress
+  );
+
+  if(expansionProgress<1){
+    requestAnimationFrame(animateFilm);
+  }else{
+    finished=true;
+
+    render(
+      FOCUS_INDEX+total,
+      true,
+      1
+    );
+
+    setTimeout(
+      startSeamlessReturn,
+      HOLD_DURATION
+    );
+  }
+}
+
+/* ORIGINAL CATALOGUE LAYOUT */
+
+const catalogueTiles=[
+  {src:"guillem.jpg",x:0,y:0,w:12.2,h:27.5},
+  {src:"body.jpg",x:12.2,y:0,w:23.4,h:27.5},
+  {src:"jamie.jpg",x:35.6,y:0,w:12.2,h:27.5},
+  {src:"abreale1.jpg",x:47.8,y:0,w:27.8,h:27.5},
+  {src:"light1.jpg",x:75.6,y:0,w:24.4,h:27.5},
+  {src:"annecy.jpg",x:0,y:27.5,w:14.2,h:33},
+  {src:"paris.jpg",x:14.2,y:27.5,w:14.2,h:33},
+  {src:"spiral.jpg",x:28.4,y:27.5,w:12.6,h:33},
+  {src:"abreale2.jpg",x:41,y:27.5,w:12.8,h:33},
+  {src:"soho.jpg",x:53.8,y:27.5,w:29.2,h:33},
+  {src:"abreale3.jpg",x:83,y:27.5,w:17,h:33},
+  {src:"abreale4.jpg",x:0,y:60.5,w:32.6,h:39.5},
+  {src:"poles.jpg",x:32.6,y:60.5,w:14.6,h:17},
+  {src:"light2.jpg",x:47.2,y:60.5,w:14.4,h:17},
+  {src:"abreale6.jpg",x:61.6,y:60.5,w:15.6,h:17},
+  {src:"amsterdam.jpg",x:77.2,y:60.5,w:10.2,h:17},
+  {src:"nyc.jpg",x:87.4,y:60.5,w:12.6,h:39.5},
+  {src:"morris.jpg",x:32.6,y:77.5,w:16,h:22.5},
+  {src:"abreale5.jpg",x:48.6,y:77.5,w:10.5,h:22.5},
+  {src:"ice.jpg",x:59.1,y:77.5,w:18.1,h:22.5},
+  {src:"abreale7.jpg",x:77.2,y:77.5,w:10.2,h:22.5}
+];
+
+catalogueTiles.forEach(item=>{
+  const tile=document.createElement("div");
+  tile.className="return-tile";
+
+  tile.style.left=item.x+"%";
+  tile.style.top=item.y+"%";
+  tile.style.width=item.w+"%";
+  tile.style.height=item.h+"%";
+
+  if(item.src!=="body.jpg"){
+    const img=document.createElement("img");
+
+    img.src=item.src;
+    img.alt="";
+
+    if(
+      ["abreale1.jpg","abreale3.jpg"].includes(item.src)
+    ){
+      img.style.objectPosition="50% 45%";
+    }
+
+    tile.appendChild(img);
+  }
+
+  returnCatalogue.appendChild(tile);
+});
+
+/* ORIGINAL SEAMLESS RETURN TO BODY TILE */
+
+function startSeamlessReturn(){
+  if(returning)return;
+
+  returning=true;
+
+  const focusCard=cards[FOCUS_INDEX];
+  const focusImage=focusCard.querySelector("img");
+  const origin=focusImage.getBoundingClientRect();
+
+  const target=catalogueTiles.find(
+    item=>item.src==="body.jpg"
+  );
+
+  const destination={
+    left:window.innerWidth*target.x/100,
+    top:window.innerHeight*target.y/100,
+    width:window.innerWidth*target.w/100,
+    height:window.innerHeight*target.h/100
+  };
+
+  const flying=document.createElement("div");
+  flying.className="return-flight";
+
+  const picture=document.createElement("img");
+  picture.src="body.jpg";
+  picture.alt="";
+  picture.style.objectPosition="50% 45%";
+
+  flying.appendChild(picture);
+  returnScene.appendChild(flying);
+
+  flying.style.left="0px";
+  flying.style.top="0px";
+  flying.style.width=origin.width+"px";
+  flying.style.height=origin.height+"px";
+
+  flying.style.transform=`
+    translate3d(
+      ${origin.left}px,
+      ${origin.top}px,
+      0
+    )
+  `;
+
+  returnScene.classList.add("active");
+  focusCard.style.visibility="hidden";
+
+  const start=performance.now();
+
+  function animateReturn(now){
+    enforceFilmPosition();
+
+    const t=clamp(
+      (now-start)/RETURN_DURATION,
+      0,
+      1
+    );
+
+    const eased=easeInOutCubic(t);
+
+    stage.style.opacity=String(
+      1-smoothstep(t/.65)
+    );
+
+    returnCatalogue.style.opacity=String(
+      smoothstep((t-.10)/.70)
+    );
+
+    const x=lerp(
+      origin.left,
+      destination.left,
+      eased
+    );
+
+    const y=lerp(
+      origin.top,
+      destination.top,
+      eased
+    )-Math.sin(Math.PI*t)*38;
+
+    const w=lerp(
+      origin.width,
+      destination.width,
+      eased
+    );
+
+    const h=lerp(
+      origin.height,
+      destination.height,
+      eased
+    );
+
+    flying.style.width=w+"px";
+    flying.style.height=h+"px";
+
+    flying.style.transform=`
+      translate3d(${x}px,${y}px,0)
+    `;
+
+    if(t<1){
+      requestAnimationFrame(animateReturn);
+    }else{
+      flying.style.width=
+        destination.width+"px";
+
+      flying.style.height=
+        destination.height+"px";
+
+      flying.style.transform=`
+        translate3d(
+          ${destination.left}px,
+          ${destination.top}px,
+          0
+        )
+      `;
+
+      returnCatalogue.style.opacity="1";
+
+      try{
+        sessionStorage.removeItem(
+          "integuments-return-flight"
+        );
+
+        sessionStorage.setItem(
+          "integuments-seamless-arrival",
+          JSON.stringify({
+            image:"body.jpg",
+            time:Date.now()
+          })
+        );
+      }catch(error){}
+
+      window.location.replace("page2.html");
+    }
+  }
+
+  requestAnimationFrame(animateReturn);
+}
+
+/*
+  SCROLL TRIGGER.
+
+  IMPORTANT:
+  Do not reveal the stage here.
+
+  Only startFilmAnimation() may reveal it,
+  after the film has begun moving.
+*/
+
+function updateScrollEffects(){
+  if(animationStarted||scrollLocked)return;
+
+  const fadeProgress=updateTextScroll();
+  const filmRect=section.getBoundingClientRect();
+
+  const filmCloseEnough=
+    filmRect.top<=window.innerHeight;
+
+  if(
+    fadeProgress>=1 &&
+    filmCloseEnough
+  ){
+    startFilmAnimation();
+  }
+}
+
+/* SCROLL EVENTS */
+
+window.addEventListener(
+  "scroll",
+  updateScrollEffects,
+  {passive:true}
+);
+
+window.addEventListener(
+  "load",
+  updateScrollEffects
+);
+
+/* RESIZE */
+
+let resizeTimer;
+
+window.addEventListener("resize",()=>{
+  clearTimeout(resizeTimer);
+
+  resizeTimer=setTimeout(
+    buildFloatingWords,
+    120
+  );
+
+  if(scrollLocked){
+    const finalScroll=Math.max(
+      0,
+      document.documentElement.scrollHeight-
+      window.innerHeight
+    );
+
+    window.scrollTo(0,finalScroll);
+    lockedScrollY=window.scrollY;
+  }else{
+    updateScrollEffects();
+  }
+
+  if(finished){
+    render(
+      FOCUS_INDEX+total,
+      true,
+      1
+    );
+  }else if(expanding){
+    render(
+      FOCUS_INDEX+total,
+      true,
+      expansionProgress
+    );
+  }else{
+    render(currentPosition);
+  }
+});
+
+/* INITIALIZE */
+
+updateScrollEffects();
+
+</script>
+
+</body>
+</html>

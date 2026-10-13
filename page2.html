@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTEGUMENTS — Photography</title>
+
+<style>
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#1e1e1e;
+}
+.page2{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100dvh;
+  overflow:hidden;
+  background:#1e1e1e;
+}
+.collage{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  visibility:hidden;
+  filter:none;
+  will-change:filter;
+}
+.collage.is-ready{visibility:visible}
+.tile{
+  position:absolute;
+  display:block;
+  overflow:hidden;
+  text-decoration:none;
+  cursor:pointer;
+}
+.tile img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transform:none;
+  border:0;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.tile:focus-visible{
+  outline:2px solid #ff0000;
+  outline-offset:-2px;
+  z-index:10;
+}
+
+/* TOP ROW */
+.p01{left:0%;top:0%;width:12.2%;height:27.5%}
+.p02{left:12.2%;top:0%;width:23.4%;height:27.5%}
+.p03{left:35.6%;top:0%;width:12.2%;height:27.5%}
+.p04{left:47.8%;top:0%;width:27.8%;height:27.5%}
+.p05{left:75.6%;top:0%;width:24.4%;height:27.5%}
+
+/* MIDDLE ROW */
+.p06{left:0%;top:27.5%;width:14.2%;height:33%}
+.p07{left:14.2%;top:27.5%;width:14.2%;height:33%}
+.p08{left:28.4%;top:27.5%;width:12.6%;height:33%}
+.p09{left:41%;top:27.5%;width:12.8%;height:33%}
+.p10{left:53.8%;top:27.5%;width:29.2%;height:33%}
+.p11{left:83%;top:27.5%;width:17%;height:33%}
+
+/* BOTTOM SECTION */
+.p12{left:0%;top:60.5%;width:32.6%;height:39.5%}
+.p13{left:32.6%;top:60.5%;width:14.6%;height:17%}
+.p14{left:47.2%;top:60.5%;width:14.4%;height:17%}
+.p15{left:61.6%;top:60.5%;width:15.6%;height:17%}
+.p16{left:77.2%;top:60.5%;width:10.2%;height:17%}
+.p17{left:87.4%;top:60.5%;width:12.6%;height:39.5%}
+
+/* BOTTOM STRIP */
+.p18{left:32.6%;top:77.5%;width:16%;height:22.5%}
+.p19{left:48.6%;top:77.5%;width:10.5%;height:22.5%}
+.p20{left:59.1%;top:77.5%;width:18.1%;height:22.5%}
+.p21{left:77.2%;top:77.5%;width:10.2%;height:22.5%}
+
+/* CROPPING */
+.p01 img{object-position:50% 50%}
+.p02 img{object-position:50% 45%}
+.p03 img{object-position:50% 50%}
+.p04 img{object-position:50% 45%}
+.p05 img{object-position:50% 50%}
+.p06 img{object-position:50% 50%}
+.p07 img{object-position:50% 50%}
+.p08 img{object-position:50% 50%}
+.p09 img{object-position:50% 50%}
+.p10 img{object-position:50% 50%}
+.p11 img{object-position:50% 45%}
+.p12 img{object-position:50% 50%}
+.p13 img{object-position:50% 50%}
+.p14 img{object-position:50% 50%}
+.p15 img{object-fit:cover;object-position:center center}
+.p16 img{object-position:50% 50%}
+.p17 img{object-position:50% 50%}
+.p18 img{object-position:50% 50%}
+.p19 img{object-position:50% 50%}
+.p20 img{object-position:50% 50%}
+.p21 img{object-fit:cover;object-position:center center}
+</style>
+</head>
+
+<body>
+
+<main class="page2">
+<div class="collage" id="collage">
+
+<a class="tile p01" href="page2-1.html">
+  <img src="guillem.jpg" alt="Guillem">
+</a>
+<a class="tile p02" href="page2-2.html">
+  <img src="body.jpg" alt="Body">
+</a>
+<a class="tile p03" href="page2-3.html">
+  <img src="jamie.jpg" alt="Jamie">
+</a>
+<a class="tile p04" href="page2-4.html">
+  <img src="abreale1.jpg" alt="Abreale 1">
+</a>
+<a class="tile p05" href="page2-5.html">
+  <img src="light1.jpg" alt="Light 1">
+</a>
+
+<a class="tile p06" href="page2-6.html">
+  <img src="annecy.jpg" alt="Annecy">
+</a>
+<a class="tile p07" href="page2-7.html">
+  <img src="paris.jpg" alt="Paris">
+</a>
+<a class="tile p08" href="page2-8.html">
+  <img src="spiral.jpg" alt="Spiral">
+</a>
+<a class="tile p09" href="page2-9.html">
+  <img src="abreale2.jpg" alt="Abreale 2">
+</a>
+<a class="tile p10" href="page2-10.html">
+  <img src="soho.jpg" alt="Soho">
+</a>
+<a class="tile p11" href="page2-11.html">
+  <img src="abreale3.jpg" alt="Abreale 3">
+</a>
+
+<a class="tile p12" href="page2-12.html">
+  <img src="abreale4.jpg" alt="Abreale 4">
+</a>
+<a class="tile p13" href="page2-13.html">
+  <img src="poles.jpg" alt="Poles">
+</a>
+<a class="tile p14" href="page2-15.html">
+  <img src="light2.jpg" alt="Light 2">
+</a>
+<a class="tile p15" href="page2-17.html">
+  <img src="abreale6.jpg" alt="Abreale 6">
+</a>
+<a class="tile p16" href="page2-19.html">
+  <img src="amsterdam.jpg" alt="Amsterdam">
+</a>
+<a class="tile p17" href="page2-21.html">
+  <img src="nyc.jpg" alt="NYC">
+</a>
+
+<a class="tile p18" href="page2-14.html">
+  <img src="morris.jpg" alt="Morris">
+</a>
+<a class="tile p19" href="page2-16.html">
+  <img src="abreale5.jpg" alt="Abreale 5">
+</a>
+<a class="tile p20" href="page2-18.html">
+  <img src="ice.jpg" alt="Ice">
+</a>
+<a class="tile p21" href="page2-20.html">
+  <img src="abreale7.jpg" alt="Abreale 7">
+</a>
+
+</div>
+</main>
+
+<script>
+const collage=document.getElementById("collage");
+const images=[...collage.querySelectorAll("img")];
+
+function waitForImage(img){
+  return new Promise(resolve=>{
+    if(img.complete){
+      resolve();
+      return;
+    }
+    img.addEventListener("load",resolve,{once:true});
+    img.addEventListener("error",resolve,{once:true});
+  });
+}
+
+/* AUTOMATIC COLOR PALETTE */
+const originalRed={
+  grayscale:0,sepia:0,hue:0,
+  saturation:1,brightness:1
+};
+const blackWhite={
+  grayscale:1,sepia:0,hue:0,
+  saturation:1,brightness:1.04
+};
+const icyBlue={
+  grayscale:1,sepia:.30,hue:165,
+  saturation:.85,brightness:1.02
+};
+const emerald={
+  grayscale:1,sepia:.38,hue:95,
+  saturation:.9,brightness:.99
+};
+const mutedPurple={
+  grayscale:1,sepia:.30,hue:235,
+  saturation:.75,brightness:1
+};
+const warmMonochrome={
+  grayscale:1,sepia:.25,hue:0,
+  saturation:.75,brightness:.98
+};
+
+const colorStages=[
+  originalRed,
+  blackWhite,
+  originalRed,
+  icyBlue,
+  originalRed,
+  emerald,
+  originalRed,
+  mutedPurple,
+  originalRed,
+  warmMonochrome,
+  originalRed
+];
+
+const transitionDuration=2000;
+let transitionStart=null;
+let currentStage=0;
+
+function lerp(a,b,t){
+  return a+(b-a)*t;
+}
+function smoothstep(t){
+  t=Math.max(0,Math.min(1,t));
+  return t*t*(3-2*t);
+}
+function interpolateFilter(a,b,t){
+  return {
+    grayscale:lerp(a.grayscale,b.grayscale,t),
+    sepia:lerp(a.sepia,b.sepia,t),
+    hue:lerp(a.hue,b.hue,t),
+    saturation:lerp(a.saturation,b.saturation,t),
+    brightness:lerp(a.brightness,b.brightness,t)
+  };
+}
+function filterToCSS(f){
+  return `
+    grayscale(${f.grayscale})
+    sepia(${f.sepia})
+    hue-rotate(${f.hue}deg)
+    saturate(${f.saturation})
+    brightness(${f.brightness})
+  `;
+}
+
+function animate(now){
+  if(transitionStart===null){
+    transitionStart=now;
+  }
+
+  const elapsed=now-transitionStart;
+
+  if(elapsed>=transitionDuration){
+    const completed=Math.floor(
+      elapsed/transitionDuration
+    );
+    currentStage=(
+      currentStage+completed
+    )%colorStages.length;
+    transitionStart+=completed*transitionDuration;
+  }
+
+  const progress=smoothstep(
+    (now-transitionStart)/transitionDuration
+  );
+  const nextStage=(
+    currentStage+1
+  )%colorStages.length;
+
+  collage.style.filter=filterToCSS(
+    interpolateFilter(
+      colorStages[currentStage],
+      colorStages[nextStage],
+      progress
+    )
+  );
+
+  requestAnimationFrame(animate);
+}
+
+/* SEAMLESS ARRIVAL */
+function checkArrival(){
+  try{
+    const raw=sessionStorage.getItem(
+      "integuments-seamless-arrival"
+    );
+
+    sessionStorage.removeItem(
+      "integuments-seamless-arrival"
+    );
+
+    /* REMOVE OLD RETURN DATA */
+    sessionStorage.removeItem(
+      "integuments-return-flight"
+    );
+
+    if(!raw)return false;
+
+    const arrival=JSON.parse(raw);
+
+    return (
+      arrival.image==="guillem.jpg" &&
+      Date.now()-arrival.time<15000
+    );
+  }catch(error){
+    return false;
+  }
+}
+
+const arrivingFromFilm=checkArrival();
+
+/* DISPLAY COLLAGE AND RESUME COLOR CYCLE */
+Promise.all(images.map(waitForImage)).then(()=>{
+  collage.style.filter=filterToCSS(originalRed);
+  collage.classList.add("is-ready");
+
+  /* START AUTOMATIC 2-SECOND COLOR TRANSITIONS */
+  requestAnimationFrame(animate);
+});
+</script>
+
+</body>
+</html>

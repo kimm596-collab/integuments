@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTEGUMENTS — Paris</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: #a90000;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* FIXED BARCODE LOGO */
+
+.site-logo {
+  position: fixed;
+  top: 42px;
+  right: 34px;
+  width: 220px;
+  z-index: 2000;
+  display: block;
+}
+
+.site-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* OPENING SECTION */
+
+.opening {
+  position: relative;
+  height: 155vh;
+  min-height: 1000px;
+  background: #000;
+}
+
+/*
+  2-7 TEXT.PNG
+
+  Centered horizontally.
+  Positioned lower so the text extends
+  beyond the initial viewport.
+*/
+
+.text-group {
+  position: absolute;
+  top: 38vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 440px;
+  max-width: 78vw;
+  opacity: 1;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.text-group img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* FILM SECTION — SAME AS PREVIOUS PAGES */
+
+.film-section {
+  position: relative;
+  height: 72vh;
+  height: 72dvh;
+  min-height: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.film-stage {
+  position: absolute;
+  inset: 0;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  overflow: hidden;
+  isolation: isolate;
+  opacity: 0;
+  transition: opacity 1100ms ease-in-out;
+}
+
+.film-stage.revealed {
+  opacity: 1;
+}
+
+/* SAME FILM POSITION */
+
+.film-item {
+  position: absolute;
+  top: 22dvh;
+  left: 50%;
+  width: max-content;
+  height: 300px;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+  pointer-events: none;
+}
+
+.film-item img {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  backface-visibility: hidden;
+}
+
+/* RETURN TO CATALOGUE */
+
+.back-link {
+  position: absolute;
+  bottom: 9%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1200;
+  color: #a90000;
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+
+.back-link:hover {
+  color: #ff0000;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .site-logo {
+    top: 26px;
+    right: 20px;
+    width: 170px;
+  }
+
+  .opening {
+    height: 145vh;
+    min-height: 850px;
+  }
+
+  .text-group {
+    top: 42vh;
+    width: 72vw;
+    max-width: 440px;
+  }
+
+  .film-section {
+    height: 75vh;
+    height: 75dvh;
+  }
+
+  .film-item {
+    top: 25dvh;
+    height: 200px;
+  }
+
+  .back-link {
+    bottom: 10%;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- FIXED BARCODE LOGO -->
+
+<a href="index.html" class="site-logo">
+  <img
+    src="integuments-red-logo.png"
+    alt="INTEGUMENTS"
+  >
+</a>
+
+<!-- OPENING TEXT -->
+
+<section class="opening" id="opening">
+
+  <div class="text-group" id="text-group">
+
+    <img
+      src="2-7 text.png"
+      alt="From a friend, a mother, a lover, a neighbor, through your pain."
+    >
+
+  </div>
+
+</section>
+
+<!-- FILM STRIP -->
+
+<section class="film-section" id="film-section">
+
+  <div class="film-stage" id="film-stage"></div>
+
+  <a href="page2.html" class="back-link">
+    ← RETURN TO CATALOGUE
+  </a>
+
+</section>
+
+<script>
+
+/* HELPERS */
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function smoothstep(value) {
+  const t = clamp(value, 0, 1);
+  return t * t * (3 - 2 * t);
+}
+
+function easeInOutCubic(t) {
+  t = clamp(t, 0, 1);
+
+  return t < .5
+    ? 4 * t * t * t
+    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+/* ELEMENTS */
+
+const textGroup = document.getElementById("text-group");
+const opening = document.getElementById("opening");
+const section = document.getElementById("film-section");
+const stage = document.getElementById("film-stage");
+
+/* TEXT FADE — SAME AS PREVIOUS PAGES */
+
+function updateTextScroll() {
+
+  const scrollY = window.scrollY;
+  const viewport = window.innerHeight;
+
+  const openingBottom =
+    opening.offsetTop + opening.offsetHeight;
+
+  const fadeStart =
+    openingBottom - viewport * .75;
+
+  const fadeEnd =
+    openingBottom - viewport * .30;
+
+  const fadeProgress = smoothstep(
+    (scrollY - fadeStart) /
+    (fadeEnd - fadeStart)
+  );
+
+  textGroup.style.opacity = 1 - fadeProgress;
+
+  return fadeProgress;
+}
+
+/* ALL 21 PHOTOGRAPHS */
+
+const images = [
+  "guillem.jpg",
+  "body.jpg",
+  "jamie.jpg",
+  "abreale1.jpg",
+  "light1.jpg",
+  "annecy.jpg",
+  "paris.jpg",
+  "spiral.jpg",
+  "abreale2.jpg",
+  "soho.jpg",
+  "abreale3.jpg",
+  "abreale4.jpg",
+  "poles.jpg",
+  "light2.jpg",
+  "abreale5.jpg",
+  "amsterdam.jpg",
+  "morris.jpg",
+  "abreale6.jpg",
+  "ice.jpg",
+  "abreale7.jpg",
+  "nyc.jpg"
+];
+
+/* CREATE FILM CARDS */
+
+const cards = images.map(filename => {
+
+  const card = document.createElement("div");
+  card.className = "film-item";
+
+  const img = document.createElement("img");
+
+  img.src = filename;
+  img.alt = filename;
+  img.draggable = false;
+
+  card.appendChild(img);
+  stage.appendChild(card);
+
+  return card;
+});
+
+const total = cards.length;
+
+/* PARIS.JPG IS THE FINAL IMAGE */
+
+const FOCUS_INDEX = 6;
+
+/* SAME FIVE-SECOND TIMING */
+
+const RUN_DURATION = 3200;
+const EXPAND_DURATION = 1800;
+
+let animationStarted = false;
+let animationStart = null;
+
+let currentPosition = FOCUS_INDEX;
+let finished = false;
+let expanding = false;
+let expansionProgress = 0;
+
+/* CIRCULAR DISTANCE */
+
+function getDistance(index, position) {
+
+  let distance = index - position;
+
+  while (distance < -total / 2) {
+    distance += total;
+  }
+
+  while (distance > total / 2) {
+    distance -= total;
+  }
+
+  return distance;
+}
+
+/* FEATHERED FILM EDGES */
+
+function updateRevealMask(img, distance) {
+
+  const reveal = smoothstep(
+    (distance + .35) / 1.65
+  );
+
+  const width = 45 * reveal;
+
+  if (width < .1) {
+    img.style.webkitMaskImage = "none";
+    img.style.maskImage = "none";
+    return;
+  }
+
+  const gradient = `linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,.12) ${width * .18}%,
+    rgba(0,0,0,.32) ${width * .40}%,
+    rgba(0,0,0,.62) ${width * .68}%,
+    rgba(0,0,0,.85) ${width * .88}%,
+    black ${width}%,
+    black 100%
+  )`;
+
+  img.style.webkitMaskImage = gradient;
+  img.style.maskImage = gradient;
+}
+
+/* REVOLVING FILM — SAME AS PAGE2-4 */
+
+function render(position, finalMode = false, expansion = 0) {
+
+  currentPosition = position;
+
+  const mobile = window.innerWidth <= 700;
+
+  const spacing = mobile ? 112 : 175;
+  const baseHeight = mobile ? 200 : 300;
+
+  cards.forEach((card, index) => {
+
+    const distance = getDistance(
+      index,
+      finalMode ? FOCUS_INDEX : position
+    );
+
+    const abs = Math.abs(distance);
+
+    const x = distance * spacing;
+    const y = Math.min(abs * abs * 3.5, 65);
+    const z = -abs * 125;
+
+    const rotateY = clamp(
+      -distance * 15,
+      -65,
+      65
+    );
+
+    const scale =
+      Math.max(.55, 1 - abs * .055);
+
+    const opacity =
+      clamp(1 - abs * .095, 0, 1);
+
+    const brightness =
+      clamp(1 - abs * .085, .22, 1);
+
+    const img = card.querySelector("img");
+
+    card.style.height = baseHeight + "px";
+
+    updateRevealMask(img, distance);
+
+    card.style.opacity = opacity;
+
+    card.style.filter =
+      `brightness(${brightness})`;
+
+    card.style.transform = `
+      translate(-50%, -50%)
+      translate3d(${x}px, ${y}px, ${z}px)
+      rotateY(${rotateY}deg)
+      scale(${scale})
+    `;
+
+    card.style.zIndex = String(
+      1000 - Math.round(abs * 10)
+    );
+
+    card.style.visibility =
+      opacity <= 0 ? "hidden" : "visible";
+
+  });
+
+  /* FINAL PARIS IMAGE ENLARGEMENT */
+
+  if (finalMode) {
+
+    const focus = cards[FOCUS_INDEX];
+    const img = focus.querySelector("img");
+    const eased = easeInOutCubic(expansion);
+
+    const sectionHeight = section.clientHeight;
+
+    const centerY = mobile
+      ? window.innerHeight * .25
+      : window.innerHeight * .22;
+
+    const safeHeight = Math.max(
+      100,
+      Math.min(
+        sectionHeight * .70,
+        centerY * 2 - 24,
+        (sectionHeight - centerY) * 2 - 24
+      )
+    );
+
+    const finalHeight = mobile
+      ? Math.min(safeHeight, 380)
+      : Math.min(safeHeight, 476);
+
+    focus.style.height = (
+      baseHeight +
+      (finalHeight - baseHeight) * eased
+    ) + "px";
+
+    img.style.webkitMaskImage = "none";
+    img.style.maskImage = "none";
+
+    focus.style.transform = `
+      translate(-50%, -50%)
+      translate3d(0px,0px,0px)
+      rotateY(0deg)
+      scale(1)
+    `;
+
+    focus.style.opacity = "1";
+    focus.style.filter = "brightness(1)";
+    focus.style.zIndex = "1100";
+    focus.style.visibility = "visible";
+  }
+}
+
+/* INITIAL FILM POSITION */
+
+render(FOCUS_INDEX);
+
+/* START ONLY AFTER TEXT HAS FADED */
+
+function startFilmAnimation() {
+
+  if (animationStarted) return;
+
+  animationStarted = true;
+  animationStart = performance.now();
+
+  requestAnimationFrame(animateFilm);
+}
+
+/* FIVE-SECOND REVOLUTION AND EXPANSION */
+
+function animateFilm(now) {
+
+  const elapsed = now - animationStart;
+
+  if (elapsed < RUN_DURATION) {
+
+    render(
+      FOCUS_INDEX +
+      (elapsed / RUN_DURATION) * total
+    );
+
+    requestAnimationFrame(animateFilm);
+    return;
+  }
+
+  expanding = true;
+
+  expansionProgress = clamp(
+    (elapsed - RUN_DURATION) / EXPAND_DURATION,
+    0,
+    1
+  );
+
+  render(
+    FOCUS_INDEX + total,
+    true,
+    expansionProgress
+  );
+
+  if (expansionProgress < 1) {
+
+    requestAnimationFrame(animateFilm);
+
+  } else {
+
+    finished = true;
+
+    render(
+      FOCUS_INDEX + total,
+      true,
+      1
+    );
+  }
+}
+
+/* SYNCHRONIZED TEXT-TO-FILM TRANSITION */
+
+function updateScrollEffects() {
+
+  const fadeProgress = updateTextScroll();
+
+  const filmRect = section.getBoundingClientRect();
+  const viewport = window.innerHeight;
+
+  const filmCloseEnough =
+    filmRect.top <= viewport;
+
+  if (fadeProgress >= 1 && filmCloseEnough) {
+
+    stage.classList.add("revealed");
+
+    startFilmAnimation();
+
+  } else {
+
+    stage.classList.remove("revealed");
+  }
+}
+
+/* SCROLL EVENTS */
+
+window.addEventListener(
+  "scroll",
+  updateScrollEffects,
+  { passive: true }
+);
+
+window.addEventListener(
+  "load",
+  updateScrollEffects
+);
+
+/* RESIZE */
+
+window.addEventListener("resize", () => {
+
+  updateScrollEffects();
+
+  if (finished) {
+
+    render(
+      FOCUS_INDEX + total,
+      true,
+      1
+    );
+
+  } else if (expanding) {
+
+    render(
+      FOCUS_INDEX + total,
+      true,
+      expansionProgress
+    );
+
+  } else {
+
+    render(currentPosition);
+  }
+});
+
+/* INITIALIZE */
+
+updateScrollEffects();
+
+</script>
+
+</body>
+</html>

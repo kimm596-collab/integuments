@@ -1,0 +1,1212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTEGUMENTS — 2-13</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+html{
+  background:#000;
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:#000;
+  color:#b90000;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+
+/* FIXED BARCODE */
+.site-logo{
+  position:fixed;
+  top:42px;
+  right:34px;
+  width:220px;
+  z-index:2000;
+  display:block;
+}
+
+.site-logo img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+/* OPENING — ORIGINAL 2-13 TEXT POSITION */
+.opening{
+  position:relative;
+  background:#000;
+}
+
+.text-group{
+  position:relative;
+  width:min(1380px,96vw);
+  margin:0 auto;
+  padding-top:67vh;
+  padding-bottom:0;
+  pointer-events:none;
+  opacity:1;
+  will-change:opacity;
+}
+
+.text-motion{
+  position:relative;
+  width:100%;
+  isolation:isolate;
+}
+
+.text-original{
+  position:relative;
+  display:block;
+  width:100%;
+  height:auto;
+  z-index:10;
+}
+
+.text-glow{
+  position:absolute;
+  left:0;
+  top:0;
+  display:block;
+  width:100%;
+  height:auto;
+  pointer-events:none;
+}
+
+.text-glow.outer{
+  opacity:.55;
+  filter:
+    drop-shadow(0 0 5px rgba(195,22,35,.58))
+    drop-shadow(0 0 11px rgba(155,10,25,.30));
+  animation:outerRimFlow 9s ease-in-out infinite;
+}
+
+.text-glow.inner{
+  opacity:.35;
+  filter:
+    drop-shadow(0 0 2px rgba(255,184,184,.48))
+    drop-shadow(0 0 5px rgba(235,70,80,.28));
+  animation:innerRimFlow 11s ease-in-out infinite;
+}
+
+@keyframes outerRimFlow{
+  0%,100%{
+    transform:translate(0,0);
+    opacity:.52;
+  }
+  25%{
+    transform:translate(1px,-1px);
+    opacity:.60;
+  }
+  50%{
+    transform:translate(0,1px);
+    opacity:.56;
+  }
+  75%{
+    transform:translate(-1px,0);
+    opacity:.61;
+  }
+}
+
+@keyframes innerRimFlow{
+  0%,100%{
+    transform:translate(0,0);
+    opacity:.32;
+  }
+  25%{
+    transform:translate(-1px,0);
+    opacity:.38;
+  }
+  50%{
+    transform:translate(0,-1px);
+    opacity:.35;
+  }
+  75%{
+    transform:translate(1px,0);
+    opacity:.39;
+  }
+}
+
+/* SOFT RED WORD ECHOES */
+.word-shadows{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  overflow:visible;
+  pointer-events:none;
+}
+
+.word-shadow{
+  position:absolute;
+  background-repeat:no-repeat;
+  pointer-events:none;
+  transform-origin:center;
+  will-change:transform,opacity;
+  animation:
+    wordFloat var(--duration)
+    ease-in-out infinite alternate;
+  animation-delay:var(--delay);
+  filter:
+    brightness(1.45)
+    saturate(1.2)
+    drop-shadow(0 0 2px rgba(255,0,0,.42));
+}
+
+.word-shadow.secondary{
+  animation-name:wordFloatSecondary;
+  filter:
+    brightness(1.4)
+    saturate(1.15)
+    drop-shadow(0 0 2px rgba(255,0,0,.32));
+}
+
+@keyframes wordFloat{
+  0%{
+    transform:translate(
+      calc(var(--dx)*-.45),
+      calc(var(--dy)*-.45)
+    );
+    opacity:.23;
+  }
+  50%{
+    transform:translate(var(--dx),var(--dy));
+    opacity:.44;
+  }
+  100%{
+    transform:translate(
+      calc(var(--dx)*-.75),
+      calc(var(--dy)*.55)
+    );
+    opacity:.27;
+  }
+}
+
+@keyframes wordFloatSecondary{
+  0%{
+    transform:translate(
+      calc(var(--dx)*.5),
+      calc(var(--dy)*-.7)
+    );
+    opacity:.14;
+  }
+  50%{
+    transform:translate(
+      calc(var(--dx)*-1),
+      calc(var(--dy)*.65)
+    );
+    opacity:.30;
+  }
+  100%{
+    transform:translate(
+      calc(var(--dx)*.8),
+      calc(var(--dy)*-.4)
+    );
+    opacity:.18;
+  }
+}
+
+/* FILM STRIP — MATCHES 2-10 */
+.film-section{
+  position:relative;
+  height:72vh;
+  height:72dvh;
+  overflow:hidden;
+  background:#000;
+}
+
+.film-stage{
+  position:absolute;
+  inset:0;
+  perspective:1000px;
+  perspective-origin:50% 50%;
+  overflow:hidden;
+  isolation:isolate;
+  opacity:0;
+  transition:opacity 1100ms ease-in-out;
+}
+
+.film-stage.revealed{
+  opacity:1;
+}
+
+.film-item{
+  position:absolute;
+  top:22vh;
+  top:22dvh;
+  left:50%;
+  width:max-content;
+  height:300px;
+  transform-origin:center center;
+  backface-visibility:hidden;
+  will-change:transform,opacity,filter;
+  pointer-events:none;
+}
+
+.film-item img{
+  display:block;
+  width:auto;
+  height:100%;
+  max-width:none;
+  object-fit:contain;
+  backface-visibility:hidden;
+}
+
+html.film-locked{
+  scroll-behavior:auto;
+  overflow:hidden;
+}
+
+body.film-locked{
+  overflow:hidden;
+}
+
+/* AUTOMATIC COLLAGE RETURN */
+.return-scene{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  overflow:hidden;
+  background:transparent;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.return-scene.active{
+  opacity:1;
+  visibility:visible;
+}
+
+.return-catalogue{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  will-change:opacity;
+}
+
+.return-tile{
+  position:absolute;
+  overflow:hidden;
+  background:#000;
+}
+
+.return-tile img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.return-flight{
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:5100;
+  overflow:hidden;
+  pointer-events:none;
+  transform-origin:top left;
+  will-change:transform,width,height;
+}
+
+.return-flight img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* MOBILE — MATCHES 2-10 FILM POSITION */
+@media(max-width:700px){
+  .site-logo{
+    top:26px;
+    right:20px;
+    width:170px;
+  }
+
+  .text-group{
+    width:96vw;
+    padding-top:68vh;
+    padding-bottom:0;
+  }
+
+  .film-section{
+    height:75vh;
+    height:75dvh;
+  }
+
+  .film-item{
+    top:25vh;
+    top:25dvh;
+    height:200px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .text-glow,
+  .word-shadow{
+    animation:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<a href="index.html" class="site-logo">
+  <img
+    src="integuments-red-logo.png"
+    alt="INTEGUMENTS"
+  >
+</a>
+
+<section class="opening" id="opening">
+  <div class="text-group" id="poem-group">
+    <div class="text-motion">
+
+      <img
+        class="text-glow outer"
+        src="2-13 text.png"
+        alt=""
+        aria-hidden="true"
+      >
+
+      <img
+        class="text-glow inner"
+        src="2-13 text.png"
+        alt=""
+        aria-hidden="true"
+      >
+
+      <div
+        class="word-shadows"
+        id="poem-shadows"
+        aria-hidden="true"
+      ></div>
+
+      <img
+        class="text-original"
+        id="poem-image"
+        src="2-13 text.png"
+        alt="Poem typography"
+      >
+
+    </div>
+  </div>
+</section>
+
+<section class="film-section" id="film-section">
+  <div class="film-stage" id="film-stage"></div>
+</section>
+
+<div class="return-scene" id="return-scene">
+  <div class="return-catalogue" id="return-catalogue"></div>
+</div>
+
+<script>
+/* HELPERS */
+function clamp(value,min=0,max=1){
+  return Math.max(min,Math.min(max,value));
+}
+
+function smoothstep(value){
+  const t=clamp(value);
+  return t*t*(3-2*t);
+}
+
+function easeInOutCubic(t){
+  t=clamp(t);
+  return t<.5
+    ?4*t*t*t
+    :1-Math.pow(-2*t+2,3)/2;
+}
+
+function lerp(a,b,t){
+  return a+(b-a)*t;
+}
+
+function variation(seed,salt){
+  const value=Math.sin(
+    seed*127.1+salt*311.7
+  )*43758.5453;
+
+  return value-Math.floor(value);
+}
+
+/* ELEMENTS */
+const opening=document.getElementById("opening");
+const poemGroup=document.getElementById("poem-group");
+const poemImage=document.getElementById("poem-image");
+const poemShadows=document.getElementById("poem-shadows");
+
+const section=document.getElementById("film-section");
+const stage=document.getElementById("film-stage");
+
+const returnScene=document.getElementById("return-scene");
+const returnCatalogue=document.getElementById("return-catalogue");
+
+/* BUILD SOFT WORD ECHOES */
+function buildWordShadows(){
+  if(!poemImage.complete||!poemImage.naturalWidth)return;
+
+  const W=poemImage.naturalWidth;
+  const H=poemImage.naturalHeight;
+
+  const canvas=document.createElement("canvas");
+  canvas.width=W;
+  canvas.height=H;
+
+  const ctx=canvas.getContext("2d",{
+    willReadFrequently:true
+  });
+
+  ctx.drawImage(poemImage,0,0);
+
+  let imageData;
+
+  try{
+    imageData=ctx.getImageData(0,0,W,H);
+  }catch(error){
+    console.warn("Unable to read text pixels",error);
+    return;
+  }
+
+  const data=imageData.data;
+
+  for(let i=0;i<data.length;i+=4){
+    const r=data[i];
+    const g=data[i+1];
+    const b=data[i+2];
+    const a=data[i+3];
+
+    const redAmount=Math.max(
+      0,
+      r-Math.max(g,b)*.7
+    );
+
+    const strength=clamp(
+      (redAmount-5)/35
+    );
+
+    data[i]=190;
+    data[i+1]=0;
+    data[i+2]=0;
+    data[i+3]=Math.round(a*strength);
+  }
+
+  ctx.putImageData(imageData,0,0);
+
+  const echoImage=canvas.toDataURL("image/png");
+  const activeRows=new Uint8Array(H);
+
+  for(let y=0;y<H;y++){
+    let count=0;
+
+    for(let x=0;x<W;x+=2){
+      if(data[(y*W+x)*4+3]>40){
+        count++;
+      }
+    }
+
+    if(count>2){
+      activeRows[y]=1;
+    }
+  }
+
+  const lines=[];
+  let lineStart=-1;
+  let lastRow=-1;
+
+  function addLine(top,bottom){
+    if(bottom-top<2)return;
+
+    lines.push({
+      top:Math.max(0,top-3),
+      bottom:Math.min(H,bottom+4)
+    });
+  }
+
+  for(let y=0;y<H;y++){
+    if(activeRows[y]){
+      if(lineStart<0){
+        lineStart=y;
+      }
+
+      lastRow=y;
+    }else if(
+      lineStart>=0 &&
+      y-lastRow>8
+    ){
+      addLine(lineStart,lastRow);
+
+      lineStart=-1;
+      lastRow=-1;
+    }
+  }
+
+  if(lineStart>=0){
+    addLine(lineStart,lastRow);
+  }
+
+  const fragments=[];
+
+  lines.forEach(line=>{
+    const activeColumns=new Uint8Array(W);
+
+    for(let x=0;x<W;x++){
+      for(let y=line.top;y<line.bottom;y+=2){
+        if(data[(y*W+x)*4+3]>40){
+          activeColumns[x]=1;
+          break;
+        }
+      }
+    }
+
+    let start=-1;
+    let last=-1;
+
+    function addFragment(left,right){
+      if(right-left<3)return;
+
+      fragments.push({
+        x:Math.max(0,left-3),
+        y:line.top,
+        w:Math.min(W,right+4)-Math.max(0,left-3),
+        h:line.bottom-line.top
+      });
+    }
+
+    for(let x=0;x<W;x++){
+      if(activeColumns[x]){
+        if(start<0){
+          start=x;
+        }
+
+        last=x;
+      }else if(
+        start>=0 &&
+        x-last>12
+      ){
+        addFragment(start,last);
+
+        start=-1;
+        last=-1;
+      }
+    }
+
+    if(start>=0){
+      addFragment(start,last);
+    }
+  });
+
+  poemShadows.innerHTML="";
+
+  const scale=poemImage.getBoundingClientRect().width/W;
+  const displayW=W*scale;
+  const displayH=H*scale;
+
+  fragments.forEach((fragment,index)=>{
+    if(variation(index,19)>.80)return;
+
+    const x=fragment.x*scale;
+    const y=fragment.y*scale;
+    const w=fragment.w*scale;
+    const h=fragment.h*scale;
+
+    if(w<2||h<1)return;
+
+    for(let layer=0;layer<2;layer++){
+      const shadow=document.createElement("div");
+      shadow.className="word-shadow";
+
+      if(layer===1){
+        shadow.classList.add("secondary");
+      }
+
+      shadow.style.left=x+"px";
+      shadow.style.top=y+"px";
+      shadow.style.width=w+"px";
+      shadow.style.height=h+"px";
+
+      shadow.style.backgroundImage=
+        `url("${echoImage}")`;
+
+      shadow.style.backgroundSize=
+        `${displayW}px ${displayH}px`;
+
+      shadow.style.backgroundPosition=
+        `${-x}px ${-y}px`;
+
+      const seed=index*2+layer+100;
+
+      const dx=(variation(seed,1)>.5?1:-1)*
+        (7+variation(seed,3)*10);
+
+      const dy=(variation(seed,2)>.5?1:-1)*
+        (5+variation(seed,4)*9);
+
+      const duration=layer===0?3.8:4.4;
+
+      shadow.style.setProperty(
+        "--dx",dx+"px"
+      );
+
+      shadow.style.setProperty(
+        "--dy",dy+"px"
+      );
+
+      shadow.style.setProperty(
+        "--duration",duration+"s"
+      );
+
+      shadow.style.setProperty(
+        "--delay",
+        (-variation(seed,6)*duration)+"s"
+      );
+
+      poemShadows.appendChild(shadow);
+    }
+  });
+}
+
+if(poemImage.complete&&poemImage.naturalWidth){
+  buildWordShadows();
+}else{
+  poemImage.addEventListener(
+    "load",
+    buildWordShadows,
+    {once:true}
+  );
+}
+
+/* TEXT SCROLL FADE */
+function updateTextScroll(){
+  const viewport=window.innerHeight;
+
+  const imageBottom=
+    poemImage.getBoundingClientRect().bottom+
+    window.scrollY;
+
+  const fadeStart=imageBottom-viewport*.85;
+  const fadeEnd=imageBottom-viewport*.45;
+
+  const fadeProgress=smoothstep(
+    (window.scrollY-fadeStart)/
+    (fadeEnd-fadeStart)
+  );
+
+  poemGroup.style.opacity=1-fadeProgress;
+
+  return fadeProgress;
+}
+
+/* ALL 21 PHOTOGRAPHS */
+const images=[
+  "guillem.jpg",
+  "body.jpg",
+  "jamie.jpg",
+  "abreale1.jpg",
+  "light1.jpg",
+  "annecy.jpg",
+  "paris.jpg",
+  "spiral.jpg",
+  "abreale2.jpg",
+  "soho.jpg",
+  "abreale3.jpg",
+  "abreale4.jpg",
+  "poles.jpg",
+  "light2.jpg",
+  "abreale5.jpg",
+  "amsterdam.jpg",
+  "morris.jpg",
+  "abreale6.jpg",
+  "ice.jpg",
+  "abreale7.jpg",
+  "nyc.jpg"
+];
+
+const cards=images.map(filename=>{
+  const card=document.createElement("div");
+  card.className="film-item";
+
+  const img=document.createElement("img");
+  img.src=filename;
+  img.alt=filename;
+  img.draggable=false;
+
+  card.appendChild(img);
+  stage.appendChild(card);
+
+  return card;
+});
+
+const total=cards.length;
+const FOCUS_INDEX=12;
+
+const RUN_DURATION=3200;
+const EXPAND_DURATION=1800;
+const HOLD_DURATION=300;
+const RETURN_DURATION=2000;
+
+let currentPosition=FOCUS_INDEX;
+let finished=false;
+let expanding=false;
+let expansionProgress=0;
+let animationStarted=false;
+let animationStart=null;
+let scrollLocked=false;
+let returning=false;
+
+/* CIRCULAR DISTANCE */
+function getDistance(index,position){
+  let distance=index-position;
+
+  while(distance<-total/2){
+    distance+=total;
+  }
+
+  while(distance>total/2){
+    distance-=total;
+  }
+
+  return distance;
+}
+
+/* FEATHERED IMAGE EDGES */
+function updateRevealMask(img,distance){
+  const reveal=smoothstep((distance+.35)/1.65);
+  const width=45*reveal;
+
+  if(width<.1){
+    img.style.webkitMaskImage="none";
+    img.style.maskImage="none";
+    return;
+  }
+
+  const gradient=`linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,.12) ${width*.18}%,
+    rgba(0,0,0,.32) ${width*.40}%,
+    rgba(0,0,0,.62) ${width*.68}%,
+    rgba(0,0,0,.85) ${width*.88}%,
+    black ${width}%,
+    black 100%
+  )`;
+
+  img.style.webkitMaskImage=gradient;
+  img.style.maskImage=gradient;
+}
+
+/* FILM RENDER — MATCHES 2-10 */
+function render(position,finalMode=false,expansion=0){
+  currentPosition=position;
+
+  const mobile=window.innerWidth<=700;
+  const spacing=mobile?112:175;
+  const baseHeight=mobile?200:300;
+
+  cards.forEach((card,index)=>{
+    const distance=getDistance(
+      index,
+      finalMode?FOCUS_INDEX:position
+    );
+
+    const abs=Math.abs(distance);
+    const x=distance*spacing;
+    const y=Math.min(abs*abs*3.5,65);
+    const z=-abs*125;
+
+    const rotateY=clamp(-distance*15,-65,65);
+    const scale=Math.max(.55,1-abs*.055);
+    const opacity=clamp(1-abs*.095);
+    const brightness=clamp(1-abs*.085,.22,1);
+
+    const img=card.querySelector("img");
+
+    card.style.height=baseHeight+"px";
+    updateRevealMask(img,distance);
+
+    card.style.opacity=opacity;
+    card.style.filter=`brightness(${brightness})`;
+
+    card.style.transform=`
+      translate(-50%,-50%)
+      translate3d(${x}px,${y}px,${z}px)
+      rotateY(${rotateY}deg)
+      scale(${scale})
+    `;
+
+    card.style.zIndex=String(
+      1000-Math.round(abs*10)
+    );
+
+    card.style.visibility=
+      opacity<=0?"hidden":"visible";
+  });
+
+  /* FINAL POLES ENLARGEMENT */
+  if(finalMode){
+    const focus=cards[FOCUS_INDEX];
+    const img=focus.querySelector("img");
+    const eased=easeInOutCubic(expansion);
+
+    const sectionHeight=section.clientHeight;
+    const centerY=mobile
+      ?window.innerHeight*.25
+      :window.innerHeight*.22;
+
+    const safeHeight=Math.max(
+      100,
+      Math.min(
+        sectionHeight*.70,
+        centerY*2-24,
+        (sectionHeight-centerY)*2-24
+      )
+    );
+
+    const finalHeight=mobile
+      ?Math.min(safeHeight,380)
+      :Math.min(safeHeight,476);
+
+    focus.style.height=(
+      baseHeight+
+      (finalHeight-baseHeight)*eased
+    )+"px";
+
+    img.style.webkitMaskImage="none";
+    img.style.maskImage="none";
+
+    focus.style.transform=`
+      translate(-50%,-50%)
+      translate3d(0px,0px,0px)
+      rotateY(0deg)
+      scale(1)
+    `;
+
+    focus.style.opacity="1";
+    focus.style.filter="brightness(1)";
+    focus.style.zIndex="1100";
+    focus.style.visibility="visible";
+  }
+}
+
+render(FOCUS_INDEX);
+
+/* SCROLL LOCK */
+function lockFilmScroll(){
+  if(scrollLocked)return;
+
+  scrollLocked=true;
+
+  const finalScroll=Math.max(
+    0,
+    document.documentElement.scrollHeight-
+    window.innerHeight
+  );
+
+  document.documentElement.style.scrollBehavior="auto";
+  window.scrollTo(0,finalScroll);
+
+  document.documentElement.classList.add(
+    "film-locked"
+  );
+
+  document.body.classList.add(
+    "film-locked"
+  );
+}
+
+/* FILM ANIMATION */
+function startFilmAnimation(){
+  if(animationStarted)return;
+
+  animationStarted=true;
+  lockFilmScroll();
+
+  stage.classList.add("revealed");
+
+  animationStart=performance.now();
+  requestAnimationFrame(animateFilm);
+}
+
+function animateFilm(now){
+  const elapsed=now-animationStart;
+
+  if(elapsed<RUN_DURATION){
+    render(
+      FOCUS_INDEX+
+      (elapsed/RUN_DURATION)*total
+    );
+
+    requestAnimationFrame(animateFilm);
+    return;
+  }
+
+  expanding=true;
+
+  expansionProgress=clamp(
+    (elapsed-RUN_DURATION)/EXPAND_DURATION
+  );
+
+  render(
+    FOCUS_INDEX+total,
+    true,
+    expansionProgress
+  );
+
+  if(expansionProgress<1){
+    requestAnimationFrame(animateFilm);
+  }else{
+    finished=true;
+
+    render(
+      FOCUS_INDEX+total,
+      true,
+      1
+    );
+
+    setTimeout(
+      startSeamlessReturn,
+      HOLD_DURATION
+    );
+  }
+}
+
+/* COLLAGE PREVIEW */
+const catalogueTiles=[
+  ["guillem.jpg",0,0,12.2,27.5],
+  ["body.jpg",12.2,0,23.4,27.5],
+  ["jamie.jpg",35.6,0,12.2,27.5],
+  ["abreale1.jpg",47.8,0,27.8,27.5],
+  ["light1.jpg",75.6,0,24.4,27.5],
+  ["annecy.jpg",0,27.5,14.2,33],
+  ["paris.jpg",14.2,27.5,14.2,33],
+  ["spiral.jpg",28.4,27.5,12.6,33],
+  ["abreale2.jpg",41,27.5,12.8,33],
+  ["soho.jpg",53.8,27.5,29.2,33],
+  ["abreale3.jpg",83,27.5,17,33],
+  ["abreale4.jpg",0,60.5,32.6,39.5],
+  ["poles.jpg",32.6,60.5,14.6,17],
+  ["light2.jpg",47.2,60.5,14.4,17],
+  ["abreale6.jpg",61.6,60.5,15.6,17],
+  ["amsterdam.jpg",77.2,60.5,10.2,17],
+  ["nyc.jpg",87.4,60.5,12.6,39.5],
+  ["morris.jpg",32.6,77.5,16,22.5],
+  ["abreale5.jpg",48.6,77.5,10.5,22.5],
+  ["ice.jpg",59.1,77.5,18.1,22.5],
+  ["abreale7.jpg",77.2,77.5,10.2,22.5]
+];
+
+catalogueTiles.forEach(([src,x,y,w,h])=>{
+  const tile=document.createElement("div");
+  tile.className="return-tile";
+
+  tile.style.left=x+"%";
+  tile.style.top=y+"%";
+  tile.style.width=w+"%";
+  tile.style.height=h+"%";
+
+  if(src!=="poles.jpg"){
+    const img=document.createElement("img");
+    img.src=src;
+    img.alt="";
+    tile.appendChild(img);
+  }
+
+  returnCatalogue.appendChild(tile);
+});
+
+/* SEAMLESS POLES RETURN */
+function startSeamlessReturn(){
+  if(returning)return;
+  returning=true;
+
+  const focus=cards[FOCUS_INDEX];
+
+  const origin=focus.querySelector(
+    "img"
+  ).getBoundingClientRect();
+
+  const destination={
+    left:window.innerWidth*.326,
+    top:window.innerHeight*.605,
+    width:window.innerWidth*.146,
+    height:window.innerHeight*.17
+  };
+
+  const flight=document.createElement("div");
+  flight.className="return-flight";
+
+  const img=document.createElement("img");
+  img.src="poles.jpg";
+  img.alt="";
+
+  flight.appendChild(img);
+  returnScene.appendChild(flight);
+
+  flight.style.width=origin.width+"px";
+  flight.style.height=origin.height+"px";
+
+  flight.style.transform=
+    `translate3d(${origin.left}px,${origin.top}px,0)`;
+
+  returnScene.classList.add("active");
+  focus.style.visibility="hidden";
+
+  const start=performance.now();
+
+  function tick(now){
+    const t=clamp(
+      (now-start)/RETURN_DURATION
+    );
+
+    const e=easeInOutCubic(t);
+
+    stage.style.opacity=String(
+      1-smoothstep(t/.65)
+    );
+
+    returnCatalogue.style.opacity=String(
+      smoothstep((t-.10)/.70)
+    );
+
+    const x=lerp(
+      origin.left,
+      destination.left,
+      e
+    );
+
+    const y=lerp(
+      origin.top,
+      destination.top,
+      e
+    )-Math.sin(Math.PI*t)*38;
+
+    const w=lerp(
+      origin.width,
+      destination.width,
+      e
+    );
+
+    const h=lerp(
+      origin.height,
+      destination.height,
+      e
+    );
+
+    flight.style.width=w+"px";
+    flight.style.height=h+"px";
+
+    flight.style.transform=
+      `translate3d(${x}px,${y}px,0)`;
+
+    if(t<1){
+      requestAnimationFrame(tick);
+    }else{
+      flight.style.width=
+        destination.width+"px";
+
+      flight.style.height=
+        destination.height+"px";
+
+      flight.style.transform=
+        `translate3d(${destination.left}px,${destination.top}px,0)`;
+
+      returnCatalogue.style.opacity="1";
+
+      try{
+        sessionStorage.setItem(
+          "integuments-seamless-arrival",
+          JSON.stringify({
+            image:"poles.jpg",
+            time:Date.now()
+          })
+        );
+      }catch(error){}
+
+      window.location.replace("page2.html");
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+/* SCROLL TRANSITION */
+function updateScrollEffects(){
+  if(scrollLocked)return;
+
+  const fadeProgress=updateTextScroll();
+  const filmRect=section.getBoundingClientRect();
+
+  if(
+    fadeProgress>=1 &&
+    filmRect.top<=window.innerHeight*.75
+  ){
+    startFilmAnimation();
+  }
+}
+
+/* EVENTS */
+window.addEventListener(
+  "scroll",
+  updateScrollEffects,
+  {passive:true}
+);
+
+window.addEventListener("load",()=>{
+  buildWordShadows();
+  updateScrollEffects();
+});
+
+let resizeTimer;
+
+window.addEventListener("resize",()=>{
+  clearTimeout(resizeTimer);
+
+  resizeTimer=setTimeout(
+    buildWordShadows,
+    150
+  );
+
+  if(scrollLocked){
+    const finalScroll=Math.max(
+      0,
+      document.documentElement.scrollHeight-
+      window.innerHeight
+    );
+
+    window.scrollTo(0,finalScroll);
+  }else{
+    updateScrollEffects();
+  }
+
+  if(finished){
+    render(
+      FOCUS_INDEX+total,
+      true,
+      1
+    );
+  }else if(expanding){
+    render(
+      FOCUS_INDEX+total,
+      true,
+      expansionProgress
+    );
+  }else{
+    render(currentPosition);
+  }
+});
+
+updateScrollEffects();
+</script>
+
+</body>
+</html>
