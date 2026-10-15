@@ -108,7 +108,7 @@ body{
   will-change:transform,opacity;
 }
 
-/* ORIGINAL COLLAGE */
+/* COLLAGE — SAME POSITIONS AS PAGE2.HTML */
 
 .collage{
   position:absolute;
@@ -151,7 +151,7 @@ body{
   -webkit-user-drag:none;
 }
 
-/* ORIGINAL TOP ROW */
+/* TOP ROW */
 
 .p01{left:0%;top:0%;width:12.2%;height:27.5%}
 .p02{left:12.2%;top:0%;width:23.4%;height:27.5%}
@@ -159,7 +159,7 @@ body{
 .p04{left:47.8%;top:0%;width:27.8%;height:27.5%}
 .p05{left:75.6%;top:0%;width:24.4%;height:27.5%}
 
-/* ORIGINAL MIDDLE ROW */
+/* MIDDLE ROW */
 
 .p06{left:0%;top:27.5%;width:14.2%;height:33%}
 .p07{left:14.2%;top:27.5%;width:14.2%;height:33%}
@@ -168,7 +168,7 @@ body{
 .p10{left:53.8%;top:27.5%;width:29.2%;height:33%}
 .p11{left:83%;top:27.5%;width:17%;height:33%}
 
-/* ORIGINAL BOTTOM SECTION */
+/* BOTTOM SECTION */
 
 .p12{left:0%;top:60.5%;width:32.6%;height:39.5%}
 .p13{left:32.6%;top:60.5%;width:14.6%;height:17%}
@@ -177,7 +177,7 @@ body{
 .p16{left:77.2%;top:60.5%;width:10.2%;height:17%}
 .p17{left:87.4%;top:60.5%;width:12.6%;height:39.5%}
 
-/* ORIGINAL BOTTOM STRIP */
+/* BOTTOM STRIP */
 
 .p18{left:32.6%;top:77.5%;width:16%;height:22.5%}
 .p19{left:48.6%;top:77.5%;width:10.5%;height:22.5%}
@@ -215,7 +215,7 @@ body{
 
 <main class="page1">
 
-  <!-- ORIGINAL RED OPENING SCREEN -->
+  <!-- RED OPENING SCREEN -->
 
   <section class="intro" id="intro">
     <div class="title-position">
@@ -223,7 +223,7 @@ body{
     </div>
   </section>
 
-  <!-- ORIGINAL PHOTOGRAPHY COLLAGE -->
+  <!-- PHOTOGRAPHY COLLAGE -->
 
   <div class="collage" id="collage">
 
@@ -324,7 +324,7 @@ const images=[...collage.querySelectorAll("img")];
 const intro=document.getElementById("intro");
 const introTitle=document.getElementById("introTitle");
 
-/* EXACT ORIGINAL TITLE CENTERING */
+/* ORIGINAL TITLE CENTERING */
 
 let titleScale=1;
 let titleLeft=0;
@@ -342,7 +342,6 @@ function fitIntroTitle(){
   `;
 
   const metrics=ctx.measureText("INTEGUMENTS");
-
   const letterSpacing=parseFloat(style.letterSpacing)||0;
 
   const spacingWidth=
@@ -369,7 +368,7 @@ function fitIntroTitle(){
   updateVisuals();
 }
 
-/* ORIGINAL IMAGE LOADING */
+/* IMAGE LOADING */
 
 function waitForImage(img){
   return new Promise(resolve=>{
@@ -541,7 +540,7 @@ let currentProgress=0;
 let lastFrameTime=0;
 let imagesReady=false;
 
-/* NEW: TRANSITION TO COLLAGE PAGE */
+/* PAGE HANDOFF */
 
 let handoffStarted=false;
 let handoffTimer=null;
@@ -561,8 +560,6 @@ function getScrollProgress(){
 }
 
 function updateVisuals(){
-
-  /* SAME ORIGINAL EASING */
 
   const p=smoothstep(currentProgress);
 
@@ -595,8 +592,6 @@ function updateVisuals(){
   intro.style.pointerEvents=
     fullyRevealed?"none":"auto";
 
-  /* KEEP ORIGINAL COLOR ANIMATION */
-
   if(
     fullyRevealed &&
     imagesReady &&
@@ -605,16 +600,7 @@ function updateVisuals(){
     startColorCycle();
   }
 
-  /*
-    NEW PAGE HANDOFF.
-
-    Wait until the original collage reveal
-    is completely finished before opening
-    page2.html.
-
-    The short delay allows the final collage
-    frame to settle visually.
-  */
+  /* HANDOFF TO THE UPDATED COLLAGE PAGE */
 
   if(
     fullyRevealed &&
@@ -633,14 +619,18 @@ function updateVisuals(){
         );
       }catch(error){}
 
-      window.location.replace("page2.html");
+      /*
+        Versioned URL prevents the browser
+        from reusing an older page2.html
+        document during the handoff.
+      */
+
+      window.location.replace(
+        "page2.html?v=collage-layout-20261015"
+      );
+
     },450);
   }
-
-  /*
-    If the visitor scrolls upward before
-    the reveal finishes, do not navigate.
-  */
 
   if(
     !fullyRevealed &&
@@ -688,7 +678,7 @@ function render(now){
   requestAnimationFrame(render);
 }
 
-/* ORIGINAL INITIAL SCROLL POSITION */
+/* INITIAL SCROLL POSITION */
 
 if("scrollRestoration" in history){
   history.scrollRestoration="manual";
@@ -699,7 +689,7 @@ window.scrollTo(0,0);
 targetProgress=0;
 currentProgress=0;
 
-/* ORIGINAL INITIAL RENDER */
+/* INITIAL RENDER */
 
 fitIntroTitle();
 updateVisuals();
@@ -711,7 +701,7 @@ window.addEventListener(
   fitIntroTitle
 );
 
-/* ORIGINAL IMAGE PRELOADING */
+/* IMAGE PRELOADING */
 
 Promise.all(
   images.map(waitForImage)
@@ -730,7 +720,7 @@ Promise.all(
 
 });
 
-/* START ORIGINAL SCROLL ANIMATION */
+/* START SCROLL ANIMATION */
 
 requestAnimationFrame(render);
 
