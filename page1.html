@@ -11,64 +11,52 @@
   box-sizing:border-box;
 }
 
-html,body{
-  margin:0;
-  width:100%;
-  min-height:100%;
-  background:#1e1e1e;
-}
-
 html{
+  margin:0;
   scroll-behavior:auto;
   overscroll-behavior-y:none;
 }
 
 body{
-  height:240vh;
-  height:240dvh;
+  margin:0;
+  width:100%;
+  min-height:220vh;
+  min-height:220dvh;
   overflow-x:hidden;
+  background:#E60000;
   overscroll-behavior-y:none;
 }
-
-/* FIXED FULL-SCREEN PAGE */
 
 .page1{
   position:fixed;
   inset:0;
-  width:100%;
   height:100vh;
   height:100dvh;
   overflow:hidden;
-  background:#1e1e1e;
+  background:#E60000;
   isolation:isolate;
 }
 
-/* ORIGINAL RED INTRO */
+/* ORIGINAL RED OPENING */
 
 .intro{
   position:absolute;
   inset:0;
   z-index:5;
-  width:100%;
-  height:100%;
   background:#E60000;
-  overflow:hidden;
+  opacity:1;
+  pointer-events:none;
   will-change:opacity;
 }
 
-/* ORIGINAL TITLE POSITION */
+/* ORIGINAL TITLE PLACEMENT */
 
 .title-position{
   position:absolute;
-  left:0;
-  right:0;
-  bottom:3%;
-  height:auto;
-  overflow:visible;
+  inset:auto 0 3% 0;
   pointer-events:none;
+  overflow:visible;
 }
-
-/* ORIGINAL MATTE EMBOSSED TITLE */
 
 .intro-title{
   position:relative;
@@ -109,7 +97,7 @@ body{
   will-change:transform,opacity;
 }
 
-/* ORIGINAL COLLAGE */
+/* PHOTOGRAPHY COLLAGE */
 
 .collage{
   position:absolute;
@@ -118,26 +106,19 @@ body{
   width:100%;
   height:100%;
   overflow:hidden;
-  visibility:hidden;
-  opacity:0;
-  filter:none;
-  transform:scale(1.035);
-  transform-origin:center center;
-  will-change:filter,opacity,transform;
-  pointer-events:none;
-}
-
-.collage.is-ready{
   visibility:visible;
+  opacity:0;
+  transform:scale(1.025);
+  transform-origin:center;
+  pointer-events:none;
+  will-change:opacity,transform;
+  background:#1e1e1e;
 }
 
 .tile{
   position:absolute;
   display:block;
   overflow:hidden;
-  text-decoration:none;
-  cursor:default;
-  pointer-events:none;
 }
 
 .tile img{
@@ -146,21 +127,18 @@ body{
   height:100%;
   object-fit:cover;
   object-position:center;
-  transform:none;
   border:0;
   user-select:none;
   -webkit-user-drag:none;
 }
 
-/* ORIGINAL TOP ROW */
+/* ORIGINAL 21 IMAGE POSITIONS */
 
 .p01{left:0%;top:0%;width:12.2%;height:27.5%}
 .p02{left:12.2%;top:0%;width:23.4%;height:27.5%}
 .p03{left:35.6%;top:0%;width:12.2%;height:27.5%}
 .p04{left:47.8%;top:0%;width:27.8%;height:27.5%}
 .p05{left:75.6%;top:0%;width:24.4%;height:27.5%}
-
-/* ORIGINAL MIDDLE ROW */
 
 .p06{left:0%;top:27.5%;width:14.2%;height:33%}
 .p07{left:14.2%;top:27.5%;width:14.2%;height:33%}
@@ -169,16 +147,12 @@ body{
 .p10{left:53.8%;top:27.5%;width:29.2%;height:33%}
 .p11{left:83%;top:27.5%;width:17%;height:33%}
 
-/* ORIGINAL BOTTOM SECTION */
-
 .p12{left:0%;top:60.5%;width:32.6%;height:39.5%}
 .p13{left:32.6%;top:60.5%;width:14.6%;height:17%}
 .p14{left:47.2%;top:60.5%;width:14.4%;height:17%}
 .p15{left:61.6%;top:60.5%;width:15.6%;height:17%}
 .p16{left:77.2%;top:60.5%;width:10.2%;height:17%}
 .p17{left:87.4%;top:60.5%;width:12.6%;height:39.5%}
-
-/* ORIGINAL BOTTOM STRIP */
 
 .p18{left:32.6%;top:77.5%;width:16%;height:22.5%}
 .p19{left:48.6%;top:77.5%;width:10.5%;height:22.5%}
@@ -187,28 +161,24 @@ body{
 
 /* ORIGINAL IMAGE CROPPING */
 
-.p01 img{object-position:50% 50%}
-.p02 img{object-position:50% 45%}
-.p03 img{object-position:50% 50%}
-.p04 img{object-position:50% 45%}
-.p05 img{object-position:50% 50%}
-.p06 img{object-position:50% 50%}
-.p07 img{object-position:50% 50%}
-.p08 img{object-position:50% 50%}
-.p09 img{object-position:50% 50%}
-.p10 img{object-position:50% 50%}
-.p11 img{object-position:50% 45%}
-.p12 img{object-position:50% 50%}
-.p13 img{object-position:50% 50%}
-.p14 img{object-position:50% 50%}
-.p15 img{object-fit:cover;object-position:center center}
-.p16 img{object-position:50% 50%}
-.p17 img{object-position:50% 50%}
-.p18 img{object-position:50% 50%}
-.p19 img{object-position:50% 50%}
-.p20 img{object-position:50% 50%}
-.p21 img{object-fit:cover;object-position:center center}
+.p02 img,
+.p04 img,
+.p11 img{
+  object-position:50% 45%;
+}
 
+.p15 img,
+.p21 img{
+  object-position:center center;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .intro,
+  .collage,
+  .intro-title{
+    will-change:auto;
+  }
+}
 </style>
 </head>
 
@@ -216,100 +186,98 @@ body{
 
 <main class="page1">
 
-  <!-- ORIGINAL RED OPENING SCREEN -->
-
   <section class="intro" id="intro">
     <div class="title-position">
-      <h1 class="intro-title" id="introTitle">INTEGUMENTS</h1>
+      <h1 class="intro-title" id="introTitle">
+        INTEGUMENTS
+      </h1>
     </div>
   </section>
-
-  <!-- ORIGINAL PHOTOGRAPHY COLLAGE -->
 
   <div class="collage" id="collage">
 
     <div class="tile p01">
-      <img src="guillem.jpg" alt="Guillem">
+      <img src="guillem.jpg" alt="Guillem" decoding="async">
     </div>
 
     <div class="tile p02">
-      <img src="body.jpg" alt="Body">
+      <img src="body.jpg" alt="Body" decoding="async">
     </div>
 
     <div class="tile p03">
-      <img src="jamie.jpg" alt="Jamie">
+      <img src="jamie.jpg" alt="Jamie" decoding="async">
     </div>
 
     <div class="tile p04">
-      <img src="abreale1.jpg" alt="Abreale 1">
+      <img src="abreale1.jpg" alt="Abreale 1" decoding="async">
     </div>
 
     <div class="tile p05">
-      <img src="light1.jpg" alt="Light 1">
+      <img src="light1.jpg" alt="Light 1" decoding="async">
     </div>
 
     <div class="tile p06">
-      <img src="annecy.jpg" alt="Annecy">
+      <img src="annecy.jpg" alt="Annecy" decoding="async">
     </div>
 
     <div class="tile p07">
-      <img src="paris.jpg" alt="Paris">
+      <img src="paris.jpg" alt="Paris" decoding="async">
     </div>
 
     <div class="tile p08">
-      <img src="spiral.jpg" alt="Spiral">
+      <img src="spiral.jpg" alt="Spiral" decoding="async">
     </div>
 
     <div class="tile p09">
-      <img src="abreale2.jpg" alt="Abreale 2">
+      <img src="abreale2.jpg" alt="Abreale 2" decoding="async">
     </div>
 
     <div class="tile p10">
-      <img src="soho.jpg" alt="Soho">
+      <img src="soho.jpg" alt="Soho" decoding="async">
     </div>
 
     <div class="tile p11">
-      <img src="abreale3.jpg" alt="Abreale 3">
+      <img src="abreale3.jpg" alt="Abreale 3" decoding="async">
     </div>
 
     <div class="tile p12">
-      <img src="abreale4.jpg" alt="Abreale 4">
+      <img src="abreale4.jpg" alt="Abreale 4" decoding="async">
     </div>
 
     <div class="tile p13">
-      <img src="poles.jpg" alt="Poles">
+      <img src="poles.jpg" alt="Poles" decoding="async">
     </div>
 
     <div class="tile p14">
-      <img src="light2.jpg" alt="Light 2">
+      <img src="light2.jpg" alt="Light 2" decoding="async">
     </div>
 
     <div class="tile p15">
-      <img src="abreale6.jpg" alt="Abreale 6">
+      <img src="abreale6.jpg" alt="Abreale 6" decoding="async">
     </div>
 
     <div class="tile p16">
-      <img src="amsterdam.jpg" alt="Amsterdam">
+      <img src="amsterdam.jpg" alt="Amsterdam" decoding="async">
     </div>
 
     <div class="tile p17">
-      <img src="nyc.jpg" alt="NYC">
+      <img src="nyc.jpg" alt="NYC" decoding="async">
     </div>
 
     <div class="tile p18">
-      <img src="morris.jpg" alt="Morris">
+      <img src="morris.jpg" alt="Morris" decoding="async">
     </div>
 
     <div class="tile p19">
-      <img src="abreale5.jpg" alt="Abreale 5">
+      <img src="abreale5.jpg" alt="Abreale 5" decoding="async">
     </div>
 
     <div class="tile p20">
-      <img src="ice.jpg" alt="Ice">
+      <img src="ice.jpg" alt="Ice" decoding="async">
     </div>
 
     <div class="tile p21">
-      <img src="abreale7.jpg" alt="Abreale 7">
+      <img src="abreale7.jpg" alt="Abreale 7" decoding="async">
     </div>
 
   </div>
@@ -317,379 +285,136 @@ body{
 </main>
 
 <script>
+"use strict";
 
-/* ELEMENTS */
-
+const intro=document.getElementById("intro");
+const title=document.getElementById("introTitle");
 const collage=document.getElementById("collage");
 const images=[...collage.querySelectorAll("img")];
-const intro=document.getElementById("intro");
-const introTitle=document.getElementById("introTitle");
-
-/* EXACT ORIGINAL TITLE CENTERING */
 
 let titleScale=1;
 let titleLeft=0;
+let scrollFrame=0;
+let redirectTimer=null;
+let navigating=false;
 
-function fitIntroTitle(){
-  const style=getComputedStyle(introTitle);
-
-  const canvas=document.createElement("canvas");
-  const ctx=canvas.getContext("2d");
-
-  ctx.font=`
-    ${style.fontWeight}
-    ${style.fontSize}
-    ${style.fontFamily}
-  `;
-
-  const metrics=ctx.measureText("INTEGUMENTS");
-
-  const letterSpacing=parseFloat(style.letterSpacing)||0;
-
-  const spacingWidth=
-    letterSpacing*("INTEGUMENTS".length-1);
-
-  const actualLeft=metrics.actualBoundingBoxLeft;
-  const actualRight=metrics.actualBoundingBoxRight;
-
-  const visibleWidth=
-    actualLeft+actualRight+spacingWidth;
-
-  const desiredWidth=window.innerWidth*.98;
-
-  titleScale=desiredWidth/visibleWidth;
-
-  const leftInkOffset=actualLeft*titleScale;
-
-  titleLeft=
-    (window.innerWidth-desiredWidth)/2+
-    leftInkOffset;
-
-  introTitle.style.left=titleLeft+"px";
-
-  updateVisuals();
-}
-
-/* ORIGINAL IMAGE LOADING */
-
-function waitForImage(img){
-  return new Promise(resolve=>{
-    if(img.complete){
-      resolve();
-      return;
-    }
-
-    img.addEventListener("load",resolve,{once:true});
-    img.addEventListener("error",resolve,{once:true});
-  });
-}
-
-/* ORIGINAL COLOR PALETTES */
-
-const originalRed={
-  grayscale:0,
-  sepia:0,
-  hue:0,
-  saturation:1,
-  brightness:1
-};
-
-const blackWhite={
-  grayscale:1,
-  sepia:0,
-  hue:0,
-  saturation:1,
-  brightness:1.04
-};
-
-const icyBlue={
-  grayscale:1,
-  sepia:.30,
-  hue:165,
-  saturation:.85,
-  brightness:1.02
-};
-
-const emerald={
-  grayscale:1,
-  sepia:.38,
-  hue:95,
-  saturation:.9,
-  brightness:.99
-};
-
-const mutedPurple={
-  grayscale:1,
-  sepia:.30,
-  hue:235,
-  saturation:.75,
-  brightness:1
-};
-
-const warmMonochrome={
-  grayscale:1,
-  sepia:.25,
-  hue:0,
-  saturation:.75,
-  brightness:.98
-};
-
-const colorStages=[
-  originalRed,
-  blackWhite,
-  originalRed,
-  icyBlue,
-  originalRed,
-  emerald,
-  originalRed,
-  mutedPurple,
-  originalRed,
-  warmMonochrome,
-  originalRed
-];
-
-const transitionDuration=2000;
-
-let transitionStart=null;
-let currentStage=0;
-let colorCycleStarted=false;
-
-function lerp(a,b,t){
-  return a+(b-a)*t;
-}
+const clamp=(v,min=0,max=1)=>
+  Math.max(min,Math.min(max,v));
 
 function smoothstep(t){
-  t=Math.max(0,Math.min(1,t));
+  t=clamp(t);
   return t*t*(3-2*t);
 }
 
-function interpolateFilter(a,b,t){
-  return {
-    grayscale:lerp(a.grayscale,b.grayscale,t),
-    sepia:lerp(a.sepia,b.sepia,t),
-    hue:lerp(a.hue,b.hue,t),
-    saturation:lerp(a.saturation,b.saturation,t),
-    brightness:lerp(a.brightness,b.brightness,t)
-  };
+/* CENTER THE ACTUAL RENDERED TITLE */
+
+function fitTitle(){
+  title.style.transform="none";
+  title.style.left="0px";
+
+  const width=title.getBoundingClientRect().width;
+  if(!width)return;
+
+  const desired=window.innerWidth*.97;
+
+  titleScale=desired/width;
+  titleLeft=(window.innerWidth-desired)/2;
+
+  title.style.left=titleLeft+"px";
+
+  updateScroll();
 }
 
-function filterToCSS(f){
-  return `
-    grayscale(${f.grayscale})
-    sepia(${f.sepia})
-    hue-rotate(${f.hue}deg)
-    saturate(${f.saturation})
-    brightness(${f.brightness})
-  `;
-}
+/* DIRECT SCROLL RESPONSE — NO DELAYED SMOOTHING */
 
-/* ORIGINAL COLOR CYCLE */
-
-function animateColors(now){
-  if(transitionStart===null){
-    transitionStart=now;
-  }
-
-  const elapsed=now-transitionStart;
-
-  if(elapsed>=transitionDuration){
-    const completed=Math.floor(
-      elapsed/transitionDuration
-    );
-
-    currentStage=(
-      currentStage+completed
-    )%colorStages.length;
-
-    transitionStart+=completed*transitionDuration;
-  }
-
-  const progress=smoothstep(
-    (now-transitionStart)/transitionDuration
-  );
-
-  const nextStage=(
-    currentStage+1
-  )%colorStages.length;
-
-  collage.style.filter=filterToCSS(
-    interpolateFilter(
-      colorStages[currentStage],
-      colorStages[nextStage],
-      progress
-    )
-  );
-
-  requestAnimationFrame(animateColors);
-}
-
-function startColorCycle(){
-  if(colorCycleStarted)return;
-
-  colorCycleStarted=true;
-  transitionStart=null;
-  currentStage=0;
-
-  collage.style.filter=filterToCSS(originalRed);
-
-  requestAnimationFrame(animateColors);
-}
-
-/* ORIGINAL SMOOTH SCROLL REVEAL */
-
-let targetProgress=0;
-let currentProgress=0;
-let lastFrameTime=0;
-let imagesReady=false;
-
-/* NEW: TRANSITION TO COLLAGE PAGE */
-
-let handoffStarted=false;
-let handoffTimer=null;
-
-function clamp(value,min,max){
-  return Math.max(min,Math.min(max,value));
-}
-
-function getScrollProgress(){
+function getProgress(){
   const maxScroll=Math.max(
     1,
     document.documentElement.scrollHeight-
     window.innerHeight
   );
 
-  return clamp(window.scrollY/maxScroll,0,1);
+  return clamp(window.scrollY/maxScroll);
 }
 
-function updateVisuals(){
+function updateScroll(){
+  scrollFrame=0;
 
-  /* SAME ORIGINAL EASING */
+  if(navigating)return;
 
-  const p=smoothstep(currentProgress);
+  const progress=getProgress();
+
+  /* Reveal begins during scrolling, not afterward. */
 
   const reveal=smoothstep(
-    clamp((p-.04)/.94,0,1)
+    clamp((progress-.035)/.90)
   );
 
-  collage.style.opacity=reveal;
+  intro.style.opacity=String(1-reveal);
+  collage.style.opacity=String(reveal);
 
-  const collageScale=
-    1.035-(reveal*.035);
+  const scale=1.025-(reveal*.025);
 
-  collage.style.transform=
-    `scale(${collageScale})`;
+  collage.style.transform=`scale(${scale})`;
 
-  intro.style.opacity=1-reveal;
+  title.style.transform=
+    `translateY(${-progress*35}px) scaleX(${titleScale})`;
 
-  const titleMove=-currentProgress*35;
-
-  introTitle.style.transform=
-    `translateY(${titleMove}px) scaleX(${titleScale})`;
-
-  introTitle.style.opacity=
-    1-smoothstep(
-      clamp(currentProgress/.75,0,1)
-    );
-
-  const fullyRevealed=reveal>.995;
-
-  intro.style.pointerEvents=
-    fullyRevealed?"none":"auto";
-
-  /* KEEP ORIGINAL COLOR ANIMATION */
-
-  if(
-    fullyRevealed &&
-    imagesReady &&
-    !colorCycleStarted
-  ){
-    startColorCycle();
-  }
+  title.style.opacity=String(
+    1-smoothstep(clamp(progress/.76))
+  );
 
   /*
-    NEW PAGE HANDOFF.
-
-    Wait until the original collage reveal
-    is completely finished before opening
-    page2.html.
-
-    The short delay allows the final collage
-    frame to settle visually.
+    Navigate only after reaching the bottom.
+    Cancel navigation if the visitor scrolls back.
   */
 
-  if(
-    fullyRevealed &&
-    imagesReady &&
-    !handoffStarted
-  ){
-    handoffStarted=true;
-
-    handoffTimer=setTimeout(()=>{
-      try{
-        sessionStorage.setItem(
-          "integuments-from-page1",
-          JSON.stringify({
-            time:Date.now()
-          })
-        );
-      }catch(error){}
-
-      window.location.replace("page2.html");
-    },450);
-  }
-
-  /*
-    If the visitor scrolls upward before
-    the reveal finishes, do not navigate.
-  */
-
-  if(
-    !fullyRevealed &&
-    handoffStarted
-  ){
-    handoffStarted=false;
-
-    if(handoffTimer!==null){
-      clearTimeout(handoffTimer);
-      handoffTimer=null;
+  if(progress>=.998){
+    if(redirectTimer===null){
+      redirectTimer=setTimeout(
+        goToPage2,
+        1050
+      );
+    }
+  }else{
+    if(redirectTimer!==null){
+      clearTimeout(redirectTimer);
+      redirectTimer=null;
     }
   }
 }
 
-/* ORIGINAL FRAME-BY-FRAME SCROLL SMOOTHING */
+function requestScrollUpdate(){
+  if(scrollFrame)return;
 
-function render(now){
-  if(!lastFrameTime){
-    lastFrameTime=now;
-  }
-
-  const dt=Math.min(
-    (now-lastFrameTime)/1000,
-    .05
-  );
-
-  lastFrameTime=now;
-
-  targetProgress=getScrollProgress();
-
-  const smoothing=
-    1-Math.exp(-dt*5.5);
-
-  currentProgress+=
-    (targetProgress-currentProgress)*smoothing;
-
-  if(
-    Math.abs(targetProgress-currentProgress)<.0001
-  ){
-    currentProgress=targetProgress;
-  }
-
-  updateVisuals();
-
-  requestAnimationFrame(render);
+  scrollFrame=requestAnimationFrame(updateScroll);
 }
 
-/* ORIGINAL INITIAL SCROLL POSITION */
+/* PAGE 2 HANDOFF */
+
+function goToPage2(){
+  if(navigating)return;
+
+  if(getProgress()<.998){
+    redirectTimer=null;
+    return;
+  }
+
+  navigating=true;
+
+  try{
+    sessionStorage.setItem(
+      "integuments-from-page1",
+      JSON.stringify({
+        time:Date.now()
+      })
+    );
+  }catch(error){}
+
+  window.location.replace("page2.html");
+}
+
+/* RESET INITIAL SCROLL */
 
 if("scrollRestoration" in history){
   history.scrollRestoration="manual";
@@ -697,43 +422,50 @@ if("scrollRestoration" in history){
 
 window.scrollTo(0,0);
 
-targetProgress=0;
-currentProgress=0;
-
-/* ORIGINAL INITIAL RENDER */
-
-fitIntroTitle();
-updateVisuals();
-
-document.fonts.ready.then(fitIntroTitle);
+window.addEventListener(
+  "scroll",
+  requestScrollUpdate,
+  {passive:true}
+);
 
 window.addEventListener(
   "resize",
-  fitIntroTitle
+  fitTitle,
+  {passive:true}
 );
 
-/* ORIGINAL IMAGE PRELOADING */
+window.addEventListener(
+  "pageshow",
+  ()=>{
+    navigating=false;
 
-Promise.all(
-  images.map(waitForImage)
-).then(()=>{
+    if(redirectTimer!==null){
+      clearTimeout(redirectTimer);
+      redirectTimer=null;
+    }
 
-  imagesReady=true;
-
-  collage.style.filter=
-    filterToCSS(originalRed);
-
-  collage.classList.add("is-ready");
-
-  if(currentProgress>=.995){
-    startColorCycle();
+    window.scrollTo(0,0);
+    fitTitle();
   }
+);
 
+/* PREPARE IMAGES FOR THE COLLAGE */
+
+images.forEach(img=>{
+  img.loading="eager";
+  img.decoding="async";
 });
 
-/* START ORIGINAL SCROLL ANIMATION */
+/*
+  The scroll reveal does not wait for every
+  image to load. This prevents image loading
+  from blocking the page transition.
+*/
 
-requestAnimationFrame(render);
+fitTitle();
+updateScroll();
+
+document.fonts.ready.then(fitTitle);
 
 </script>
 
