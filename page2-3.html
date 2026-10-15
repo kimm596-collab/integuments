@@ -17,7 +17,21 @@ body{margin:0;background:#000;color:#a90000;font-family:Arial,Helvetica,sans-ser
 .text-container{padding-top:calc(16vh + 170px);padding-bottom:180px}
 .meral-text-wrap{position:relative;width:min(42vw,600px);max-width:100%;margin:0 auto;opacity:1;isolation:isolate;will-change:opacity}
 .meral-text{display:block;position:relative;width:100%;height:auto;margin:0;z-index:3}
-.text-shadow-field{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible}
+
+/* SAME SOFT HOVER ECHO AS BODY */
+.text-shadow-field{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  overflow:visible;
+  opacity:0;
+  transition:opacity 1000ms cubic-bezier(.22,1,.36,1);
+  will-change:opacity;
+}
+.meral-text-wrap:hover .text-shadow-field{
+  opacity:1;
+}
 .text-shadow-fragment{
   position:absolute;
   background-image:url("meral text.png");
@@ -27,21 +41,39 @@ body{margin:0;background:#000;color:#a90000;font-family:Arial,Helvetica,sans-ser
   transform-origin:center;
   animation:floatFragment var(--duration) ease-in-out infinite alternate;
   animation-delay:var(--delay);
-  filter:drop-shadow(0 0 2px rgba(255,0,0,.35));
+  filter:drop-shadow(0 0 2px rgba(255,0,0,.38));
 }
 .text-shadow-fragment.secondary{
   animation-name:floatFragmentSecondary;
-  filter:drop-shadow(0 0 3px rgba(200,0,0,.25));
+  filter:drop-shadow(0 0 3px rgba(220,0,0,.30));
 }
 @keyframes floatFragment{
-  0%{transform:translate(calc(var(--dx)*-.45),calc(var(--dy)*-.45));opacity:.12}
-  50%{transform:translate(var(--dx),var(--dy));opacity:.42}
-  100%{transform:translate(calc(var(--dx)*-.75),calc(var(--dy)*.55));opacity:.20}
+  0%{
+    transform:translate(calc(var(--dx)*-.45),calc(var(--dy)*-.45));
+    opacity:.20;
+  }
+  50%{
+    transform:translate(var(--dx),var(--dy));
+    opacity:.56;
+  }
+  100%{
+    transform:translate(calc(var(--dx)*-.75),calc(var(--dy)*.55));
+    opacity:.30;
+  }
 }
 @keyframes floatFragmentSecondary{
-  0%{transform:translate(calc(var(--dx)*.5),calc(var(--dy)*-.7));opacity:.08}
-  50%{transform:translate(calc(var(--dx)*-1),calc(var(--dy)*.65));opacity:.27}
-  100%{transform:translate(calc(var(--dx)*.8),calc(var(--dy)*-.4));opacity:.12}
+  0%{
+    transform:translate(calc(var(--dx)*.5),calc(var(--dy)*-.7));
+    opacity:.13;
+  }
+  50%{
+    transform:translate(calc(var(--dx)*-1),calc(var(--dy)*.65));
+    opacity:.36;
+  }
+  100%{
+    transform:translate(calc(var(--dx)*.8),calc(var(--dy)*-.4));
+    opacity:.19;
+  }
 }
 
 /* FILM STRIP — SAME AS SUCCESSFUL PAGE2-2 */
@@ -105,7 +137,7 @@ body.film-locked{
   .film-item{top:25dvh;height:200px}
 }
 @media(prefers-reduced-motion:reduce){
-  .text-shadow-fragment{animation:none;opacity:.12}
+  .text-shadow-fragment{animation:none;opacity:.20}
 }
 </style>
 </head>
@@ -161,7 +193,7 @@ function variation(n,o){
   return v-Math.floor(v);
 }
 
-/* ORIGINAL JAMIE FLOATING FRAGMENTS */
+/* JAMIE FLOATING FRAGMENTS — MATCH BODY HOVER EFFECT */
 
 const meralText=document.getElementById("meral-text");
 const meralTextWrap=document.getElementById("meral-text-wrap");
@@ -353,7 +385,9 @@ function buildFloatingShadows(){
 
     if(w<3||h<2)return;
 
-    for(let layer=0;layer<4;layer++){
+    /* TWO SOFT ECHO LAYERS, LIKE BODY */
+
+    for(let layer=0;layer<2;layer++){
       const el=document.createElement("div");
 
       el.className=
@@ -370,15 +404,15 @@ function buildFloatingShadows(){
         overflow:"hidden"
       });
 
-      const seed=index*4+layer;
+      const seed=index*2+layer;
 
       const dx=
         (variation(seed,1)>.5?1:-1)*
-        (9+variation(seed,3)*15);
+        (7+variation(seed,3)*10);
 
       const dy=
         (variation(seed,2)>.5?1:-1)*
-        (7+variation(seed,4)*13);
+        (5+variation(seed,4)*9);
 
       const duration=4.5+variation(seed,5)*4;
 

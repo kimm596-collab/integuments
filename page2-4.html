@@ -29,7 +29,7 @@ body{margin:0;background:#000;color:#a90000;font-family:Arial,Helvetica,sans-ser
   width:400px;
   max-width:78vw;
   opacity:1;
-  pointer-events:none;
+  pointer-events:auto;
   will-change:opacity;
   isolation:isolate;
 }
@@ -81,59 +81,27 @@ body{margin:0;background:#000;color:#a90000;font-family:Arial,Helvetica,sans-ser
   75%{transform:translate(1px,0);opacity:.39}
 }
 
-.text-shadow-field{
+/* FULL DUPLICATE TEXT ECHO — SAME AS PAGE2-1 */
+
+.text-echo{
   position:absolute;
-  inset:0;
+  top:0;
+  left:0;
   z-index:2;
   pointer-events:none;
-  overflow:visible;
+  opacity:0;
+  transform:translate(3px,2px);
+  transition:opacity 850ms ease-in-out;
+  animation:echoDrift 4.8s ease-in-out infinite alternate;
+  filter:drop-shadow(0 0 3px rgba(220,0,0,.30));
 }
 
-.text-shadow-fragment{
-  position:absolute;
-  background-image:url("for one.png");
-  background-repeat:no-repeat;
-  pointer-events:none;
-  will-change:transform,opacity;
-  transform-origin:center;
-  animation:floatFragment var(--duration) ease-in-out infinite alternate;
-  animation-delay:var(--delay);
-  filter:drop-shadow(0 0 2px rgba(255,0,0,.35));
-}
+.text-group:hover .text-echo{opacity:.58}
 
-.text-shadow-fragment.secondary{
-  animation-name:floatFragmentSecondary;
-  filter:drop-shadow(0 0 3px rgba(200,0,0,.25));
-}
-
-@keyframes floatFragment{
-  0%{
-    transform:translate(calc(var(--dx)*-.45),calc(var(--dy)*-.45));
-    opacity:.12;
-  }
-  50%{
-    transform:translate(var(--dx),var(--dy));
-    opacity:.42;
-  }
-  100%{
-    transform:translate(calc(var(--dx)*-.75),calc(var(--dy)*.55));
-    opacity:.20;
-  }
-}
-
-@keyframes floatFragmentSecondary{
-  0%{
-    transform:translate(calc(var(--dx)*.5),calc(var(--dy)*-.7));
-    opacity:.08;
-  }
-  50%{
-    transform:translate(calc(var(--dx)*-1),calc(var(--dy)*.65));
-    opacity:.27;
-  }
-  100%{
-    transform:translate(calc(var(--dx)*.8),calc(var(--dy)*-.4));
-    opacity:.12;
-  }
+@keyframes echoDrift{
+  0%{transform:translate(3px,2px)}
+  50%{transform:translate(9px,-3px)}
+  100%{transform:translate(5px,5px)}
 }
 
 /* EXACT SUCCESSFUL FILM STYLE */
@@ -283,7 +251,7 @@ body.film-locked{
 @media(prefers-reduced-motion:reduce){
   .text-glow-outer,
   .text-glow-inner,
-  .text-shadow-fragment{
+  .text-echo{
     animation:none;
   }
 }
@@ -300,7 +268,7 @@ body.film-locked{
   <div class="text-group" id="text-group">
     <img src="for one.png" class="text-glow-outer" alt="" aria-hidden="true">
     <img src="for one.png" class="text-glow-inner" alt="" aria-hidden="true">
-    <div class="text-shadow-field" id="text-shadow-field" aria-hidden="true"></div>
+    <img src="for one.png" class="text-echo" alt="" aria-hidden="true">
     <img
       src="for one.png"
       class="text-main"
@@ -342,250 +310,10 @@ function lerp(a,b,t){
   return a+(b-a)*t;
 }
 
-function variation(n,o){
-  const v=Math.sin(n*12.9898+o*78.233)*43758.5453;
-  return v-Math.floor(v);
-}
-
-/* ORIGINAL FOR ONE FLOATING TEXT */
+/* ORIGINAL TEXT SCROLL FADE */
 
 const textGroup=document.getElementById("text-group");
 const textMain=document.getElementById("text-main");
-const shadowField=document.getElementById("text-shadow-field");
-
-function buildFloatingShadows(){
-  if(!textMain.complete||!textMain.naturalWidth)return;
-
-  const naturalW=textMain.naturalWidth;
-  const naturalH=textMain.naturalHeight;
-
-  const canvas=document.createElement("canvas");
-  canvas.width=naturalW;
-  canvas.height=naturalH;
-
-  const ctx=canvas.getContext("2d",{willReadFrequently:true});
-  ctx.drawImage(textMain,0,0);
-
-  let pixels;
-
-  try{
-    pixels=ctx.getImageData(0,0,naturalW,naturalH).data;
-  }catch(error){
-    console.warn("Text analysis failed:",error);
-    return;
-  }
-
-  function isTextPixel(x,y){
-    if(x<0||y<0||x>=naturalW||y>=naturalH)return false;
-
-    const i=(y*naturalW+x)*4;
-
-    return (
-      pixels[i+3]>65 &&
-      pixels[i]>75 &&
-      pixels[i]>pixels[i+1]*1.5 &&
-      pixels[i]>pixels[i+2]*1.5
-    );
-  }
-
-  const cellSize=Math.max(3,Math.round(naturalW/250));
-  const cols=Math.ceil(naturalW/cellSize);
-  const rows=Math.ceil(naturalH/cellSize);
-  const occupied=new Uint8Array(cols*rows);
-
-  for(let gy=0;gy<rows;gy++){
-    for(let gx=0;gx<cols;gx++){
-      let found=false;
-
-      for(
-        let y=gy*cellSize;
-        y<Math.min((gy+1)*cellSize,naturalH)&&!found;
-        y++
-      ){
-        for(
-          let x=gx*cellSize;
-          x<Math.min((gx+1)*cellSize,naturalW);
-          x++
-        ){
-          if(isTextPixel(x,y)){
-            found=true;
-            break;
-          }
-        }
-      }
-
-      if(found){
-        occupied[gy*cols+gx]=1;
-      }
-    }
-  }
-
-  const visited=new Uint8Array(cols*rows);
-  const components=[];
-
-  const neighbors=[
-    [-1,0],[1,0],[0,-1],[0,1],
-    [-1,-1],[1,-1],[-1,1],[1,1]
-  ];
-
-  for(let gy=0;gy<rows;gy++){
-    for(let gx=0;gx<cols;gx++){
-      const start=gy*cols+gx;
-
-      if(!occupied[start]||visited[start])continue;
-
-      const stack=[start];
-      visited[start]=1;
-
-      let minX=gx;
-      let maxX=gx;
-      let minY=gy;
-      let maxY=gy;
-      let count=0;
-
-      while(stack.length){
-        const index=stack.pop();
-        const cx=index%cols;
-        const cy=Math.floor(index/cols);
-
-        count++;
-
-        minX=Math.min(minX,cx);
-        maxX=Math.max(maxX,cx);
-        minY=Math.min(minY,cy);
-        maxY=Math.max(maxY,cy);
-
-        for(const [dx,dy] of neighbors){
-          const nx=cx+dx;
-          const ny=cy+dy;
-
-          if(nx<0||ny<0||nx>=cols||ny>=rows)continue;
-
-          const next=ny*cols+nx;
-
-          if(occupied[next]&&!visited[next]){
-            visited[next]=1;
-            stack.push(next);
-          }
-        }
-      }
-
-      if(count>=3){
-        components.push({
-          x:minX*cellSize,
-          y:minY*cellSize,
-          w:(maxX-minX+1)*cellSize,
-          h:(maxY-minY+1)*cellSize
-        });
-      }
-    }
-  }
-
-  const fragments=[];
-  const targetWidth=naturalW*.13;
-  const targetHeight=Math.max(naturalH*.035,cellSize*4);
-
-  components.forEach(component=>{
-    const horizontalPieces=Math.max(
-      1,
-      Math.ceil(component.w/targetWidth)
-    );
-
-    const verticalPieces=Math.max(
-      1,
-      Math.ceil(component.h/targetHeight)
-    );
-
-    for(let iy=0;iy<verticalPieces;iy++){
-      for(let ix=0;ix<horizontalPieces;ix++){
-        const w=component.w/horizontalPieces;
-        const h=component.h/verticalPieces;
-
-        if(w<cellSize*2||h<cellSize)continue;
-
-        fragments.push({
-          x:component.x+ix*w,
-          y:component.y+iy*h,
-          w,
-          h
-        });
-      }
-    }
-  });
-
-  shadowField.innerHTML="";
-
-  const scale=
-    textMain.getBoundingClientRect().width/naturalW;
-
-  const displayW=naturalW*scale;
-  const displayH=naturalH*scale;
-
-  const step=Math.max(
-    1,
-    Math.ceil(fragments.length/220)
-  );
-
-  fragments.forEach((fragment,index)=>{
-    if(index%step!==0)return;
-
-    const x=fragment.x*scale;
-    const y=fragment.y*scale;
-    const w=fragment.w*scale;
-    const h=fragment.h*scale;
-
-    if(w<3||h<2)return;
-
-    for(let layer=0;layer<4;layer++){
-      const el=document.createElement("div");
-
-      el.className=
-        "text-shadow-fragment"+
-        (layer%2?" secondary":"");
-
-      Object.assign(el.style,{
-        left:x+"px",
-        top:y+"px",
-        width:w+"px",
-        height:h+"px",
-        backgroundSize:`${displayW}px ${displayH}px`,
-        backgroundPosition:`${-x}px ${-y}px`,
-        overflow:"hidden"
-      });
-
-      const seed=index*4+layer;
-
-      const dx=
-        (variation(seed,1)>.5?1:-1)*
-        (9+variation(seed,3)*15);
-
-      const dy=
-        (variation(seed,2)>.5?1:-1)*
-        (7+variation(seed,4)*13);
-
-      const duration=4.5+variation(seed,5)*4;
-
-      el.style.setProperty("--dx",dx+"px");
-      el.style.setProperty("--dy",dy+"px");
-      el.style.setProperty("--duration",duration+"s");
-
-      el.style.setProperty(
-        "--delay",
-        -variation(seed,6)*duration+"s"
-      );
-
-      shadowField.appendChild(el);
-    }
-  });
-}
-
-textMain.addEventListener("load",buildFloatingShadows);
-
-if(textMain.complete){
-  buildFloatingShadows();
-}
-
-/* ORIGINAL TEXT SCROLL FADE */
 
 const opening=document.getElementById("opening");
 const section=document.getElementById("film-section");
@@ -1224,16 +952,7 @@ window.addEventListener(
 
 /* RESIZE */
 
-let resizeTimer;
-
 window.addEventListener("resize",()=>{
-  clearTimeout(resizeTimer);
-
-  resizeTimer=setTimeout(
-    buildFloatingShadows,
-    120
-  );
-
   if(scrollLocked){
     const finalScroll=Math.max(
       0,

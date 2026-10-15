@@ -30,7 +30,7 @@ body{
   top:55vh;left:50%;
   transform:translateX(-50%);
   width:min(40vw,520px);
-  pointer-events:none;
+  pointer-events:auto;
 }
 .poem-space{
   position:relative;width:100%;
@@ -52,13 +52,16 @@ body{
   display:block;object-fit:fill;
 }
 
-/* FLOATING RED LETTER ECHOES */
+/* FLOATING RED LETTER ECHOES — HOVER ONLY */
 
 .word-shadows{
   position:absolute;inset:0;
   z-index:5;overflow:visible;
   pointer-events:none;
+  opacity:0;
+  transition:opacity 1400ms cubic-bezier(.45,0,.25,1);
 }
+.poem-space:hover .word-shadows{opacity:1}
 .word-shadow{
   position:absolute;
   background-repeat:no-repeat;
@@ -68,11 +71,13 @@ body{
   animation:wordFloat var(--duration)
     ease-in-out infinite alternate;
   animation-delay:var(--delay);
+  animation-play-state:paused;
   filter:
     brightness(1.45)
     saturate(1.2)
     drop-shadow(0 0 2px rgba(255,0,0,.45));
 }
+.poem-space:hover .word-shadow{animation-play-state:running}
 .word-shadow.secondary{
   animation-name:wordFloatSecondary;
   filter:
@@ -215,6 +220,7 @@ body.film-locked{
 @media(prefers-reduced-motion:reduce){
   .word-shadow{animation:none}
 }
+
 </style>
 </head>
 <body>

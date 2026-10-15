@@ -5,259 +5,1155 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INTEGUMENTS — Light</title>
+
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:#000}
-body{margin:0;background:#000;color:#a90000;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
-.site-logo{position:fixed;top:42px;right:34px;width:220px;z-index:2000;display:block}
-.site-logo img{display:block;width:100%;height:auto}
-/* ORIGINAL 2-5 OPENING AND POEM POSITION */
-.opening{position:relative;height:155vh;min-height:1000px;background:#000}
-.text-group{position:absolute;top:54vh;left:50%;transform:translateX(-50%);width:1080px;max-width:94vw;opacity:1;pointer-events:none;will-change:opacity}
-.text-motion{position:relative;width:100%;isolation:isolate}
-.text-original{position:relative;z-index:10;display:block;width:100%;height:auto}
-/* RESTORED FLOATING RED WORD ECHOES */
-.word-shadows{position:absolute;inset:0;z-index:5;overflow:visible;pointer-events:none}
-.word-shadow{position:absolute;background-image:url("arrow.png");background-repeat:no-repeat;pointer-events:none;will-change:transform,opacity;transform-origin:center;animation:wordFloat var(--duration) ease-in-out infinite alternate;animation-delay:var(--delay);filter:drop-shadow(0 0 2px rgba(255,0,0,.35))}
-.word-shadow.secondary{animation-name:wordFloatSecondary;filter:drop-shadow(0 0 3px rgba(200,0,0,.25))}
-@keyframes wordFloat{0%{transform:translate(calc(var(--dx)*-.45),calc(var(--dy)*-.45));opacity:.12}50%{transform:translate(var(--dx),var(--dy));opacity:.42}100%{transform:translate(calc(var(--dx)*-.75),calc(var(--dy)*.55));opacity:.20}}
-@keyframes wordFloatSecondary{0%{transform:translate(calc(var(--dx)*.5),calc(var(--dy)*-.7));opacity:.08}50%{transform:translate(calc(var(--dx)*-1),calc(var(--dy)*.65));opacity:.27}100%{transform:translate(calc(var(--dx)*.8),calc(var(--dy)*-.4));opacity:.12}}
-/* FILM STRIP: SAME MOVEMENT AND TIMING AS COMPLETED PAGES */
-.film-section{position:relative;height:72vh;height:72dvh;min-height:0;overflow:hidden;background:#000}
-.film-stage{position:absolute;inset:0;perspective:1000px;perspective-origin:50% 50%;overflow:hidden;isolation:isolate;opacity:0;transition:opacity 1100ms ease-in-out}
-.film-stage.revealed{opacity:1}
-.film-item{position:absolute;top:22dvh;left:50%;width:max-content;height:300px;transform-origin:center center;backface-visibility:hidden;will-change:transform,opacity,filter;pointer-events:none}
-.film-item img{display:block;width:auto;height:100%;max-width:none;object-fit:contain;backface-visibility:hidden}
-html.film-locked{scroll-behavior:auto;overflow:hidden}
-body.film-locked{overflow:hidden}
-/* SEAMLESS RETURN */
-.return-scene{position:fixed;inset:0;z-index:5000;overflow:hidden;background:transparent;opacity:0;visibility:hidden;pointer-events:none}
-.return-scene.active{visibility:visible;opacity:1}
-.return-catalogue{position:absolute;inset:0;opacity:0;will-change:opacity}
-.return-tile{position:absolute;overflow:hidden;background:#000}
-.return-tile img{display:block;width:100%;height:100%;object-fit:cover}
-.return-flight{position:fixed;z-index:5100;overflow:hidden;pointer-events:none;transform-origin:top left;will-change:transform,width,height}
-.return-flight img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
-@media(max-width:700px){
-.site-logo{top:26px;right:20px;width:170px}
-.opening{height:145vh;min-height:850px}
-.text-group{top:58vh;width:96vw;max-width:96vw}
-.film-section{height:75vh;height:75dvh}
-.film-item{top:25dvh;height:200px}
+body{
+  margin:0;
+  background:#000;
+  color:#a90000;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
 }
-@media(prefers-reduced-motion:reduce){.word-shadow{animation:none;opacity:.12}}
+
+/* TOP-RIGHT LOGO */
+
+.site-logo{
+  position:fixed;
+  top:42px;
+  right:34px;
+  width:220px;
+  z-index:2000;
+  display:block;
+  transition:opacity 350ms ease;
+}
+
+.site-logo img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+/* HIDE LOGO DURING RETURN TO COLLAGE */
+
+.site-logo.return-hidden{
+  opacity:0;
+  pointer-events:none;
+}
+
+/* ORIGINAL LIGHT TEXT POSITION */
+
+.opening{
+  position:relative;
+  height:155vh;
+  min-height:1000px;
+  background:#000;
+}
+
+.text-group{
+  position:absolute;
+  top:54vh;
+  left:50%;
+  transform:translateX(-50%);
+  width:1080px;
+  max-width:94vw;
+  opacity:1;
+  pointer-events:auto;
+  will-change:opacity;
+}
+
+.text-motion{
+  position:relative;
+  width:100%;
+  isolation:isolate;
+}
+
+.text-original{
+  position:relative;
+  z-index:10;
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+/* FLOATING TEXT HOVER EFFECT */
+
+.word-shadows{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  overflow:visible;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity 1000ms cubic-bezier(.22,1,.36,1);
+  will-change:opacity;
+}
+
+.text-group:hover .word-shadows{
+  opacity:1;
+}
+
+.word-shadow{
+  position:absolute;
+  background-image:url("arrow.png");
+  background-repeat:no-repeat;
+  pointer-events:none;
+  will-change:transform,opacity;
+  transform-origin:center;
+  animation:wordFloat var(--duration) ease-in-out infinite alternate;
+  animation-delay:var(--delay);
+  filter:drop-shadow(0 0 2px rgba(255,0,0,.38));
+}
+
+.word-shadow.secondary{
+  animation-name:wordFloatSecondary;
+  filter:drop-shadow(0 0 3px rgba(220,0,0,.30));
+}
+
+@keyframes wordFloat{
+  0%{
+    transform:translate(
+      calc(var(--dx)*-.35),
+      calc(var(--dy)*-.35)
+    );
+    opacity:.12;
+  }
+
+  50%{
+    transform:translate(
+      calc(var(--dx)*.75),
+      calc(var(--dy)*.75)
+    );
+    opacity:.38;
+  }
+
+  100%{
+    transform:translate(
+      calc(var(--dx)*-.55),
+      calc(var(--dy)*.40)
+    );
+    opacity:.22;
+  }
+}
+
+@keyframes wordFloatSecondary{
+  0%{
+    transform:translate(
+      calc(var(--dx)*.35),
+      calc(var(--dy)*-.50)
+    );
+    opacity:.08;
+  }
+
+  50%{
+    transform:translate(
+      calc(var(--dx)*-.75),
+      calc(var(--dy)*.50)
+    );
+    opacity:.24;
+  }
+
+  100%{
+    transform:translate(
+      calc(var(--dx)*.60),
+      calc(var(--dy)*-.30)
+    );
+    opacity:.12;
+  }
+}
+
+/* FILM STRIP */
+
+.film-section{
+  position:relative;
+  height:72vh;
+  height:72dvh;
+  min-height:0;
+  overflow:hidden;
+  background:#000;
+}
+
+.film-stage{
+  position:absolute;
+  inset:0;
+  perspective:1000px;
+  perspective-origin:50% 50%;
+  overflow:hidden;
+  isolation:isolate;
+  opacity:0;
+  transition:opacity 1100ms ease-in-out;
+}
+
+.film-stage.revealed{
+  opacity:1;
+}
+
+.film-item{
+  position:absolute;
+  top:22dvh;
+  left:50%;
+  width:max-content;
+  height:300px;
+  transform-origin:center center;
+  backface-visibility:hidden;
+  will-change:transform,opacity,filter;
+  pointer-events:none;
+}
+
+.film-item img{
+  display:block;
+  width:auto;
+  height:100%;
+  max-width:none;
+  object-fit:contain;
+  backface-visibility:hidden;
+}
+
+/* SCROLL LOCK */
+
+html.film-locked{
+  scroll-behavior:auto!important;
+  overflow:hidden!important;
+  overscroll-behavior:none;
+}
+
+body.film-locked{
+  overflow:hidden!important;
+  overscroll-behavior:none;
+}
+
+/* RETURN TO COLLAGE */
+
+.return-scene{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  overflow:hidden;
+  background:transparent;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.return-scene.active{
+  visibility:visible;
+  opacity:1;
+}
+
+.return-catalogue{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  will-change:opacity;
+}
+
+.return-tile{
+  position:absolute;
+  overflow:hidden;
+  background:#000;
+}
+
+.return-tile img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.return-flight{
+  position:fixed;
+  z-index:5100;
+  overflow:hidden;
+  pointer-events:none;
+  transform-origin:top left;
+  will-change:transform,width,height;
+}
+
+.return-flight img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+  .site-logo{
+    top:26px;
+    right:20px;
+    width:170px;
+  }
+
+  .opening{
+    height:145vh;
+    min-height:850px;
+  }
+
+  .text-group{
+    top:58vh;
+    width:96vw;
+    max-width:96vw;
+  }
+
+  .film-section{
+    height:75vh;
+    height:75dvh;
+  }
+
+  .film-item{
+    top:25dvh;
+    height:200px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .word-shadow{
+    animation:none;
+    opacity:.20;
+  }
+}
 </style>
 </head>
+
 <body>
-<a href="index.html" class="site-logo"><img src="integuments-red-logo.png" alt="INTEGUMENTS"></a>
+
+<a href="index.html" class="site-logo" id="site-logo">
+  <img src="integuments-red-logo.png" alt="INTEGUMENTS">
+</a>
+
 <section class="opening" id="opening">
   <div class="text-group" id="text-group">
     <div class="text-motion">
-      <div class="word-shadows" id="word-shadows" aria-hidden="true"></div>
-      <img src="arrow.png" class="text-original" id="text-original" alt="It was never about finding the right path.">
+      <div
+        class="word-shadows"
+        id="word-shadows"
+        aria-hidden="true"
+      ></div>
+
+      <img
+        src="arrow.png"
+        class="text-original"
+        id="text-original"
+        alt="It was never about finding the right path."
+      >
     </div>
   </div>
 </section>
-<section class="film-section" id="film-section"><div class="film-stage" id="film-stage"></div></section>
-<div class="return-scene" id="return-scene"><div class="return-catalogue" id="return-catalogue"></div></div>
+
+<section class="film-section" id="film-section">
+  <div class="film-stage" id="film-stage"></div>
+</section>
+
+<div class="return-scene" id="return-scene">
+  <div class="return-catalogue" id="return-catalogue"></div>
+</div>
+
 <script>
+
 /* HELPERS */
-function clamp(value,min=0,max=1){return Math.max(min,Math.min(max,value))}
-function smoothstep(value){const t=clamp(value);return t*t*(3-2*t)}
-function easeInOutCubic(t){t=clamp(t);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
-function lerp(a,b,t){return a+(b-a)*t}
-/* WORD ECHOES: IMAGE-DERIVED FLOATING FRAGMENTS */
+
+function clamp(value,min=0,max=1){
+  return Math.max(min,Math.min(max,value));
+}
+
+function smoothstep(value){
+  const t=clamp(value);
+  return t*t*(3-2*t);
+}
+
+function easeInOutCubic(t){
+  t=clamp(t);
+  return t<.5
+    ?4*t*t*t
+    :1-Math.pow(-2*t+2,3)/2;
+}
+
+function lerp(a,b,t){
+  return a+(b-a)*t;
+}
+
+function variation(n,offset){
+  const value=
+    Math.sin(n*12.9898+offset*78.233)*43758.5453;
+
+  return value-Math.floor(value);
+}
+
+/* FLOATING TEXT FRAGMENTS */
+
 const textOriginal=document.getElementById("text-original");
 const wordShadows=document.getElementById("word-shadows");
-function variation(n,offset){const value=Math.sin(n*12.9898+offset*78.233)*43758.5453;return value-Math.floor(value)}
+
 function buildWordShadows(){
-  if(!textOriginal.complete||!textOriginal.naturalWidth)return;
+  if(!textOriginal.complete||!textOriginal.naturalWidth){
+    return;
+  }
+
   const naturalW=textOriginal.naturalWidth;
   const naturalH=textOriginal.naturalHeight;
+
   const canvas=document.createElement("canvas");
-  canvas.width=naturalW;canvas.height=naturalH;
-  const ctx=canvas.getContext("2d",{willReadFrequently:true});
+  canvas.width=naturalW;
+  canvas.height=naturalH;
+
+  const ctx=canvas.getContext("2d",{
+    willReadFrequently:true
+  });
+
   ctx.drawImage(textOriginal,0,0);
+
   let pixels;
-  try{pixels=ctx.getImageData(0,0,naturalW,naturalH).data}catch(error){console.warn("Could not analyze poem image:",error);return}
+
+  try{
+    pixels=ctx.getImageData(
+      0,0,naturalW,naturalH
+    ).data;
+  }catch(error){
+    console.warn(
+      "Could not analyze poem image:",
+      error
+    );
+    return;
+  }
+
   function isTextPixel(x,y){
-    if(x<0||y<0||x>=naturalW||y>=naturalH)return false;
+    if(
+      x<0||
+      y<0||
+      x>=naturalW||
+      y>=naturalH
+    ){
+      return false;
+    }
+
     const i=(y*naturalW+x)*4;
-    const r=pixels[i],g=pixels[i+1],b=pixels[i+2],a=pixels[i+3];
-    return a>65&&r>75&&r>g*1.5&&r>b*1.5;
+
+    const r=pixels[i];
+    const g=pixels[i+1];
+    const b=pixels[i+2];
+    const a=pixels[i+3];
+
+    return (
+      a>65 &&
+      r>75 &&
+      r>g*1.5 &&
+      r>b*1.5
+    );
   }
-  const cellSize=Math.max(3,Math.round(naturalW/250));
-  const cols=Math.ceil(naturalW/cellSize),rows=Math.ceil(naturalH/cellSize);
+
+  const cellSize=Math.max(
+    3,
+    Math.round(naturalW/250)
+  );
+
+  const cols=Math.ceil(naturalW/cellSize);
+  const rows=Math.ceil(naturalH/cellSize);
+
   const occupied=new Uint8Array(cols*rows);
-  for(let gy=0;gy<rows;gy++)for(let gx=0;gx<cols;gx++){
-    const x0=gx*cellSize,y0=gy*cellSize;
-    let count=0;
-    for(let y=y0;y<Math.min(y0+cellSize,naturalH);y++)for(let x=x0;x<Math.min(x0+cellSize,naturalW);x++)if(isTextPixel(x,y))count++;
-    if(count>=1)occupied[gy*cols+gx]=1;
-  }
-  const visited=new Uint8Array(cols*rows),components=[];
-  const neighbors=[[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[1,-1],[-1,1],[1,1]];
-  for(let gy=0;gy<rows;gy++)for(let gx=0;gx<cols;gx++){
-    const start=gy*cols+gx;
-    if(!occupied[start]||visited[start])continue;
-    const stack=[start];visited[start]=1;
-    let minX=gx,maxX=gx,minY=gy,maxY=gy,count=0;
-    while(stack.length){
-      const index=stack.pop(),cx=index%cols,cy=Math.floor(index/cols);
-      count++;minX=Math.min(minX,cx);maxX=Math.max(maxX,cx);minY=Math.min(minY,cy);maxY=Math.max(maxY,cy);
-      for(const [dx,dy] of neighbors){
-        const nx=cx+dx,ny=cy+dy;
-        if(nx<0||ny<0||nx>=cols||ny>=rows)continue;
-        const next=ny*cols+nx;
-        if(occupied[next]&&!visited[next]){visited[next]=1;stack.push(next)}
+
+  for(let gy=0;gy<rows;gy++){
+    for(let gx=0;gx<cols;gx++){
+      const x0=gx*cellSize;
+      const y0=gy*cellSize;
+
+      let count=0;
+
+      for(
+        let y=y0;
+        y<Math.min(y0+cellSize,naturalH);
+        y++
+      ){
+        for(
+          let x=x0;
+          x<Math.min(x0+cellSize,naturalW);
+          x++
+        ){
+          if(isTextPixel(x,y)){
+            count++;
+          }
+        }
+      }
+
+      if(count>=1){
+        occupied[gy*cols+gx]=1;
       }
     }
-    if(count>=3)components.push({x:minX*cellSize,y:minY*cellSize,w:(maxX-minX+1)*cellSize,h:(maxY-minY+1)*cellSize});
   }
-  const fragments=[],targetWidth=naturalW*.13,targetHeight=Math.max(naturalH*.035,cellSize*4);
+
+  const visited=new Uint8Array(cols*rows);
+  const components=[];
+
+  const neighbors=[
+    [-1,0],
+    [1,0],
+    [0,-1],
+    [0,1],
+    [-1,-1],
+    [1,-1],
+    [-1,1],
+    [1,1]
+  ];
+
+  for(let gy=0;gy<rows;gy++){
+    for(let gx=0;gx<cols;gx++){
+      const start=gy*cols+gx;
+
+      if(!occupied[start]||visited[start]){
+        continue;
+      }
+
+      const stack=[start];
+      visited[start]=1;
+
+      let minX=gx;
+      let maxX=gx;
+      let minY=gy;
+      let maxY=gy;
+      let count=0;
+
+      while(stack.length){
+        const index=stack.pop();
+        const cx=index%cols;
+        const cy=Math.floor(index/cols);
+
+        count++;
+
+        minX=Math.min(minX,cx);
+        maxX=Math.max(maxX,cx);
+        minY=Math.min(minY,cy);
+        maxY=Math.max(maxY,cy);
+
+        for(const [dx,dy] of neighbors){
+          const nx=cx+dx;
+          const ny=cy+dy;
+
+          if(
+            nx<0||
+            ny<0||
+            nx>=cols||
+            ny>=rows
+          ){
+            continue;
+          }
+
+          const next=ny*cols+nx;
+
+          if(
+            occupied[next]&&
+            !visited[next]
+          ){
+            visited[next]=1;
+            stack.push(next);
+          }
+        }
+      }
+
+      if(count>=3){
+        components.push({
+          x:minX*cellSize,
+          y:minY*cellSize,
+          w:(maxX-minX+1)*cellSize,
+          h:(maxY-minY+1)*cellSize
+        });
+      }
+    }
+  }
+
+  const fragments=[];
+
+  const targetWidth=naturalW*.13;
+
+  const targetHeight=Math.max(
+    naturalH*.035,
+    cellSize*4
+  );
+
   components.forEach(component=>{
-    const horizontalPieces=Math.max(1,Math.ceil(component.w/targetWidth));
-    const verticalPieces=Math.max(1,Math.ceil(component.h/targetHeight));
-    for(let iy=0;iy<verticalPieces;iy++)for(let ix=0;ix<horizontalPieces;ix++){
-      const x=component.x+component.w*ix/horizontalPieces;
-      const y=component.y+component.h*iy/verticalPieces;
-      const w=component.w/horizontalPieces,h=component.h/verticalPieces;
-      if(w>=cellSize*2&&h>=cellSize)fragments.push({x,y,w,h});
+    const horizontalPieces=Math.max(
+      1,
+      Math.ceil(component.w/targetWidth)
+    );
+
+    const verticalPieces=Math.max(
+      1,
+      Math.ceil(component.h/targetHeight)
+    );
+
+    for(let iy=0;iy<verticalPieces;iy++){
+      for(let ix=0;ix<horizontalPieces;ix++){
+        const x=
+          component.x+
+          component.w*ix/horizontalPieces;
+
+        const y=
+          component.y+
+          component.h*iy/verticalPieces;
+
+        const w=
+          component.w/horizontalPieces;
+
+        const h=
+          component.h/verticalPieces;
+
+        if(
+          w>=cellSize*2&&
+          h>=cellSize
+        ){
+          fragments.push({x,y,w,h});
+        }
+      }
     }
   });
+
   wordShadows.innerHTML="";
-  const displayScale=textOriginal.getBoundingClientRect().width/naturalW;
-  const displayW=naturalW*displayScale,displayH=naturalH*displayScale;
-  const step=Math.max(1,Math.ceil(fragments.length/95));
+
+  const displayScale=
+    textOriginal.getBoundingClientRect().width/
+    naturalW;
+
+  const displayW=naturalW*displayScale;
+  const displayH=naturalH*displayScale;
+
+  const step=Math.max(
+    1,
+    Math.ceil(fragments.length/220)
+  );
+
   fragments.forEach((fragment,index)=>{
-    if(index%step!==0)return;
-    const x=fragment.x*displayScale,y=fragment.y*displayScale,w=fragment.w*displayScale,h=fragment.h*displayScale;
-    if(w<3||h<2)return;
+    if(index%step!==0){
+      return;
+    }
+
+    const x=fragment.x*displayScale;
+    const y=fragment.y*displayScale;
+    const w=fragment.w*displayScale;
+    const h=fragment.h*displayScale;
+
+    if(w<3||h<2){
+      return;
+    }
+
     for(let layer=0;layer<2;layer++){
       const shadow=document.createElement("div");
-      shadow.className="word-shadow"+(layer===1?" secondary":"");
-      shadow.style.left=x+"px";shadow.style.top=y+"px";shadow.style.width=w+"px";shadow.style.height=h+"px";
-      shadow.style.backgroundSize=`${displayW}px ${displayH}px`;
-      shadow.style.backgroundPosition=`${-x}px ${-y}px`;
+
+      shadow.className=
+        "word-shadow"+
+        (layer===1?" secondary":"");
+
+      shadow.style.left=x+"px";
+      shadow.style.top=y+"px";
+      shadow.style.width=w+"px";
+      shadow.style.height=h+"px";
+
+      shadow.style.backgroundSize=
+        `${displayW}px ${displayH}px`;
+
+      shadow.style.backgroundPosition=
+        `${-x}px ${-y}px`;
+
       shadow.style.overflow="hidden";
+
       const seed=index*2+layer;
-      const directionX=variation(seed,1)>.5?1:-1,directionY=variation(seed,2)>.5?1:-1;
-      const dx=directionX*(7+variation(seed,3)*10),dy=directionY*(5+variation(seed,4)*9);
-      const duration=4.5+variation(seed,5)*4,delay=-variation(seed,6)*duration;
-      shadow.style.setProperty("--dx",dx+"px");shadow.style.setProperty("--dy",dy+"px");
-      shadow.style.setProperty("--duration",duration+"s");shadow.style.setProperty("--delay",delay+"s");
+
+      const directionX=
+        variation(seed,1)>.5?1:-1;
+
+      const directionY=
+        variation(seed,2)>.5?1:-1;
+
+      const dx=
+        directionX*
+        (7+variation(seed,3)*10);
+
+      const dy=
+        directionY*
+        (5+variation(seed,4)*9);
+
+      const duration=
+        4.5+variation(seed,5)*4;
+
+      const delay=
+        -variation(seed,6)*duration;
+
+      shadow.style.setProperty(
+        "--dx",
+        dx+"px"
+      );
+
+      shadow.style.setProperty(
+        "--dy",
+        dy+"px"
+      );
+
+      shadow.style.setProperty(
+        "--duration",
+        duration+"s"
+      );
+
+      shadow.style.setProperty(
+        "--delay",
+        delay+"s"
+      );
+
       wordShadows.appendChild(shadow);
     }
   });
 }
-textOriginal.addEventListener("load",buildWordShadows);
-if(textOriginal.complete)buildWordShadows();
-/* ORIGINAL TEXT POSITION AND FADE */
+
+textOriginal.addEventListener(
+  "load",
+  buildWordShadows
+);
+
+if(textOriginal.complete){
+  buildWordShadows();
+}
+
+/* TEXT SCROLL FADE */
+
 const textGroup=document.getElementById("text-group");
 const opening=document.getElementById("opening");
 const section=document.getElementById("film-section");
 const stage=document.getElementById("film-stage");
 const returnScene=document.getElementById("return-scene");
 const returnCatalogue=document.getElementById("return-catalogue");
+const siteLogo=document.getElementById("site-logo");
+
 function updateTextScroll(){
-  const scrollY=window.scrollY,viewport=window.innerHeight;
-  const openingBottom=opening.offsetTop+opening.offsetHeight;
-  const fadeStart=openingBottom-viewport*.75,fadeEnd=openingBottom-viewport*.30;
-  const fadeProgress=smoothstep((scrollY-fadeStart)/(fadeEnd-fadeStart));
+  const scrollY=window.scrollY;
+  const viewport=window.innerHeight;
+
+  const openingBottom=
+    opening.offsetTop+
+    opening.offsetHeight;
+
+  const fadeStart=
+    openingBottom-viewport*.75;
+
+  const fadeEnd=
+    openingBottom-viewport*.30;
+
+  const fadeProgress=smoothstep(
+    (scrollY-fadeStart)/
+    (fadeEnd-fadeStart)
+  );
+
   textGroup.style.opacity=1-fadeProgress;
+
   return fadeProgress;
 }
-/* ALL 21 FILM IMAGES — LIGHT1 FOCUS */
+
+/* ORIGINAL 21 FILM IMAGES */
+
 const images=[
-  "guillem.jpg","body.jpg","jamie.jpg","abreale1.jpg","light1.jpg",
-  "annecy.jpg","paris.jpg","spiral.jpg","abreale2.jpg","soho.jpg",
-  "abreale3.jpg","abreale4.jpg","poles.jpg","light2.jpg","abreale5.jpg",
-  "amsterdam.jpg","morris.jpg","abreale6.jpg","ice.jpg","abreale7.jpg","nyc.jpg"
+  "guillem.jpg",
+  "body.jpg",
+  "jamie.jpg",
+  "abreale1.jpg",
+  "light1.jpg",
+  "annecy.jpg",
+  "paris.jpg",
+  "spiral.jpg",
+  "abreale2.jpg",
+  "soho.jpg",
+  "abreale3.jpg",
+  "abreale4.jpg",
+  "poles.jpg",
+  "light2.jpg",
+  "abreale5.jpg",
+  "amsterdam.jpg",
+  "morris.jpg",
+  "abreale6.jpg",
+  "ice.jpg",
+  "abreale7.jpg",
+  "nyc.jpg"
 ];
+
 const cards=images.map(filename=>{
-  const card=document.createElement("div");card.className="film-item";
-  const img=document.createElement("img");img.src=filename;img.alt=filename;img.draggable=false;
-  card.appendChild(img);stage.appendChild(card);return card;
+  const card=document.createElement("div");
+  card.className="film-item";
+
+  const img=document.createElement("img");
+  img.src=filename;
+  img.alt=filename;
+  img.draggable=false;
+
+  card.appendChild(img);
+  stage.appendChild(card);
+
+  return card;
 });
-const total=cards.length,FOCUS_INDEX=4;
-const RUN_DURATION=3200,EXPAND_DURATION=1800,HOLD_DURATION=300,RETURN_DURATION=2000;
-let animationStarted=false,animationStart=null,currentPosition=FOCUS_INDEX;
-let finished=false,expanding=false,expansionProgress=0,scrollLocked=false,returning=false;
+
+const total=cards.length;
+
+/* LIGHT IMAGE FOCUS */
+
+const FOCUS_INDEX=4;
+
+/* ORIGINAL ANIMATION TIMINGS */
+
+const RUN_DURATION=3200;
+const EXPAND_DURATION=1800;
+const HOLD_DURATION=300;
+const RETURN_DURATION=2000;
+const REVEAL_HEAD_START=450;
+
+let animationStarted=false;
+let animationStart=null;
+let currentPosition=FOCUS_INDEX;
+
+let finished=false;
+let expanding=false;
+let expansionProgress=0;
+
+let scrollLocked=false;
+let lockedScrollY=0;
+let returning=false;
+
+/* CIRCULAR FILM DISTANCE */
+
 function getDistance(index,position){
   let distance=index-position;
-  while(distance<-total/2)distance+=total;
-  while(distance>total/2)distance-=total;
+
+  while(distance<-total/2){
+    distance+=total;
+  }
+
+  while(distance>total/2){
+    distance-=total;
+  }
+
   return distance;
 }
+
+/* FEATHERED FILM EDGES */
+
 function updateRevealMask(img,distance){
-  const reveal=smoothstep((distance+.35)/1.65),width=45*reveal;
-  if(width<.1){img.style.webkitMaskImage="none";img.style.maskImage="none";return}
-  const gradient=`linear-gradient(to right,transparent 0%,rgba(0,0,0,.12) ${width*.18}%,rgba(0,0,0,.32) ${width*.40}%,rgba(0,0,0,.62) ${width*.68}%,rgba(0,0,0,.85) ${width*.88}%,black ${width}%,black 100%)`;
-  img.style.webkitMaskImage=gradient;img.style.maskImage=gradient;
+  const reveal=smoothstep(
+    (distance+.35)/1.65
+  );
+
+  const width=45*reveal;
+
+  if(width<.1){
+    img.style.webkitMaskImage="none";
+    img.style.maskImage="none";
+    return;
+  }
+
+  const gradient=`linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0,0,0,.12) ${width*.18}%,
+    rgba(0,0,0,.32) ${width*.40}%,
+    rgba(0,0,0,.62) ${width*.68}%,
+    rgba(0,0,0,.85) ${width*.88}%,
+    black ${width}%,
+    black 100%
+  )`;
+
+  img.style.webkitMaskImage=gradient;
+  img.style.maskImage=gradient;
 }
-/* SAME REVOLVING FILM RENDER */
-function render(position,finalMode=false,expansion=0){
+
+/* FILM RENDER */
+
+function render(
+  position,
+  finalMode=false,
+  expansion=0
+){
   currentPosition=position;
-  const mobile=window.innerWidth<=700,spacing=mobile?112:175,baseHeight=mobile?200:300;
+
+  const mobile=window.innerWidth<=700;
+  const spacing=mobile?112:175;
+  const baseHeight=mobile?200:300;
+
   cards.forEach((card,index)=>{
-    const distance=getDistance(index,finalMode?FOCUS_INDEX:position);
-    const abs=Math.abs(distance),x=distance*spacing,y=Math.min(abs*abs*3.5,65),z=-abs*125;
-    const rotateY=clamp(-distance*15,-65,65),scale=Math.max(.55,1-abs*.055);
-    const opacity=clamp(1-abs*.095),brightness=clamp(1-abs*.085,.22,1);
-    const img=card.querySelector("img");card.style.height=baseHeight+"px";
+    const distance=getDistance(
+      index,
+      finalMode?FOCUS_INDEX:position
+    );
+
+    const abs=Math.abs(distance);
+    const x=distance*spacing;
+    const y=Math.min(abs*abs*3.5,65);
+    const z=-abs*125;
+
+    const rotateY=clamp(
+      -distance*15,
+      -65,
+      65
+    );
+
+    const scale=Math.max(
+      .55,
+      1-abs*.055
+    );
+
+    const opacity=clamp(
+      1-abs*.095
+    );
+
+    const brightness=clamp(
+      1-abs*.085,
+      .22,
+      1
+    );
+
+    const img=card.querySelector("img");
+
+    card.style.height=baseHeight+"px";
+
     updateRevealMask(img,distance);
-    card.style.opacity=opacity;card.style.filter=`brightness(${brightness})`;
-    card.style.transform=`translate(-50%,-50%) translate3d(${x}px,${y}px,${z}px) rotateY(${rotateY}deg) scale(${scale})`;
-    card.style.zIndex=String(1000-Math.round(abs*10));
-    card.style.visibility=opacity<=0?"hidden":"visible";
+
+    card.style.opacity=opacity;
+
+    card.style.filter=
+      `brightness(${brightness})`;
+
+    card.style.transform=`
+      translate(-50%,-50%)
+      translate3d(${x}px,${y}px,${z}px)
+      rotateY(${rotateY}deg)
+      scale(${scale})
+    `;
+
+    card.style.zIndex=String(
+      1000-Math.round(abs*10)
+    );
+
+    card.style.visibility=
+      opacity<=0?"hidden":"visible";
   });
+
+  /* FINAL LIGHT IMAGE EXPANSION */
+
   if(finalMode){
-    const focus=cards[FOCUS_INDEX],img=focus.querySelector("img"),eased=easeInOutCubic(expansion);
-    const sectionHeight=section.clientHeight,centerY=mobile?window.innerHeight*.25:window.innerHeight*.22;
-    const safeHeight=Math.max(100,Math.min(sectionHeight*.70,centerY*2-24,(sectionHeight-centerY)*2-24));
-    const finalHeight=mobile?Math.min(safeHeight,380):Math.min(safeHeight,476);
-    focus.style.height=(baseHeight+(finalHeight-baseHeight)*eased)+"px";
-    img.style.webkitMaskImage="none";img.style.maskImage="none";
-    focus.style.transform="translate(-50%,-50%) translate3d(0px,0px,0px) rotateY(0deg) scale(1)";
-    focus.style.opacity="1";focus.style.filter="brightness(1)";
-    focus.style.zIndex="1100";focus.style.visibility="visible";
+    const focus=cards[FOCUS_INDEX];
+    const img=focus.querySelector("img");
+    const eased=easeInOutCubic(expansion);
+
+    const sectionHeight=section.clientHeight;
+
+    const centerY=mobile
+      ?window.innerHeight*.25
+      :window.innerHeight*.22;
+
+    const safeHeight=Math.max(
+      100,
+      Math.min(
+        sectionHeight*.70,
+        centerY*2-24,
+        (sectionHeight-centerY)*2-24
+      )
+    );
+
+    const finalHeight=mobile
+      ?Math.min(safeHeight,380)
+      :Math.min(safeHeight,476);
+
+    focus.style.height=(
+      baseHeight+
+      (finalHeight-baseHeight)*eased
+    )+"px";
+
+    img.style.webkitMaskImage="none";
+    img.style.maskImage="none";
+
+    focus.style.transform=`
+      translate(-50%,-50%)
+      translate3d(0px,0px,0px)
+      rotateY(0deg)
+      scale(1)
+    `;
+
+    focus.style.opacity="1";
+    focus.style.filter="brightness(1)";
+    focus.style.zIndex="1100";
+    focus.style.visibility="visible";
   }
 }
+
 render(FOCUS_INDEX);
-/* SCROLL LOCK AND FILM MOVEMENT */
+
+/* SCROLL LOCK */
+
+function preventFilmWheel(event){
+  if(!scrollLocked){
+    return;
+  }
+
+  if(event.cancelable){
+    event.preventDefault();
+  }
+}
+
+function preventFilmKeys(event){
+  if(!scrollLocked){
+    return;
+  }
+
+  const blockedKeys=[
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "PageUp",
+    "PageDown",
+    "Home",
+    "End",
+    " ",
+    "Spacebar"
+  ];
+
+  if(blockedKeys.includes(event.key)){
+    event.preventDefault();
+  }
+}
+
+window.addEventListener(
+  "wheel",
+  preventFilmWheel,
+  {passive:false,capture:true}
+);
+
+window.addEventListener(
+  "touchmove",
+  preventFilmWheel,
+  {passive:false,capture:true}
+);
+
+window.addEventListener(
+  "keydown",
+  preventFilmKeys,
+  {capture:true}
+);
+
+function enforceFilmPosition(){
+  if(!scrollLocked){
+    return;
+  }
+
+  if(
+    Math.abs(
+      window.scrollY-lockedScrollY
+    )>1
+  ){
+    window.scrollTo(0,lockedScrollY);
+  }
+}
+
 function lockFilmScroll(){
-  if(scrollLocked)return;
-  scrollLocked=true;
-  const finalScroll=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+  if(scrollLocked){
+    return;
+  }
+
+  const finalScroll=Math.max(
+    0,
+    document.documentElement.scrollHeight-
+    window.innerHeight
+  );
+
   document.documentElement.style.scrollBehavior="auto";
+  document.body.style.scrollBehavior="auto";
+
   window.scrollTo(0,finalScroll);
-  document.documentElement.classList.add("film-locked");
-  document.body.classList.add("film-locked");
+
+  lockedScrollY=window.scrollY;
+  scrollLocked=true;
+
+  document.documentElement.classList.add(
+    "film-locked"
+  );
+
+  document.body.classList.add(
+    "film-locked"
+  );
 }
+
+/* START FILM ANIMATION */
+
 function startFilmAnimation(){
-  if(animationStarted)return;
+  if(animationStarted){
+    return;
+  }
+
   animationStarted=true;
+
   lockFilmScroll();
-  stage.classList.add("revealed");
-  animationStart=performance.now();
-  requestAnimationFrame(animateFilm);
+
+  animationStart=
+    performance.now()-REVEAL_HEAD_START;
+
+  render(
+    FOCUS_INDEX+
+    (REVEAL_HEAD_START/RUN_DURATION)*total
+  );
+
+  requestAnimationFrame(now=>{
+    animateFilm(now);
+
+    requestAnimationFrame(()=>{
+      stage.classList.add("revealed");
+    });
+  });
 }
+
+/* FILM ANIMATION */
+
 function animateFilm(now){
+  enforceFilmPosition();
+
   const elapsed=now-animationStart;
+
   if(elapsed<RUN_DURATION){
-    render(FOCUS_INDEX+(elapsed/RUN_DURATION)*total);
-    requestAnimationFrame(animateFilm);return;
+    render(
+      FOCUS_INDEX+
+      (elapsed/RUN_DURATION)*total
+    );
+
+    requestAnimationFrame(animateFilm);
+    return;
   }
+
   expanding=true;
-  expansionProgress=clamp((elapsed-RUN_DURATION)/EXPAND_DURATION);
-  render(FOCUS_INDEX+total,true,expansionProgress);
-  if(expansionProgress<1){requestAnimationFrame(animateFilm)}
-  else{
-    finished=true;render(FOCUS_INDEX+total,true,1);
-    setTimeout(startSeamlessReturn,HOLD_DURATION);
+
+  expansionProgress=clamp(
+    (elapsed-RUN_DURATION)/EXPAND_DURATION,
+    0,
+    1
+  );
+
+  render(
+    FOCUS_INDEX+total,
+    true,
+    expansionProgress
+  );
+
+  if(expansionProgress<1){
+    requestAnimationFrame(animateFilm);
+  }else{
+    finished=true;
+
+    render(
+      FOCUS_INDEX+total,
+      true,
+      1
+    );
+
+    setTimeout(
+      startSeamlessReturn,
+      HOLD_DURATION
+    );
   }
 }
-/* EXACT PAGE2 COLLAGE TILE POSITIONS */
+
+/* ORIGINAL COLLAGE TILE POSITIONS */
+
 const catalogueTiles=[
   {src:"guillem.jpg",x:0,y:0,w:12.2,h:27.5},
   {src:"body.jpg",x:12.2,y:0,w:23.4,h:27.5},
@@ -281,79 +1177,267 @@ const catalogueTiles=[
   {src:"ice.jpg",x:59.1,y:77.5,w:18.1,h:22.5},
   {src:"abreale7.jpg",x:77.2,y:77.5,w:10.2,h:22.5}
 ];
-catalogueTiles.forEach((item,index)=>{
-  const tile=document.createElement("div");tile.className="return-tile";
-  tile.style.left=item.x+"%";tile.style.top=item.y+"%";
-  tile.style.width=item.w+"%";tile.style.height=item.h+"%";
-  if(index!==FOCUS_INDEX){
-    const img=document.createElement("img");img.src=item.src;img.alt="";
-    if(item.src==="body.jpg"||item.src==="abreale1.jpg"||item.src==="abreale3.jpg")img.style.objectPosition="50% 45%";
+
+catalogueTiles.forEach(item=>{
+  const tile=document.createElement("div");
+
+  tile.className="return-tile";
+
+  tile.style.left=item.x+"%";
+  tile.style.top=item.y+"%";
+  tile.style.width=item.w+"%";
+  tile.style.height=item.h+"%";
+
+  if(item.src!=="light1.jpg"){
+    const img=document.createElement("img");
+
+    img.src=item.src;
+    img.alt="";
+
+    if(
+      [
+        "body.jpg",
+        "abreale1.jpg",
+        "abreale3.jpg"
+      ].includes(item.src)
+    ){
+      img.style.objectPosition="50% 45%";
+    }
+
     tile.appendChild(img);
   }
+
   returnCatalogue.appendChild(tile);
 });
-/* FLY LIGHT1.JPG TO ITS EXACT TOP-RIGHT COLLAGE TILE */
+
+/* SEAMLESS RETURN TO COLLAGE */
+
 function startSeamlessReturn(){
-  if(returning)return;
+  if(returning){
+    return;
+  }
+
   returning=true;
-  const focusCard=cards[FOCUS_INDEX],focusImage=focusCard.querySelector("img");
+
+  /* FADE OUT THE LOGO BEFORE THE IMAGE RETURNS */
+
+  siteLogo.classList.add("return-hidden");
+
+  const focusCard=cards[FOCUS_INDEX];
+  const focusImage=focusCard.querySelector("img");
   const origin=focusImage.getBoundingClientRect();
-  const destination={left:window.innerWidth*.756,top:0,width:window.innerWidth*.244,height:window.innerHeight*.275};
-  const flying=document.createElement("div");flying.className="return-flight";
-  const picture=document.createElement("img");picture.src="light1.jpg";picture.alt="";
-  flying.appendChild(picture);returnScene.appendChild(flying);
-  flying.style.left="0px";flying.style.top="0px";
-  flying.style.width=origin.width+"px";flying.style.height=origin.height+"px";
-  flying.style.transform=`translate3d(${origin.left}px,${origin.top}px,0)`;
-  returnScene.classList.add("active");focusCard.style.visibility="hidden";
+
+  const target=catalogueTiles.find(
+    item=>item.src==="light1.jpg"
+  );
+
+  const destination={
+    left:window.innerWidth*target.x/100,
+    top:window.innerHeight*target.y/100,
+    width:window.innerWidth*target.w/100,
+    height:window.innerHeight*target.h/100
+  };
+
+  const flying=document.createElement("div");
+  flying.className="return-flight";
+
+  const picture=document.createElement("img");
+
+  picture.src="light1.jpg";
+  picture.alt="";
+
+  flying.appendChild(picture);
+  returnScene.appendChild(flying);
+
+  flying.style.left="0px";
+  flying.style.top="0px";
+  flying.style.width=origin.width+"px";
+  flying.style.height=origin.height+"px";
+
+  flying.style.transform=`
+    translate3d(
+      ${origin.left}px,
+      ${origin.top}px,
+      0
+    )
+  `;
+
+  returnScene.classList.add("active");
+
+  focusCard.style.visibility="hidden";
+
   const start=performance.now();
+
   function animateReturn(now){
-    const t=clamp((now-start)/RETURN_DURATION),eased=easeInOutCubic(t);
-    stage.style.opacity=String(1-smoothstep(t/.65));
-    returnCatalogue.style.opacity=String(smoothstep((t-.10)/.70));
-    const x=lerp(origin.left,destination.left,eased);
-    const lift=Math.sin(Math.PI*t)*38;
-    const y=lerp(origin.top,destination.top,eased)-lift;
-    const w=lerp(origin.width,destination.width,eased);
-    const h=lerp(origin.height,destination.height,eased);
-    flying.style.width=w+"px";flying.style.height=h+"px";
-    flying.style.transform=`translate3d(${x}px,${y}px,0)`;
-    if(t<1){requestAnimationFrame(animateReturn)}
-    else{
-      flying.style.width=destination.width+"px";flying.style.height=destination.height+"px";
-      flying.style.transform=`translate3d(${destination.left}px,${destination.top}px,0)`;
+    enforceFilmPosition();
+
+    const t=clamp(
+      (now-start)/RETURN_DURATION,
+      0,
+      1
+    );
+
+    const eased=easeInOutCubic(t);
+
+    stage.style.opacity=String(
+      1-smoothstep(t/.65)
+    );
+
+    returnCatalogue.style.opacity=String(
+      smoothstep((t-.10)/.70)
+    );
+
+    const x=lerp(
+      origin.left,
+      destination.left,
+      eased
+    );
+
+    const y=lerp(
+      origin.top,
+      destination.top,
+      eased
+    )-Math.sin(Math.PI*t)*38;
+
+    const w=lerp(
+      origin.width,
+      destination.width,
+      eased
+    );
+
+    const h=lerp(
+      origin.height,
+      destination.height,
+      eased
+    );
+
+    flying.style.width=w+"px";
+    flying.style.height=h+"px";
+
+    flying.style.transform=`
+      translate3d(${x}px,${y}px,0)
+    `;
+
+    if(t<1){
+      requestAnimationFrame(animateReturn);
+    }else{
+      flying.style.width=
+        destination.width+"px";
+
+      flying.style.height=
+        destination.height+"px";
+
+      flying.style.transform=`
+        translate3d(
+          ${destination.left}px,
+          ${destination.top}px,
+          0
+        )
+      `;
+
       returnCatalogue.style.opacity="1";
+
       try{
-        sessionStorage.removeItem("integuments-return-flight");
-        sessionStorage.setItem("integuments-seamless-arrival",JSON.stringify({image:"light1.jpg",time:Date.now()}));
+        sessionStorage.removeItem(
+          "integuments-return-flight"
+        );
+
+        sessionStorage.setItem(
+          "integuments-seamless-arrival",
+          JSON.stringify({
+            image:"light1.jpg",
+            time:Date.now()
+          })
+        );
       }catch(error){}
+
       window.location.replace("page2.html");
     }
   }
+
   requestAnimationFrame(animateReturn);
 }
-/* SAME TEXT-TO-FILM SCROLL TRIGGER */
+
+/* SCROLL TRIGGER */
+
 function updateScrollEffects(){
-  if(scrollLocked)return;
+  if(animationStarted||scrollLocked){
+    return;
+  }
+
   const fadeProgress=updateTextScroll();
   const filmRect=section.getBoundingClientRect();
-  if(fadeProgress>=1&&filmRect.top<=window.innerHeight){
-    stage.classList.add("revealed");startFilmAnimation();
-  }else{stage.classList.remove("revealed")}
+
+  const filmCloseEnough=
+    filmRect.top<=window.innerHeight;
+
+  if(
+    fadeProgress>=1 &&
+    filmCloseEnough
+  ){
+    startFilmAnimation();
+  }
 }
-window.addEventListener("scroll",updateScrollEffects,{passive:true});
-window.addEventListener("load",updateScrollEffects);
+
+/* EVENTS */
+
+window.addEventListener(
+  "scroll",
+  updateScrollEffects,
+  {passive:true}
+);
+
+window.addEventListener(
+  "load",
+  updateScrollEffects
+);
+
+/* RESIZE */
+
+let resizeTimer;
+
 window.addEventListener("resize",()=>{
-  buildWordShadows();
+  clearTimeout(resizeTimer);
+
+  resizeTimer=setTimeout(
+    buildWordShadows,
+    120
+  );
+
   if(scrollLocked){
-    const finalScroll=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+    const finalScroll=Math.max(
+      0,
+      document.documentElement.scrollHeight-
+      window.innerHeight
+    );
+
     window.scrollTo(0,finalScroll);
-  }else updateScrollEffects();
-  if(finished)render(FOCUS_INDEX+total,true,1);
-  else if(expanding)render(FOCUS_INDEX+total,true,expansionProgress);
-  else render(currentPosition);
+    lockedScrollY=window.scrollY;
+  }else{
+    updateScrollEffects();
+  }
+
+  if(finished){
+    render(
+      FOCUS_INDEX+total,
+      true,
+      1
+    );
+  }else if(expanding){
+    render(
+      FOCUS_INDEX+total,
+      true,
+      expansionProgress
+    );
+  }else{
+    render(currentPosition);
+  }
 });
+
+/* INITIALIZE */
+
 updateScrollEffects();
+
 </script>
 </body>
 </html>

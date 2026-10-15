@@ -71,12 +71,21 @@ body{
   font-weight:normal;
 }
 
+/* SLIGHTLY SOFTER WORD ECHO WITH SMOOTH HOVER REVEAL */
+
 .text-shadow-field{
   position:absolute;
   inset:0;
   z-index:1;
   pointer-events:none;
   overflow:visible;
+  opacity:0;
+  transition:opacity 1000ms cubic-bezier(.22,1,.36,1);
+  will-change:opacity;
+}
+
+.body-text-wrap:hover .text-shadow-field{
+  opacity:1;
 }
 
 .floating-word{
@@ -92,41 +101,41 @@ body{
   will-change:transform,opacity;
   animation:floatWord var(--duration) ease-in-out infinite alternate;
   animation-delay:var(--delay);
-  filter:drop-shadow(0 0 2px rgba(255,0,0,.35));
+  filter:drop-shadow(0 0 2px rgba(255,0,0,.38));
 }
 
 .floating-word.secondary{
   animation-name:floatWordSecondary;
-  filter:drop-shadow(0 0 3px rgba(200,0,0,.25));
+  filter:drop-shadow(0 0 3px rgba(220,0,0,.30));
 }
 
 @keyframes floatWord{
   0%{
     transform:translate(calc(var(--dx)*-.45),calc(var(--dy)*-.45));
-    opacity:.12;
+    opacity:.20;
   }
   50%{
     transform:translate(var(--dx),var(--dy));
-    opacity:.42;
+    opacity:.56;
   }
   100%{
     transform:translate(calc(var(--dx)*-.75),calc(var(--dy)*.55));
-    opacity:.20;
+    opacity:.30;
   }
 }
 
 @keyframes floatWordSecondary{
   0%{
     transform:translate(calc(var(--dx)*.5),calc(var(--dy)*-.7));
-    opacity:.08;
+    opacity:.13;
   }
   50%{
     transform:translate(calc(var(--dx)*-1),calc(var(--dy)*.65));
-    opacity:.27;
+    opacity:.36;
   }
   100%{
     transform:translate(calc(var(--dx)*.8),calc(var(--dy)*-.4));
-    opacity:.12;
+    opacity:.19;
   }
 }
 
@@ -284,7 +293,7 @@ body.film-locked{
 @media(prefers-reduced-motion:reduce){
   .floating-word{
     animation:none;
-    opacity:.12;
+    opacity:.20;
   }
 }
 </style>

@@ -10,8 +10,8 @@
 *{box-sizing:border-box}
 
 html{
-  scroll-behavior:smooth;
   background:#000;
+  scroll-behavior:smooth;
 }
 
 body{
@@ -22,7 +22,8 @@ body{
   overflow-x:hidden;
 }
 
-/* FIXED LOGO */
+/* LOGO */
+
 .site-logo{
   position:fixed;
   top:42px;
@@ -30,6 +31,7 @@ body{
   width:220px;
   z-index:2000;
   display:block;
+  transition:opacity 350ms ease;
 }
 
 .site-logo img{
@@ -38,117 +40,129 @@ body{
   height:auto;
 }
 
-/* OPENING POEM */
+.site-logo.return-hidden{
+  opacity:0;
+  pointer-events:none;
+}
+
+/* ORIGINAL PAGE2-9 TEXT POSITION */
+
 .opening{
   position:relative;
-  background:#000;
   min-height:115vh;
+  background:#000;
   padding-top:40vh;
   padding-bottom:30vh;
 }
 
-.poem-group{
+.text-container{
+  padding:0;
+}
+
+.meral-text-wrap{
   position:relative;
-  margin-left:15.3%;
   width:min(42vw,560px);
-  pointer-events:none;
+  max-width:100%;
+  margin-left:15.3%;
   opacity:1;
+  isolation:isolate;
   will-change:opacity;
 }
 
-.poem-group img{
+.meral-text{
   display:block;
+  position:relative;
   width:100%;
   height:auto;
-}
-
-.poem-main{
-  position:relative;
+  margin:0;
   z-index:3;
 }
 
-/* ORIGINAL SOFT RED GLOW */
-.poem-glow-outer{
-  position:absolute;
-  top:0;
-  left:0;
-  opacity:.55;
-  filter:
-    drop-shadow(0 0 5px rgba(195,22,35,.58))
-    drop-shadow(0 0 11px rgba(155,10,25,.30));
-  animation:outerRimFlow 9s ease-in-out infinite;
-}
+/* EXACT PAGE2-3 HOVER WORD EFFECT */
 
-.poem-glow-inner{
-  position:absolute;
-  top:0;
-  left:0;
-  opacity:.35;
-  filter:
-    drop-shadow(0 0 2px rgba(255,184,184,.48))
-    drop-shadow(0 0 5px rgba(235,70,80,.28));
-  animation:innerRimFlow 11s ease-in-out infinite;
-}
-
-@keyframes outerRimFlow{
-  0%,100%{transform:translate(0,0);opacity:.52}
-  25%{transform:translate(1px,-1px);opacity:.60}
-  50%{transform:translate(0,1px);opacity:.56}
-  75%{transform:translate(-1px,0);opacity:.61}
-}
-
-@keyframes innerRimFlow{
-  0%,100%{transform:translate(0,0);opacity:.32}
-  25%{transform:translate(-1px,0);opacity:.38}
-  50%{transform:translate(0,-1px);opacity:.35}
-  75%{transform:translate(1px,0);opacity:.39}
-}
-
-/* FLOATING RED WORD ECHOES — SLIGHTLY STRONGER */
-.word-shadows{
+.text-shadow-field{
   position:absolute;
   inset:0;
-  z-index:4;
-  overflow:visible;
+  z-index:1;
   pointer-events:none;
+  overflow:visible;
+  opacity:0;
+  transition:opacity 1000ms cubic-bezier(.22,1,.36,1);
+  will-change:opacity;
 }
 
-.word-shadow{
+.meral-text-wrap:hover .text-shadow-field{
+  opacity:1;
+}
+
+.text-shadow-fragment{
   position:absolute;
+  background-image:url("2-9 text.png");
   background-repeat:no-repeat;
   pointer-events:none;
   will-change:transform,opacity;
   transform-origin:center;
-  animation:wordFloat var(--duration) ease-in-out infinite alternate;
+  animation:floatFragment var(--duration) ease-in-out infinite alternate;
   animation-delay:var(--delay);
-  filter:
-    brightness(1.42)
-    saturate(1.2)
-    drop-shadow(0 0 2px rgba(255,0,0,.32));
+  filter:drop-shadow(0 0 2px rgba(255,0,0,.38));
 }
 
-@keyframes wordFloat{
+.text-shadow-fragment.secondary{
+  animation-name:floatFragmentSecondary;
+  filter:drop-shadow(0 0 3px rgba(220,0,0,.30));
+}
+
+@keyframes floatFragment{
   0%{
     transform:translate(
-      calc(var(--dx)*-.4),
-      calc(var(--dy)*-.4)
+      calc(var(--dx)*-.45),
+      calc(var(--dy)*-.45)
     );
-    opacity:.09;
+    opacity:.20;
   }
+
   50%{
     transform:translate(var(--dx),var(--dy));
-    opacity:.33;
+    opacity:.56;
   }
+
   100%{
     transform:translate(
-      calc(var(--dx)*-.65),
-      calc(var(--dy)*.5)
+      calc(var(--dx)*-.75),
+      calc(var(--dy)*.55)
     );
-    opacity:.15;
+    opacity:.30;
+  }
+}
+
+@keyframes floatFragmentSecondary{
+  0%{
+    transform:translate(
+      calc(var(--dx)*.5),
+      calc(var(--dy)*-.7)
+    );
+    opacity:.13;
+  }
+
+  50%{
+    transform:translate(
+      calc(var(--dx)*-1),
+      calc(var(--dy)*.65)
+    );
+    opacity:.36;
+  }
+
+  100%{
+    transform:translate(
+      calc(var(--dx)*.8),
+      calc(var(--dy)*-.4)
+    );
+    opacity:.19;
   }
 }
 
 /* FILM STRIP */
+
 .film-section{
   position:relative;
   height:72vh;
@@ -194,16 +208,21 @@ body{
   backface-visibility:hidden;
 }
 
+/* SCROLL LOCK */
+
 html.film-locked{
-  scroll-behavior:auto;
-  overflow:hidden;
+  scroll-behavior:auto!important;
+  overflow:hidden!important;
+  overscroll-behavior:none;
 }
 
 body.film-locked{
-  overflow:hidden;
+  overflow:hidden!important;
+  overscroll-behavior:none;
 }
 
-/* SEAMLESS RETURN TO COLLAGE */
+/* SEAMLESS COLLAGE RETURN */
+
 .return-scene{
   position:fixed;
   inset:0;
@@ -216,8 +235,8 @@ body.film-locked{
 }
 
 .return-scene.active{
-  opacity:1;
   visibility:visible;
+  opacity:1;
 }
 
 .return-catalogue{
@@ -256,7 +275,10 @@ body.film-locked{
   width:100%;
   height:100%;
   object-fit:cover;
+  object-position:center;
 }
+
+/* MOBILE */
 
 @media(max-width:700px){
   .site-logo{
@@ -270,9 +292,9 @@ body.film-locked{
     padding-bottom:28vh;
   }
 
-  .poem-group{
-    margin-left:9%;
+  .meral-text-wrap{
     width:82vw;
+    margin-left:9%;
   }
 
   .film-section{
@@ -287,51 +309,39 @@ body.film-locked{
 }
 
 @media(prefers-reduced-motion:reduce){
-  .poem-glow-outer,
-  .poem-glow-inner,
-  .word-shadow{
+  .text-shadow-fragment{
     animation:none;
+    opacity:.20;
   }
 }
+
 </style>
 </head>
 
 <body>
 
-<a href="index.html" class="site-logo">
+<a href="index.html" class="site-logo" id="site-logo">
   <img src="integuments-red-logo.png" alt="INTEGUMENTS">
 </a>
 
 <section class="opening" id="opening">
-  <div class="poem-group" id="poem-text">
+  <div class="text-container">
+    <div class="meral-text-wrap" id="meral-text-wrap">
 
-    <img
-      src="2-9 text.png"
-      class="poem-glow-outer"
-      alt=""
-      aria-hidden="true"
-    >
+      <div
+        class="text-shadow-field"
+        id="text-shadow-field"
+        aria-hidden="true"
+      ></div>
 
-    <img
-      src="2-9 text.png"
-      class="poem-glow-inner"
-      alt=""
-      aria-hidden="true"
-    >
+      <img
+        src="2-9 text.png"
+        class="meral-text"
+        id="meral-text"
+        alt="Abreale II poem"
+      >
 
-    <img
-      src="2-9 text.png"
-      class="poem-main"
-      id="poem-original"
-      alt="Poem beginning gasping for air, I enter a world that was once hers and ending let one's sole reason to live be You"
-    >
-
-    <div
-      class="word-shadows"
-      id="poem-shadows"
-      aria-hidden="true"
-    ></div>
-
+    </div>
   </div>
 </section>
 
@@ -344,12 +354,15 @@ body.film-locked{
 </div>
 
 <script>
-function clamp(value,min=0,max=1){
-  return Math.max(min,Math.min(max,value));
+
+/* HELPERS */
+
+function clamp(v,min=0,max=1){
+  return Math.max(min,Math.min(max,v));
 }
 
-function smoothstep(value){
-  const t=clamp(value);
+function smoothstep(v){
+  const t=clamp(v);
   return t*t*(3-2*t);
 }
 
@@ -364,218 +377,379 @@ function lerp(a,b,t){
   return a+(b-a)*t;
 }
 
-function variation(seed,salt){
-  const v=Math.sin(seed*127.1+salt*311.7)*43758.5453;
+function variation(n,o){
+  const v=Math.sin(n*12.9898+o*78.233)*43758.5453;
   return v-Math.floor(v);
 }
 
-/* GENERATE FLOATING WORD ECHOES */
-const poemOriginal=document.getElementById("poem-original");
-const poemShadows=document.getElementById("poem-shadows");
+/*
+  EXACT PAGE2-3 WORD HOVER SYSTEM
+  Adapted only to use "2-9 text.png".
+*/
 
-function buildWordShadows(){
-  if(!poemOriginal.complete||!poemOriginal.naturalWidth)return;
+const meralText=document.getElementById("meral-text");
+const meralTextWrap=document.getElementById("meral-text-wrap");
+const shadowField=document.getElementById("text-shadow-field");
 
-  const W=poemOriginal.naturalWidth;
-  const H=poemOriginal.naturalHeight;
+function buildFloatingShadows(){
 
-  const canvas=document.createElement("canvas");
-  canvas.width=W;
-  canvas.height=H;
-
-  const ctx=canvas.getContext("2d",{willReadFrequently:true});
-  ctx.drawImage(poemOriginal,0,0);
-
-  let imageData;
-
-  try{
-    imageData=ctx.getImageData(0,0,W,H);
-  }catch(error){
-    console.warn("Unable to read poem pixels",error);
+  if(!meralText.complete||!meralText.naturalWidth){
     return;
   }
 
-  const data=imageData.data;
+  const naturalW=meralText.naturalWidth;
+  const naturalH=meralText.naturalHeight;
 
-  for(let i=0;i<data.length;i+=4){
-    const r=data[i];
-    const g=data[i+1];
-    const b=data[i+2];
-    const a=data[i+3];
+  const canvas=document.createElement("canvas");
+  canvas.width=naturalW;
+  canvas.height=naturalH;
 
-    const redAmount=Math.max(0,r-Math.max(g,b)*.7);
-    const strength=clamp((redAmount-5)/35);
+  const ctx=canvas.getContext("2d",{
+    willReadFrequently:true
+  });
 
-    data[i]=190;
-    data[i+1]=0;
-    data[i+2]=0;
-    data[i+3]=Math.round(a*strength);
+  ctx.drawImage(meralText,0,0);
+
+  let pixels;
+
+  try{
+    pixels=ctx.getImageData(
+      0,0,naturalW,naturalH
+    ).data;
+  }catch(error){
+    console.warn("Text analysis failed:",error);
+    return;
   }
 
-  ctx.putImageData(imageData,0,0);
-  const echoImage=canvas.toDataURL("image/png");
+  function isTextPixel(x,y){
 
-  const activeRows=new Uint8Array(H);
+    if(
+      x<0||
+      y<0||
+      x>=naturalW||
+      y>=naturalH
+    ){
+      return false;
+    }
 
-  for(let y=0;y<H;y++){
-    let count=0;
+    const i=(y*naturalW+x)*4;
 
-    for(let x=0;x<W;x+=2){
-      if(data[(y*W+x)*4+3]>40){
-        count++;
+    return (
+      pixels[i+3]>65 &&
+      pixels[i]>75 &&
+      pixels[i]>pixels[i+1]*1.5 &&
+      pixels[i]>pixels[i+2]*1.5
+    );
+  }
+
+  const cellSize=Math.max(
+    3,
+    Math.round(naturalW/250)
+  );
+
+  const cols=Math.ceil(naturalW/cellSize);
+  const rows=Math.ceil(naturalH/cellSize);
+
+  const occupied=new Uint8Array(cols*rows);
+
+  /* DETECT THE RED TEXT */
+
+  for(let gy=0;gy<rows;gy++){
+
+    for(let gx=0;gx<cols;gx++){
+
+      let found=false;
+
+      for(
+        let y=gy*cellSize;
+        y<Math.min((gy+1)*cellSize,naturalH)&&!found;
+        y++
+      ){
+
+        for(
+          let x=gx*cellSize;
+          x<Math.min((gx+1)*cellSize,naturalW);
+          x++
+        ){
+
+          if(isTextPixel(x,y)){
+            found=true;
+            break;
+          }
+        }
+      }
+
+      if(found){
+        occupied[gy*cols+gx]=1;
       }
     }
-
-    if(count>2)activeRows[y]=1;
   }
 
-  const lines=[];
-  let lineStart=-1;
-  let lastRow=-1;
+  /* FIND INDIVIDUAL TEXT FRAGMENTS */
 
-  function addLine(top,bottom){
-    if(bottom-top<2)return;
-    lines.push({
-      top:Math.max(0,top-3),
-      bottom:Math.min(H,bottom+4)
-    });
-  }
+  const visited=new Uint8Array(cols*rows);
+  const components=[];
 
-  for(let y=0;y<H;y++){
-    if(activeRows[y]){
-      if(lineStart<0)lineStart=y;
-      lastRow=y;
-    }else if(lineStart>=0&&y-lastRow>8){
-      addLine(lineStart,lastRow);
-      lineStart=-1;
-      lastRow=-1;
+  const neighbors=[
+    [-1,0],
+    [1,0],
+    [0,-1],
+    [0,1],
+    [-1,-1],
+    [1,-1],
+    [-1,1],
+    [1,1]
+  ];
+
+  for(let gy=0;gy<rows;gy++){
+
+    for(let gx=0;gx<cols;gx++){
+
+      const start=gy*cols+gx;
+
+      if(!occupied[start]||visited[start]){
+        continue;
+      }
+
+      const stack=[start];
+      visited[start]=1;
+
+      let minX=gx;
+      let maxX=gx;
+      let minY=gy;
+      let maxY=gy;
+      let count=0;
+
+      while(stack.length){
+
+        const index=stack.pop();
+
+        const cx=index%cols;
+        const cy=Math.floor(index/cols);
+
+        count++;
+
+        minX=Math.min(minX,cx);
+        maxX=Math.max(maxX,cx);
+        minY=Math.min(minY,cy);
+        maxY=Math.max(maxY,cy);
+
+        for(const [dx,dy] of neighbors){
+
+          const nx=cx+dx;
+          const ny=cy+dy;
+
+          if(
+            nx<0||
+            ny<0||
+            nx>=cols||
+            ny>=rows
+          ){
+            continue;
+          }
+
+          const next=ny*cols+nx;
+
+          if(occupied[next]&&!visited[next]){
+            visited[next]=1;
+            stack.push(next);
+          }
+        }
+      }
+
+      if(count>=3){
+
+        components.push({
+          x:minX*cellSize,
+          y:minY*cellSize,
+          w:(maxX-minX+1)*cellSize,
+          h:(maxY-minY+1)*cellSize
+        });
+      }
     }
   }
-
-  if(lineStart>=0)addLine(lineStart,lastRow);
 
   const fragments=[];
 
-  lines.forEach(line=>{
-    const activeColumns=new Uint8Array(W);
+  const targetWidth=naturalW*.13;
 
-    for(let x=0;x<W;x++){
-      for(let y=line.top;y<line.bottom;y+=2){
-        if(data[(y*W+x)*4+3]>40){
-          activeColumns[x]=1;
-          break;
-        }
-      }
-    }
+  const targetHeight=Math.max(
+    naturalH*.035,
+    cellSize*4
+  );
 
-    let start=-1;
-    let last=-1;
+  components.forEach(component=>{
 
-    function addFragment(left,right){
-      if(right-left<3)return;
-
-      fragments.push({
-        x:Math.max(0,left-3),
-        y:line.top,
-        w:Math.min(W,right+4)-Math.max(0,left-3),
-        h:line.bottom-line.top
-      });
-    }
-
-    for(let x=0;x<W;x++){
-      if(activeColumns[x]){
-        if(start<0)start=x;
-        last=x;
-      }else if(start>=0&&x-last>12){
-        addFragment(start,last);
-        start=-1;
-        last=-1;
-      }
-    }
-
-    if(start>=0)addFragment(start,last);
-  });
-
-  poemShadows.innerHTML="";
-
-  const scale=poemOriginal.getBoundingClientRect().width/W;
-  const displayW=W*scale;
-  const displayH=H*scale;
-
-  /*
-    Approximately 80% of word fragments
-    receive one floating echo.
-  */
-  fragments.forEach((fragment,index)=>{
-    if(variation(index,9)>.80)return;
-
-    const shadow=document.createElement("div");
-    shadow.className="word-shadow";
-
-    const x=fragment.x*scale;
-    const y=fragment.y*scale;
-    const w=fragment.w*scale;
-    const h=fragment.h*scale;
-
-    shadow.style.left=x+"px";
-    shadow.style.top=y+"px";
-    shadow.style.width=w+"px";
-    shadow.style.height=h+"px";
-    shadow.style.backgroundImage=`url("${echoImage}")`;
-    shadow.style.backgroundSize=`${displayW}px ${displayH}px`;
-    shadow.style.backgroundPosition=`${-x}px ${-y}px`;
-
-    const dx=(variation(index,1)>.5?1:-1)*
-      (6+variation(index,3)*8);
-
-    const dy=(variation(index,2)>.5?1:-1)*
-      (5+variation(index,4)*8);
-
-    const duration=5+variation(index,5)*4;
-
-    shadow.style.setProperty("--dx",dx+"px");
-    shadow.style.setProperty("--dy",dy+"px");
-    shadow.style.setProperty("--duration",duration+"s");
-    shadow.style.setProperty(
-      "--delay",
-      (-variation(index,6)*duration)+"s"
+    const horizontalPieces=Math.max(
+      1,
+      Math.ceil(component.w/targetWidth)
     );
 
-    poemShadows.appendChild(shadow);
+    const verticalPieces=Math.max(
+      1,
+      Math.ceil(component.h/targetHeight)
+    );
+
+    for(let iy=0;iy<verticalPieces;iy++){
+
+      for(let ix=0;ix<horizontalPieces;ix++){
+
+        const x=
+          component.x+
+          component.w*ix/horizontalPieces;
+
+        const y=
+          component.y+
+          component.h*iy/verticalPieces;
+
+        const w=
+          component.w/horizontalPieces;
+
+        const h=
+          component.h/verticalPieces;
+
+        if(w<cellSize*2||h<cellSize){
+          continue;
+        }
+
+        fragments.push({x,y,w,h});
+      }
+    }
+  });
+
+  shadowField.innerHTML="";
+
+  const displayScale=
+    meralText.getBoundingClientRect().width/naturalW;
+
+  const displayW=naturalW*displayScale;
+  const displayH=naturalH*displayScale;
+
+  const step=Math.max(
+    1,
+    Math.ceil(fragments.length/220)
+  );
+
+  /* EXACT SAME TWO-LAYER FLOATING EFFECT */
+
+  fragments.forEach((fragment,index)=>{
+
+    if(index%step!==0){
+      return;
+    }
+
+    const x=fragment.x*displayScale;
+    const y=fragment.y*displayScale;
+    const w=fragment.w*displayScale;
+    const h=fragment.h*displayScale;
+
+    if(w<3||h<2){
+      return;
+    }
+
+    for(let layer=0;layer<2;layer++){
+
+      const el=document.createElement("div");
+
+      el.className=
+        "text-shadow-fragment"+
+        (layer%2?" secondary":"");
+
+      Object.assign(el.style,{
+        left:x+"px",
+        top:y+"px",
+        width:w+"px",
+        height:h+"px",
+        backgroundSize:
+          `${displayW}px ${displayH}px`,
+        backgroundPosition:
+          `${-x}px ${-y}px`,
+        overflow:"hidden"
+      });
+
+      const seed=index*2+layer;
+
+      const dx=
+        (variation(seed,1)>.5?1:-1)*
+        (7+variation(seed,3)*10);
+
+      const dy=
+        (variation(seed,2)>.5?1:-1)*
+        (5+variation(seed,4)*9);
+
+      const duration=
+        4.5+variation(seed,5)*4;
+
+      el.style.setProperty(
+        "--dx",
+        dx+"px"
+      );
+
+      el.style.setProperty(
+        "--dy",
+        dy+"px"
+      );
+
+      el.style.setProperty(
+        "--duration",
+        duration+"s"
+      );
+
+      el.style.setProperty(
+        "--delay",
+        -variation(seed,6)*duration+"s"
+      );
+
+      shadowField.appendChild(el);
+    }
   });
 }
 
-poemOriginal.addEventListener("load",buildWordShadows);
+meralText.addEventListener(
+  "load",
+  buildFloatingShadows
+);
 
-if(poemOriginal.complete&&poemOriginal.naturalWidth){
-  buildWordShadows();
+if(meralText.complete){
+  buildFloatingShadows();
 }
 
-/* POEM FADE */
-const poemText=document.getElementById("poem-text");
+/* TEXT FADE ON SCROLL */
+
 const opening=document.getElementById("opening");
 const section=document.getElementById("film-section");
 const stage=document.getElementById("film-stage");
+
 const returnScene=document.getElementById("return-scene");
 const returnCatalogue=document.getElementById("return-catalogue");
 
+const siteLogo=document.getElementById("site-logo");
+
 function updateTextScroll(){
+
   const scrollY=window.scrollY;
   const viewport=window.innerHeight;
-  const openingBottom=opening.offsetTop+opening.offsetHeight;
 
-  const fadeStart=openingBottom-viewport*.75;
-  const fadeEnd=openingBottom-viewport*.30;
+  const openingBottom=
+    opening.offsetTop+opening.offsetHeight;
+
+  const fadeStart=
+    openingBottom-viewport*.75;
+
+  const fadeEnd=
+    openingBottom-viewport*.30;
 
   const fadeProgress=smoothstep(
     (scrollY-fadeStart)/(fadeEnd-fadeStart)
   );
 
-  poemText.style.opacity=1-fadeProgress;
+  meralTextWrap.style.opacity=1-fadeProgress;
+
   return fadeProgress;
 }
 
-/* ALL 21 FILM PHOTOGRAPHS */
+/* ORIGINAL 21 PHOTOGRAPHS */
+
 const images=[
   "guillem.jpg",
   "body.jpg",
@@ -601,10 +775,12 @@ const images=[
 ];
 
 const cards=images.map(filename=>{
+
   const card=document.createElement("div");
   card.className="film-item";
 
   const img=document.createElement("img");
+
   img.src=filename;
   img.alt=filename;
   img.draggable=false;
@@ -616,7 +792,12 @@ const cards=images.map(filename=>{
 });
 
 const total=cards.length;
+
+/* ABREALE II */
+
 const FOCUS_INDEX=8;
+
+/* ORIGINAL TIMINGS */
 
 const RUN_DURATION=3200;
 const EXPAND_DURATION=1800;
@@ -626,14 +807,19 @@ const RETURN_DURATION=2000;
 let animationStarted=false;
 let animationStart=null;
 let currentPosition=FOCUS_INDEX;
+
 let finished=false;
 let expanding=false;
 let expansionProgress=0;
+
 let scrollLocked=false;
+let lockedScrollY=0;
 let returning=false;
 
-/* CIRCULAR FILM DISTANCE */
+/* FILM POSITION */
+
 function getDistance(index,position){
+
   let distance=index-position;
 
   while(distance<-total/2){
@@ -647,9 +833,14 @@ function getDistance(index,position){
   return distance;
 }
 
-/* FEATHERED FILM EDGES */
+/* FEATHERED FILM MASK */
+
 function updateRevealMask(img,distance){
-  const reveal=smoothstep((distance+.35)/1.65);
+
+  const reveal=smoothstep(
+    (distance+.35)/1.65
+  );
+
   const width=45*reveal;
 
   if(width<.1){
@@ -674,7 +865,13 @@ function updateRevealMask(img,distance){
 }
 
 /* FILM RENDER */
-function render(position,finalMode=false,expansion=0){
+
+function render(
+  position,
+  finalMode=false,
+  expansion=0
+){
+
   currentPosition=position;
 
   const mobile=window.innerWidth<=700;
@@ -682,24 +879,45 @@ function render(position,finalMode=false,expansion=0){
   const baseHeight=mobile?200:300;
 
   cards.forEach((card,index)=>{
+
     const distance=getDistance(
       index,
       finalMode?FOCUS_INDEX:position
     );
 
     const abs=Math.abs(distance);
+
     const x=distance*spacing;
     const y=Math.min(abs*abs*3.5,65);
     const z=-abs*125;
 
-    const rotateY=clamp(-distance*15,-65,65);
-    const scale=Math.max(.55,1-abs*.055);
-    const opacity=clamp(1-abs*.095);
-    const brightness=clamp(1-abs*.085,.22,1);
+    const rotateY=clamp(
+      -distance*15,
+      -65,
+      65
+    );
+
+    const scale=Math.max(
+      .55,
+      1-abs*.055
+    );
+
+    const opacity=clamp(
+      1-abs*.095
+    );
+
+    const brightness=clamp(
+      1-abs*.085,
+      .22,
+      1
+    );
+
     const img=card.querySelector("img");
 
     card.style.height=baseHeight+"px";
+
     updateRevealMask(img,distance);
+
     card.style.opacity=opacity;
     card.style.filter=`brightness(${brightness})`;
 
@@ -710,13 +928,21 @@ function render(position,finalMode=false,expansion=0){
       scale(${scale})
     `;
 
-    card.style.zIndex=String(1000-Math.round(abs*10));
-    card.style.visibility=opacity<=0?"hidden":"visible";
+    card.style.zIndex=String(
+      1000-Math.round(abs*10)
+    );
+
+    card.style.visibility=
+      opacity<=0?"hidden":"visible";
   });
 
+  /* FINAL ABREALE II EXPANSION */
+
   if(finalMode){
+
     const focus=cards[FOCUS_INDEX];
     const img=focus.querySelector("img");
+
     const eased=easeInOutCubic(expansion);
     const sectionHeight=section.clientHeight;
 
@@ -738,7 +964,8 @@ function render(position,finalMode=false,expansion=0){
       :Math.min(safeHeight,476);
 
     focus.style.height=(
-      baseHeight+(finalHeight-baseHeight)*eased
+      baseHeight+
+      (finalHeight-baseHeight)*eased
     )+"px";
 
     img.style.webkitMaskImage="none";
@@ -760,43 +987,123 @@ function render(position,finalMode=false,expansion=0){
 
 render(FOCUS_INDEX);
 
-/* LOCK SCROLL DURING FILM ANIMATION */
-function lockFilmScroll(){
-  if(scrollLocked)return;
+/* SCROLL PROTECTION */
 
-  scrollLocked=true;
+function preventFilmWheel(event){
+
+  if(!scrollLocked)return;
+
+  if(event.cancelable){
+    event.preventDefault();
+  }
+}
+
+function preventFilmKeys(event){
+
+  if(!scrollLocked)return;
+
+  const blockedKeys=[
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "PageUp",
+    "PageDown",
+    "Home",
+    "End",
+    " ",
+    "Spacebar"
+  ];
+
+  if(blockedKeys.includes(event.key)){
+    event.preventDefault();
+  }
+}
+
+window.addEventListener(
+  "wheel",
+  preventFilmWheel,
+  {passive:false,capture:true}
+);
+
+window.addEventListener(
+  "touchmove",
+  preventFilmWheel,
+  {passive:false,capture:true}
+);
+
+window.addEventListener(
+  "keydown",
+  preventFilmKeys,
+  {capture:true}
+);
+
+function enforceFilmPosition(){
+
+  if(!scrollLocked)return;
+
+  if(Math.abs(window.scrollY-lockedScrollY)>1){
+    window.scrollTo(0,lockedScrollY);
+  }
+}
+
+function lockFilmScroll(){
+
+  if(scrollLocked)return;
 
   const finalScroll=Math.max(
     0,
-    document.documentElement.scrollHeight-window.innerHeight
+    document.documentElement.scrollHeight-
+    window.innerHeight
   );
 
   document.documentElement.style.scrollBehavior="auto";
+  document.body.style.scrollBehavior="auto";
+
   window.scrollTo(0,finalScroll);
 
-  document.documentElement.classList.add("film-locked");
-  document.body.classList.add("film-locked");
+  lockedScrollY=window.scrollY;
+  scrollLocked=true;
+
+  document.documentElement.classList.add(
+    "film-locked"
+  );
+
+  document.body.classList.add(
+    "film-locked"
+  );
 }
 
 /* START FILM */
+
 function startFilmAnimation(){
+
   if(animationStarted)return;
 
   animationStarted=true;
+
   lockFilmScroll();
+
   stage.classList.add("revealed");
 
   animationStart=performance.now();
+
   requestAnimationFrame(animateFilm);
 }
 
-/* REVOLVING FILM AND ENLARGEMENT */
+/* REVOLVING FILM */
+
 function animateFilm(now){
+
+  enforceFilmPosition();
+
   const elapsed=now-animationStart;
 
   if(elapsed<RUN_DURATION){
+
     render(
-      FOCUS_INDEX+(elapsed/RUN_DURATION)*total
+      FOCUS_INDEX+
+      (elapsed/RUN_DURATION)*total
     );
 
     requestAnimationFrame(animateFilm);
@@ -816,15 +1123,28 @@ function animateFilm(now){
   );
 
   if(expansionProgress<1){
+
     requestAnimationFrame(animateFilm);
+
   }else{
+
     finished=true;
-    render(FOCUS_INDEX+total,true,1);
-    setTimeout(startSeamlessReturn,HOLD_DURATION);
+
+    render(
+      FOCUS_INDEX+total,
+      true,
+      1
+    );
+
+    setTimeout(
+      startSeamlessReturn,
+      HOLD_DURATION
+    );
   }
 }
 
-/* COLLAGE PREVIEW */
+/* ORIGINAL COLLAGE LAYOUT */
+
 const catalogueTiles=[
   ["guillem.jpg",0,0,12.2,27.5],
   ["body.jpg",12.2,0,23.4,27.5],
@@ -850,30 +1170,50 @@ const catalogueTiles=[
 ];
 
 catalogueTiles.forEach(([src,x,y,w,h])=>{
+
   const tile=document.createElement("div");
   tile.className="return-tile";
+
   tile.style.left=x+"%";
   tile.style.top=y+"%";
   tile.style.width=w+"%";
   tile.style.height=h+"%";
 
   if(src!=="abreale2.jpg"){
+
     const img=document.createElement("img");
+
     img.src=src;
     img.alt="";
+
+    if(
+      src==="body.jpg"||
+      src==="abreale1.jpg"||
+      src==="abreale3.jpg"
+    ){
+      img.style.objectPosition="50% 45%";
+    }
+
     tile.appendChild(img);
   }
 
   returnCatalogue.appendChild(tile);
 });
 
-/* ABREALE II RETURNS TO ITS COLLAGE TILE */
+/* RETURN TO ABREALE II COLLAGE TILE */
+
 function startSeamlessReturn(){
+
   if(returning)return;
+
   returning=true;
 
+  siteLogo.classList.add("return-hidden");
+
   const focus=cards[FOCUS_INDEX];
-  const origin=focus.querySelector("img").getBoundingClientRect();
+
+  const origin=
+    focus.querySelector("img").getBoundingClientRect();
 
   const destination={
     left:window.innerWidth*.41,
@@ -886,24 +1226,39 @@ function startSeamlessReturn(){
   flight.className="return-flight";
 
   const img=document.createElement("img");
+
   img.src="abreale2.jpg";
   img.alt="";
+
   flight.appendChild(img);
   returnScene.appendChild(flight);
 
   flight.style.width=origin.width+"px";
   flight.style.height=origin.height+"px";
-  flight.style.transform=
-    `translate3d(${origin.left}px,${origin.top}px,0)`;
+
+  flight.style.transform=`
+    translate3d(
+      ${origin.left}px,
+      ${origin.top}px,
+      0
+    )
+  `;
 
   returnScene.classList.add("active");
+
   focus.style.visibility="hidden";
 
   const start=performance.now();
 
   function tick(now){
-    const t=clamp((now-start)/RETURN_DURATION);
-    const e=easeInOutCubic(t);
+
+    enforceFilmPosition();
+
+    const t=clamp(
+      (now-start)/RETURN_DURATION
+    );
+
+    const eased=easeInOutCubic(t);
 
     stage.style.opacity=String(
       1-smoothstep(t/.65)
@@ -913,30 +1268,65 @@ function startSeamlessReturn(){
       smoothstep((t-.10)/.70)
     );
 
-    const x=lerp(origin.left,destination.left,e);
-    const y=lerp(origin.top,destination.top,e)
-      -Math.sin(Math.PI*t)*38;
+    const x=lerp(
+      origin.left,
+      destination.left,
+      eased
+    );
 
-    const w=lerp(origin.width,destination.width,e);
-    const h=lerp(origin.height,destination.height,e);
+    const y=lerp(
+      origin.top,
+      destination.top,
+      eased
+    )-Math.sin(Math.PI*t)*38;
+
+    const w=lerp(
+      origin.width,
+      destination.width,
+      eased
+    );
+
+    const h=lerp(
+      origin.height,
+      destination.height,
+      eased
+    );
 
     flight.style.width=w+"px";
     flight.style.height=h+"px";
-    flight.style.transform=
-      `translate3d(${x}px,${y}px,0)`;
+
+    flight.style.transform=`
+      translate3d(${x}px,${y}px,0)
+    `;
 
     if(t<1){
-      requestAnimationFrame(tick);
-    }else{
-      flight.style.width=destination.width+"px";
-      flight.style.height=destination.height+"px";
 
-      flight.style.transform=
-        `translate3d(${destination.left}px,${destination.top}px,0)`;
+      requestAnimationFrame(tick);
+
+    }else{
+
+      flight.style.width=
+        destination.width+"px";
+
+      flight.style.height=
+        destination.height+"px";
+
+      flight.style.transform=`
+        translate3d(
+          ${destination.left}px,
+          ${destination.top}px,
+          0
+        )
+      `;
 
       returnCatalogue.style.opacity="1";
 
       try{
+
+        sessionStorage.removeItem(
+          "integuments-return-flight"
+        );
+
         sessionStorage.setItem(
           "integuments-seamless-arrival",
           JSON.stringify({
@@ -944,6 +1334,7 @@ function startSeamlessReturn(){
             time:Date.now()
           })
         );
+
       }catch(error){}
 
       window.location.replace("page2.html");
@@ -953,23 +1344,31 @@ function startSeamlessReturn(){
   requestAnimationFrame(tick);
 }
 
-/* TEXT-TO-FILM TRANSITION */
+/* TEXT TO FILM TRANSITION */
+
 function updateScrollEffects(){
+
   if(scrollLocked)return;
 
   const fadeProgress=updateTextScroll();
-  const filmRect=section.getBoundingClientRect();
+
+  const filmRect=
+    section.getBoundingClientRect();
 
   if(
     fadeProgress>=1 &&
     filmRect.top<=window.innerHeight
   ){
-    stage.classList.add("revealed");
+
     startFilmAnimation();
+
   }else{
+
     stage.classList.remove("revealed");
   }
 }
+
+/* EVENTS */
 
 window.addEventListener(
   "scroll",
@@ -977,34 +1376,64 @@ window.addEventListener(
   {passive:true}
 );
 
-window.addEventListener("load",updateScrollEffects);
+window.addEventListener(
+  "load",
+  updateScrollEffects
+);
+
+/* RESIZE */
 
 let resizeTimer;
 
 window.addEventListener("resize",()=>{
+
   clearTimeout(resizeTimer);
-  resizeTimer=setTimeout(buildWordShadows,150);
+
+  resizeTimer=setTimeout(
+    buildFloatingShadows,
+    120
+  );
 
   if(scrollLocked){
+
     const finalScroll=Math.max(
       0,
-      document.documentElement.scrollHeight-window.innerHeight
+      document.documentElement.scrollHeight-
+      window.innerHeight
     );
+
     window.scrollTo(0,finalScroll);
+    lockedScrollY=window.scrollY;
+
   }else{
+
     updateScrollEffects();
   }
 
   if(finished){
-    render(FOCUS_INDEX+total,true,1);
+
+    render(
+      FOCUS_INDEX+total,
+      true,
+      1
+    );
+
   }else if(expanding){
-    render(FOCUS_INDEX+total,true,expansionProgress);
+
+    render(
+      FOCUS_INDEX+total,
+      true,
+      expansionProgress
+    );
+
   }else{
+
     render(currentPosition);
   }
 });
 
 updateScrollEffects();
+
 </script>
 </body>
 </html>

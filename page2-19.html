@@ -29,7 +29,7 @@ body{
   position:absolute;left:15.3%;
   top:calc(100vh - 190px);
   width:min(46vw,580px);
-  pointer-events:none;
+  pointer-events:auto;
 }
 .poem-space{
   position:relative;width:100%;
@@ -55,12 +55,16 @@ body{
   object-fit:fill;
 }
 
-/* WORD ECHOES */
+/* ORIGINAL WORD ECHOES — HOVER ACTIVATED */
 
 .word-shadows{
   position:absolute;inset:0;z-index:5;
   overflow:visible;pointer-events:none;
+  opacity:0;
+  transition:opacity 1400ms cubic-bezier(.45,0,.25,1);
 }
+.poem-space:hover .word-shadows{opacity:1}
+
 .word-shadow{
   position:absolute;
   background-repeat:no-repeat;
@@ -70,14 +74,18 @@ body{
   animation:wordFloat var(--duration)
     ease-in-out infinite alternate;
   animation-delay:var(--delay);
-  filter:drop-shadow(0 0 2px rgba(255,0,0,.30));
+  animation-play-state:paused;
+  filter:drop-shadow(0 0 2px rgba(255,0,0,.48));
+}
+.poem-space:hover .word-shadow{
+  animation-play-state:running;
 }
 .word-shadow.secondary{
   animation-name:wordFloatSecondary;
-  filter:drop-shadow(0 0 3px rgba(200,0,0,.22));
+  filter:drop-shadow(0 0 3px rgba(200,0,0,.34));
 }
 
-/* KOREAN — KEEP THE CURRENT SOFT ECHO */
+/* ORIGINAL KOREAN ANIMATION */
 
 @keyframes wordFloat{
   0%{
@@ -123,21 +131,21 @@ body{
   }
 }
 
-/* ENGLISH — EXACT 2-6 ECHO ANIMATION */
+/* ORIGINAL ENGLISH ANIMATION */
 
 .english-layer .word-shadow{
   animation-name:englishWordFloat;
   filter:
     brightness(1.45)
     saturate(1.2)
-    drop-shadow(0 0 2px rgba(255,0,0,.45));
+    drop-shadow(0 0 2px rgba(255,0,0,.60));
 }
 .english-layer .word-shadow.secondary{
   animation-name:englishWordFloatSecondary;
   filter:
     brightness(1.45)
     saturate(1.2)
-    drop-shadow(0 0 3px rgba(255,0,0,.3));
+    drop-shadow(0 0 3px rgba(255,0,0,.42));
 }
 @keyframes englishWordFloat{
   0%{
@@ -354,8 +362,6 @@ const stage=document.getElementById("film-stage");
 const returnScene=document.getElementById("return-scene");
 const returnCatalogue=document.getElementById("return-catalogue");
 
-/* KEEP THE ORIGINAL 2-19 LANGUAGE SPLIT */
-
 const KOREAN_END=.82;
 const ENGLISH_START=.91;
 
@@ -428,7 +434,7 @@ function prepareTextLayers(){
   return true;
 }
 
-/* CONNECTED LETTER AND WORD ECHOES */
+/* ORIGINAL CONNECTED LETTER AND WORD ECHOES */
 
 function buildWordShadows(original,container,region){
   if(!original.complete||!original.naturalWidth)return;
@@ -566,15 +572,6 @@ function buildWordShadows(original,container,region){
     original.getBoundingClientRect().width/naturalW;
   const displayW=naturalW*displayScale;
   const displayH=naturalH*displayScale;
-
-  /*
-    KOREAN: current 2-19 settings
-      170 fragments, close movement
-
-    ENGLISH: 2-6 settings
-      95 fragments, wider movement,
-      lighter opacity for readability
-  */
 
   const maxFragments=region==="english"?95:170;
   const step=Math.max(
