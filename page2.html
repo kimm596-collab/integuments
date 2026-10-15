@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>INTEGUMENTS — Photography</title>
 
 <style>
@@ -28,7 +29,7 @@ body{
   overscroll-behavior:none;
 }
 
-/* FULL-SCREEN COLLAGE PAGE */
+/* FULL SCREEN PHOTOGRAPHY PAGE */
 
 .page2{
   position:fixed;
@@ -41,7 +42,7 @@ body{
   isolation:isolate;
 }
 
-/* COLLAGE — ALWAYS VISIBLE */
+/* ORIGINAL COLLAGE */
 
 .collage{
   position:absolute;
@@ -50,15 +51,19 @@ body{
   width:100%;
   height:100%;
   overflow:hidden;
-  visibility:visible;
   opacity:1;
-  filter:none;
-  transform:scale(1);
-  transform-origin:center center;
+  visibility:visible;
+  transform:none;
+  transform-origin:center;
   pointer-events:auto;
+
+  filter:none;
+
+  transition:
+    filter 2000ms cubic-bezier(.45,0,.55,1);
 }
 
-/* INDIVIDUAL IMAGE TILES */
+/* PHOTOGRAPHY TILES */
 
 .tile{
   position:absolute;
@@ -74,7 +79,6 @@ body{
   height:100%;
   object-fit:cover;
   object-position:center;
-  transform:none;
   border:0;
   user-select:none;
   -webkit-user-drag:none;
@@ -83,10 +87,10 @@ body{
 .tile:focus-visible{
   outline:2px solid #E60000;
   outline-offset:-2px;
-  z-index:10;
+  z-index:20;
 }
 
-/* TOP ROW */
+/* ORIGINAL TOP ROW */
 
 .p01{left:0%;top:0%;width:12.2%;height:27.5%}
 .p02{left:12.2%;top:0%;width:23.4%;height:27.5%}
@@ -94,7 +98,7 @@ body{
 .p04{left:47.8%;top:0%;width:27.8%;height:27.5%}
 .p05{left:75.6%;top:0%;width:24.4%;height:27.5%}
 
-/* MIDDLE ROW */
+/* ORIGINAL MIDDLE ROW */
 
 .p06{left:0%;top:27.5%;width:14.2%;height:33%}
 .p07{left:14.2%;top:27.5%;width:14.2%;height:33%}
@@ -103,7 +107,7 @@ body{
 .p10{left:53.8%;top:27.5%;width:29.2%;height:33%}
 .p11{left:83%;top:27.5%;width:17%;height:33%}
 
-/* BOTTOM SECTION */
+/* ORIGINAL BOTTOM SECTION */
 
 .p12{left:0%;top:60.5%;width:32.6%;height:39.5%}
 .p13{left:32.6%;top:60.5%;width:14.6%;height:17%}
@@ -112,7 +116,7 @@ body{
 .p16{left:77.2%;top:60.5%;width:10.2%;height:17%}
 .p17{left:87.4%;top:60.5%;width:12.6%;height:39.5%}
 
-/* BOTTOM STRIP */
+/* ORIGINAL BOTTOM STRIP */
 
 .p18{left:32.6%;top:77.5%;width:16%;height:22.5%}
 .p19{left:48.6%;top:77.5%;width:10.5%;height:22.5%}
@@ -126,23 +130,31 @@ body{
 .p03 img{object-position:50% 50%}
 .p04 img{object-position:50% 45%}
 .p05 img{object-position:50% 50%}
+
 .p06 img{object-position:50% 50%}
 .p07 img{object-position:50% 50%}
 .p08 img{object-position:50% 50%}
 .p09 img{object-position:50% 50%}
 .p10 img{object-position:50% 50%}
 .p11 img{object-position:50% 45%}
+
 .p12 img{object-position:50% 50%}
 .p13 img{object-position:50% 50%}
 .p14 img{object-position:50% 50%}
-.p15 img{object-fit:cover;object-position:center center}
+.p15 img{object-position:center center}
 .p16 img{object-position:50% 50%}
 .p17 img{object-position:50% 50%}
+
 .p18 img{object-position:50% 50%}
 .p19 img{object-position:50% 50%}
 .p20 img{object-position:50% 50%}
-.p21 img{object-fit:cover;object-position:center center}
+.p21 img{object-position:center center}
 
+@media (prefers-reduced-motion:reduce){
+  .collage{
+    transition:none;
+  }
+}
 </style>
 </head>
 
@@ -150,100 +162,98 @@ body{
 
 <main class="page2">
 
-  <!-- FULL-SCREEN PHOTOGRAPHY COLLAGE -->
-
   <div class="collage" id="collage">
 
     <!-- TOP ROW -->
 
     <a class="tile p01" href="page2-1.html">
-      <img src="guillem.jpg" alt="Guillem">
+      <img src="guillem.jpg" alt="Guillem" decoding="async">
     </a>
 
     <a class="tile p02" href="page2-2.html">
-      <img src="body.jpg" alt="Body">
+      <img src="body.jpg" alt="Body" decoding="async">
     </a>
 
     <a class="tile p03" href="page2-3.html">
-      <img src="jamie.jpg" alt="Jamie">
+      <img src="jamie.jpg" alt="Jamie" decoding="async">
     </a>
 
     <a class="tile p04" href="page2-4.html">
-      <img src="abreale1.jpg" alt="Abreale 1">
+      <img src="abreale1.jpg" alt="Abreale 1" decoding="async">
     </a>
 
     <a class="tile p05" href="page2-5.html">
-      <img src="light1.jpg" alt="Light 1">
+      <img src="light1.jpg" alt="Light 1" decoding="async">
     </a>
 
     <!-- MIDDLE ROW -->
 
     <a class="tile p06" href="page2-6.html">
-      <img src="annecy.jpg" alt="Annecy">
+      <img src="annecy.jpg" alt="Annecy" decoding="async">
     </a>
 
     <a class="tile p07" href="page2-7.html">
-      <img src="paris.jpg" alt="Paris">
+      <img src="paris.jpg" alt="Paris" decoding="async">
     </a>
 
     <a class="tile p08" href="page2-8.html">
-      <img src="spiral.jpg" alt="Spiral">
+      <img src="spiral.jpg" alt="Spiral" decoding="async">
     </a>
 
     <a class="tile p09" href="page2-9.html">
-      <img src="abreale2.jpg" alt="Abreale 2">
+      <img src="abreale2.jpg" alt="Abreale 2" decoding="async">
     </a>
 
     <a class="tile p10" href="page2-10.html">
-      <img src="soho.jpg" alt="Soho">
+      <img src="soho.jpg" alt="Soho" decoding="async">
     </a>
 
     <a class="tile p11" href="page2-11.html">
-      <img src="abreale3.jpg" alt="Abreale 3">
+      <img src="abreale3.jpg" alt="Abreale 3" decoding="async">
     </a>
 
     <!-- BOTTOM SECTION -->
 
     <a class="tile p12" href="page2-12.html">
-      <img src="abreale4.jpg" alt="Abreale 4">
+      <img src="abreale4.jpg" alt="Abreale 4" decoding="async">
     </a>
 
     <a class="tile p13" href="page2-13.html">
-      <img src="poles.jpg" alt="Poles">
+      <img src="poles.jpg" alt="Poles" decoding="async">
     </a>
 
     <a class="tile p14" href="page2-15.html">
-      <img src="light2.jpg" alt="Light 2">
+      <img src="light2.jpg" alt="Light 2" decoding="async">
     </a>
 
     <a class="tile p15" href="page2-17.html">
-      <img src="abreale6.jpg" alt="Abreale 6">
+      <img src="abreale6.jpg" alt="Abreale 6" decoding="async">
     </a>
 
     <a class="tile p16" href="page2-19.html">
-      <img src="amsterdam.jpg" alt="Amsterdam">
+      <img src="amsterdam.jpg" alt="Amsterdam" decoding="async">
     </a>
 
     <a class="tile p17" href="page2-21.html">
-      <img src="nyc.jpg" alt="NYC">
+      <img src="nyc.jpg" alt="NYC" decoding="async">
     </a>
 
     <!-- BOTTOM STRIP -->
 
     <a class="tile p18" href="page2-14.html">
-      <img src="morris.jpg" alt="Morris">
+      <img src="morris.jpg" alt="Morris" decoding="async">
     </a>
 
     <a class="tile p19" href="page2-16.html">
-      <img src="abreale5.jpg" alt="Abreale 5">
+      <img src="abreale5.jpg" alt="Abreale 5" decoding="async">
     </a>
 
     <a class="tile p20" href="page2-18.html">
-      <img src="ice.jpg" alt="Ice">
+      <img src="ice.jpg" alt="Ice" decoding="async">
     </a>
 
     <a class="tile p21" href="page2-20.html">
-      <img src="abreale7.jpg" alt="Abreale 7">
+      <img src="abreale7.jpg" alt="Abreale 7" decoding="async">
     </a>
 
   </div>
@@ -251,77 +261,37 @@ body{
 </main>
 
 <script>
-
-/* COLLAGE ELEMENTS */
+"use strict";
 
 const collage=document.getElementById("collage");
 const images=[...collage.querySelectorAll("img")];
 
-/* IMAGE LOADING */
+/*
+  ORIGINAL COLOR PALETTES
 
-function waitForImage(img){
-  return new Promise(resolve=>{
-    if(img.complete){
-      resolve();
-      return;
-    }
+  These preserve the same color sequence.
+  Only the animation method is optimized.
+*/
 
-    img.addEventListener("load",resolve,{once:true});
-    img.addEventListener("error",resolve,{once:true});
-  });
-}
+const originalRed=
+  "grayscale(0) sepia(0) hue-rotate(0deg) saturate(1) brightness(1)";
 
-/* ORIGINAL COLOR PALETTES — UNCHANGED */
+const blackWhite=
+  "grayscale(1) sepia(0) hue-rotate(0deg) saturate(1) brightness(1.04)";
 
-const originalRed={
-  grayscale:0,
-  sepia:0,
-  hue:0,
-  saturation:1,
-  brightness:1
-};
+const icyBlue=
+  "grayscale(1) sepia(.30) hue-rotate(165deg) saturate(.85) brightness(1.02)";
 
-const blackWhite={
-  grayscale:1,
-  sepia:0,
-  hue:0,
-  saturation:1,
-  brightness:1.04
-};
+const emerald=
+  "grayscale(1) sepia(.38) hue-rotate(95deg) saturate(.9) brightness(.99)";
 
-const icyBlue={
-  grayscale:1,
-  sepia:.30,
-  hue:165,
-  saturation:.85,
-  brightness:1.02
-};
+const mutedPurple=
+  "grayscale(1) sepia(.30) hue-rotate(235deg) saturate(.75) brightness(1)";
 
-const emerald={
-  grayscale:1,
-  sepia:.38,
-  hue:95,
-  saturation:.9,
-  brightness:.99
-};
+const warmMonochrome=
+  "grayscale(1) sepia(.25) hue-rotate(0deg) saturate(.75) brightness(.98)";
 
-const mutedPurple={
-  grayscale:1,
-  sepia:.30,
-  hue:235,
-  saturation:.75,
-  brightness:1
-};
-
-const warmMonochrome={
-  grayscale:1,
-  sepia:.25,
-  hue:0,
-  saturation:.75,
-  brightness:.98
-};
-
-/* SAME ORIGINAL COLOR ORDER */
+/* ORIGINAL COLOR ORDER */
 
 const colorStages=[
   originalRed,
@@ -337,96 +307,57 @@ const colorStages=[
   originalRed
 ];
 
-/* SAME ORIGINAL COLOR TIMING */
-
 const transitionDuration=2000;
 
-let transitionStart=null;
 let currentStage=0;
+let colorTimer=null;
 let colorCycleStarted=false;
 
-function lerp(a,b,t){
-  return a+(b-a)*t;
-}
+/*
+  PERFORMANCE OPTIMIZATION
 
-function smoothstep(t){
-  t=Math.max(0,Math.min(1,t));
-  return t*t*(3-2*t);
-}
+  The previous code recalculated the filter
+  continuously with requestAnimationFrame.
 
-function interpolateFilter(a,b,t){
-  return {
-    grayscale:lerp(a.grayscale,b.grayscale,t),
-    sepia:lerp(a.sepia,b.sepia,t),
-    hue:lerp(a.hue,b.hue,t),
-    saturation:lerp(a.saturation,b.saturation,t),
-    brightness:lerp(a.brightness,b.brightness,t)
-  };
-}
+  This version changes the filter target
+  once every two seconds.
 
-function filterToCSS(f){
-  return `
-    grayscale(${f.grayscale})
-    sepia(${f.sepia})
-    hue-rotate(${f.hue}deg)
-    saturate(${f.saturation})
-    brightness(${f.brightness})
-  `;
-}
+  CSS handles the transition in between.
+*/
 
-/* ORIGINAL CONTINUOUS COLOR ANIMATION */
+function advanceColor(){
+  currentStage=
+    (currentStage+1)%colorStages.length;
 
-function animateColors(now){
-  if(transitionStart===null){
-    transitionStart=now;
-  }
-
-  const elapsed=now-transitionStart;
-
-  if(elapsed>=transitionDuration){
-    const completed=Math.floor(
-      elapsed/transitionDuration
-    );
-
-    currentStage=(
-      currentStage+completed
-    )%colorStages.length;
-
-    transitionStart+=completed*transitionDuration;
-  }
-
-  const progress=smoothstep(
-    (now-transitionStart)/transitionDuration
-  );
-
-  const nextStage=(
-    currentStage+1
-  )%colorStages.length;
-
-  collage.style.filter=filterToCSS(
-    interpolateFilter(
-      colorStages[currentStage],
-      colorStages[nextStage],
-      progress
-    )
-  );
-
-  requestAnimationFrame(animateColors);
+  collage.style.filter=
+    colorStages[currentStage];
 }
 
 function startColorCycle(){
   if(colorCycleStarted)return;
 
   colorCycleStarted=true;
-  transitionStart=null;
   currentStage=0;
 
-  collage.style.filter=filterToCSS(originalRed);
+  collage.style.transition="none";
+  collage.style.filter=originalRed;
 
-  requestAnimationFrame(animateColors);
+  /* Allow the original collage to paint first. */
+
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      collage.style.transition=
+        "filter 2000ms cubic-bezier(.45,0,.55,1)";
+
+      colorTimer=setInterval(
+        advanceColor,
+        transitionDuration
+      );
+    });
+  });
 }
 
-/* HANDLE ARRIVALS FROM ALL FILM PAGES */
+/* KEEP ORIGINAL ARRIVAL HANDLING */
 
 function checkArrival(){
   try{
@@ -478,35 +409,57 @@ function checkArrival(){
 
 const arrivingFromAnotherPage=checkArrival();
 
-/*
-  The collage is now the ONLY scene on page2.html.
-
-  Whether the visitor arrives from:
-  - page1.html
-  - page2-1.html
-  - page2-2.html
-  - page2-3.html
-  - any other film page
-
-  the red opening is never displayed.
-*/
-
 /* INITIAL COLLAGE STATE */
 
 collage.style.opacity="1";
 collage.style.visibility="visible";
-collage.style.transform="scale(1)";
-collage.style.filter=filterToCSS(originalRed);
+collage.style.transform="none";
+collage.style.filter=originalRed;
 
-/* PRELOAD IMAGES AND START COLOR CYCLE */
+/*
+  Load images asynchronously.
 
-Promise.all(
-  images.map(waitForImage)
-).then(()=>{
-  startColorCycle();
+  Do not block the collage on Promise.all.
+  Begin the color cycle after initial paint.
+*/
+
+images.forEach(img=>{
+  img.loading="eager";
+  img.decoding="async";
 });
 
-/* NO SCROLL REVEAL OR RED INTRO ON THIS PAGE */
+/* START COLOR TRANSITIONS */
+
+if(document.readyState==="complete"){
+  startColorCycle();
+}else{
+  window.addEventListener(
+    "load",
+    startColorCycle,
+    {once:true}
+  );
+}
+
+/* PAUSE COLOR WORK WHEN TAB IS HIDDEN */
+
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+    if(document.hidden){
+      if(colorTimer!==null){
+        clearInterval(colorTimer);
+        colorTimer=null;
+      }
+    }else if(colorCycleStarted && colorTimer===null){
+      colorTimer=setInterval(
+        advanceColor,
+        transitionDuration
+      );
+    }
+  }
+);
+
+/* NO RED OPENING ON PAGE 2 */
 
 if("scrollRestoration" in history){
   history.scrollRestoration="manual";
