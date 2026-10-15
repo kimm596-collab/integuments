@@ -56,7 +56,7 @@ body{
   will-change:opacity;
 }
 
-/* CENTERED TITLE POSITION */
+/* ORIGINAL TITLE POSITION */
 
 .title-position{
   position:absolute;
@@ -68,7 +68,7 @@ body{
   pointer-events:none;
 }
 
-/* MATTE EMBOSSED TITLE */
+/* ORIGINAL MATTE EMBOSSED TITLE */
 
 .intro-title{
   position:relative;
@@ -216,7 +216,7 @@ body{
 
 <main class="page1">
 
-  <!-- RED OPENING SCREEN -->
+  <!-- ORIGINAL RED OPENING SCREEN -->
 
   <section class="intro" id="intro">
     <div class="title-position">
@@ -325,32 +325,45 @@ const images=[...collage.querySelectorAll("img")];
 const intro=document.getElementById("intro");
 const introTitle=document.getElementById("introTitle");
 
-/* PRECISE TITLE CENTERING USING ACTUAL RENDERED TEXT */
+/* EXACT ORIGINAL TITLE CENTERING */
 
 let titleScale=1;
 let titleLeft=0;
 
 function fitIntroTitle(){
+  const style=getComputedStyle(introTitle);
 
-  /* Measure the title as Chrome actually renders it,
-     including its font, weight and letter spacing. */
+  const canvas=document.createElement("canvas");
+  const ctx=canvas.getContext("2d");
 
-  introTitle.style.transform="none";
-  introTitle.style.left="0px";
+  ctx.font=`
+    ${style.fontWeight}
+    ${style.fontSize}
+    ${style.fontFamily}
+  `;
 
-  const actualWidth=introTitle.getBoundingClientRect().width;
+  const metrics=ctx.measureText("INTEGUMENTS");
 
-  if(!actualWidth)return;
+  const letterSpacing=parseFloat(style.letterSpacing)||0;
 
-  /* Fill 97% of the viewport, with equal side margins. */
+  const spacingWidth=
+    letterSpacing*("INTEGUMENTS".length-1);
 
-  const desiredWidth=window.innerWidth*.97;
+  const actualLeft=metrics.actualBoundingBoxLeft;
+  const actualRight=metrics.actualBoundingBoxRight;
 
-  titleScale=desiredWidth/actualWidth;
+  const visibleWidth=
+    actualLeft+actualRight+spacingWidth;
 
-  /* Center the scaled element, not a canvas estimate. */
+  const desiredWidth=window.innerWidth*.98;
 
-  titleLeft=(window.innerWidth-desiredWidth)/2;
+  titleScale=desiredWidth/visibleWidth;
+
+  const leftInkOffset=actualLeft*titleScale;
+
+  titleLeft=
+    (window.innerWidth-desiredWidth)/2+
+    leftInkOffset;
 
   introTitle.style.left=titleLeft+"px";
 
@@ -529,7 +542,7 @@ let currentProgress=0;
 let lastFrameTime=0;
 let imagesReady=false;
 
-/* TRANSITION TO COLLAGE PAGE */
+/* NEW: TRANSITION TO COLLAGE PAGE */
 
 let handoffStarted=false;
 let handoffTimer=null;
@@ -549,6 +562,8 @@ function getScrollProgress(){
 }
 
 function updateVisuals(){
+
+  /* SAME ORIGINAL EASING */
 
   const p=smoothstep(currentProgress);
 
@@ -581,6 +596,8 @@ function updateVisuals(){
   intro.style.pointerEvents=
     fullyRevealed?"none":"auto";
 
+  /* KEEP ORIGINAL COLOR ANIMATION */
+
   if(
     fullyRevealed &&
     imagesReady &&
@@ -589,7 +606,16 @@ function updateVisuals(){
     startColorCycle();
   }
 
-  /* PAGE HANDOFF */
+  /*
+    NEW PAGE HANDOFF.
+
+    Wait until the original collage reveal
+    is completely finished before opening
+    page2.html.
+
+    The short delay allows the final collage
+    frame to settle visually.
+  */
 
   if(
     fullyRevealed &&
@@ -611,6 +637,11 @@ function updateVisuals(){
       window.location.replace("page2.html");
     },450);
   }
+
+  /*
+    If the visitor scrolls upward before
+    the reveal finishes, do not navigate.
+  */
 
   if(
     !fullyRevealed &&
@@ -669,7 +700,7 @@ window.scrollTo(0,0);
 targetProgress=0;
 currentProgress=0;
 
-/* INITIAL RENDER */
+/* ORIGINAL INITIAL RENDER */
 
 fitIntroTitle();
 updateVisuals();
