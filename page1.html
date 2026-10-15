@@ -4,65 +4,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INTEGUMENTS — Opening</title>
+<title>INTEGUMENTS</title>
 
 <style>
+:root{
+  --red:#E60000;
+  --red-filter:grayscale(1) sepia(1) saturate(9)
+    hue-rotate(320deg) brightness(.93) contrast(1.1);
+}
+
 *{
   box-sizing:border-box;
 }
 
 html{
   margin:0;
+  background:var(--red);
   scroll-behavior:auto;
   overscroll-behavior-y:none;
 }
 
 body{
   margin:0;
-  width:100%;
-  min-height:220vh;
-  min-height:220dvh;
+  min-height:240vh;
+  min-height:240dvh;
   overflow-x:hidden;
-  background:#E60000;
+  background:var(--red);
   overscroll-behavior-y:none;
 }
 
-.page1{
+.scene{
   position:fixed;
   inset:0;
   height:100vh;
   height:100dvh;
   overflow:hidden;
-  background:#E60000;
   isolation:isolate;
+  background:var(--red);
 }
 
-/* ORIGINAL RED OPENING */
+/* RED OPENING */
 
 .intro{
   position:absolute;
   inset:0;
   z-index:5;
-  background:#E60000;
+  background:var(--red);
   opacity:1;
   pointer-events:none;
-  will-change:opacity;
 }
-
-/* ORIGINAL TITLE PLACEMENT */
 
 .title-position{
   position:absolute;
-  inset:auto 0 3% 0;
-  pointer-events:none;
-  overflow:visible;
+  left:0;
+  right:0;
+  bottom:3%;
 }
 
 .intro-title{
   position:relative;
   display:block;
   width:max-content;
-  max-width:none;
   margin:0;
   padding:0;
 
@@ -80,7 +82,6 @@ body{
   line-height:.82;
   letter-spacing:-.065em;
   white-space:nowrap;
-
   color:#a50000;
 
   text-shadow:
@@ -97,28 +98,42 @@ body{
   will-change:transform,opacity;
 }
 
-/* PHOTOGRAPHY COLLAGE */
+/* COMPLETE PHOTOGRAPHY COLLAGE */
 
 .collage{
   position:absolute;
   inset:0;
   z-index:10;
-  width:100%;
-  height:100%;
   overflow:hidden;
-  visibility:visible;
+  background:var(--red);
+
   opacity:0;
-  transform:scale(1.025);
+  visibility:hidden;
+  transform:scale(1.018);
   transform-origin:center;
+
   pointer-events:none;
   will-change:opacity,transform;
-  background:#1e1e1e;
+}
+
+.collage-images{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  background:var(--red);
+
+  filter:var(--red-filter);
+  transition:none;
 }
 
 .tile{
   position:absolute;
   display:block;
   overflow:hidden;
+  background:var(--red);
+  text-decoration:none;
+  cursor:pointer;
 }
 
 .tile img{
@@ -132,7 +147,13 @@ body{
   -webkit-user-drag:none;
 }
 
-/* ORIGINAL 21 IMAGE POSITIONS */
+.tile:focus-visible{
+  outline:2px solid #fff;
+  outline-offset:-2px;
+  z-index:30;
+}
+
+/* EXACT 21-IMAGE COLLAGE LAYOUT */
 
 .p01{left:0%;top:0%;width:12.2%;height:27.5%}
 .p02{left:12.2%;top:0%;width:23.4%;height:27.5%}
@@ -159,24 +180,20 @@ body{
 .p20{left:59.1%;top:77.5%;width:18.1%;height:22.5%}
 .p21{left:77.2%;top:77.5%;width:10.2%;height:22.5%}
 
-/* ORIGINAL IMAGE CROPPING */
-
 .p02 img,
 .p04 img,
 .p11 img{
   object-position:50% 45%;
 }
 
-.p15 img,
-.p21 img{
-  object-position:center center;
-}
-
-@media (prefers-reduced-motion:reduce){
-  .intro,
+@media(prefers-reduced-motion:reduce){
   .collage,
   .intro-title{
     will-change:auto;
+  }
+
+  .collage-images{
+    transition:none!important;
   }
 }
 </style>
@@ -184,103 +201,44 @@ body{
 
 <body>
 
-<main class="page1">
+<main class="scene">
 
   <section class="intro" id="intro">
     <div class="title-position">
-      <h1 class="intro-title" id="introTitle">
-        INTEGUMENTS
-      </h1>
+      <h1 class="intro-title" id="title">INTEGUMENTS</h1>
     </div>
   </section>
 
-  <div class="collage" id="collage">
+  <section class="collage" id="collage" aria-label="Photography catalogue">
+    <div class="collage-images" id="collageImages">
 
-    <div class="tile p01">
-      <img src="guillem.jpg" alt="Guillem" decoding="async">
+      <a class="tile p01" href="page2-1.html"><img src="guillem.jpg" alt="Guillem"></a>
+      <a class="tile p02" href="page2-2.html"><img src="body.jpg" alt="Body"></a>
+      <a class="tile p03" href="page2-3.html"><img src="jamie.jpg" alt="Jamie"></a>
+      <a class="tile p04" href="page2-4.html"><img src="abreale1.jpg" alt="Abreale 1"></a>
+      <a class="tile p05" href="page2-5.html"><img src="light1.jpg" alt="Light 1"></a>
+
+      <a class="tile p06" href="page2-6.html"><img src="annecy.jpg" alt="Annecy"></a>
+      <a class="tile p07" href="page2-7.html"><img src="paris.jpg" alt="Paris"></a>
+      <a class="tile p08" href="page2-8.html"><img src="spiral.jpg" alt="Spiral"></a>
+      <a class="tile p09" href="page2-9.html"><img src="abreale2.jpg" alt="Abreale 2"></a>
+      <a class="tile p10" href="page2-10.html"><img src="soho.jpg" alt="Soho"></a>
+      <a class="tile p11" href="page2-11.html"><img src="abreale3.jpg" alt="Abreale 3"></a>
+
+      <a class="tile p12" href="page2-12.html"><img src="abreale4.jpg" alt="Abreale 4"></a>
+      <a class="tile p13" href="page2-13.html"><img src="poles.jpg" alt="Poles"></a>
+      <a class="tile p14" href="page2-15.html"><img src="light2.jpg" alt="Light 2"></a>
+      <a class="tile p15" href="page2-17.html"><img src="abreale6.jpg" alt="Abreale 6"></a>
+      <a class="tile p16" href="page2-19.html"><img src="amsterdam.jpg" alt="Amsterdam"></a>
+      <a class="tile p17" href="page2-21.html"><img src="nyc.jpg" alt="NYC"></a>
+
+      <a class="tile p18" href="page2-14.html"><img src="morris.jpg" alt="Morris"></a>
+      <a class="tile p19" href="page2-16.html"><img src="abreale5.jpg" alt="Abreale 5"></a>
+      <a class="tile p20" href="page2-18.html"><img src="ice.jpg" alt="Ice"></a>
+      <a class="tile p21" href="page2-20.html"><img src="abreale7.jpg" alt="Abreale 7"></a>
+
     </div>
-
-    <div class="tile p02">
-      <img src="body.jpg" alt="Body" decoding="async">
-    </div>
-
-    <div class="tile p03">
-      <img src="jamie.jpg" alt="Jamie" decoding="async">
-    </div>
-
-    <div class="tile p04">
-      <img src="abreale1.jpg" alt="Abreale 1" decoding="async">
-    </div>
-
-    <div class="tile p05">
-      <img src="light1.jpg" alt="Light 1" decoding="async">
-    </div>
-
-    <div class="tile p06">
-      <img src="annecy.jpg" alt="Annecy" decoding="async">
-    </div>
-
-    <div class="tile p07">
-      <img src="paris.jpg" alt="Paris" decoding="async">
-    </div>
-
-    <div class="tile p08">
-      <img src="spiral.jpg" alt="Spiral" decoding="async">
-    </div>
-
-    <div class="tile p09">
-      <img src="abreale2.jpg" alt="Abreale 2" decoding="async">
-    </div>
-
-    <div class="tile p10">
-      <img src="soho.jpg" alt="Soho" decoding="async">
-    </div>
-
-    <div class="tile p11">
-      <img src="abreale3.jpg" alt="Abreale 3" decoding="async">
-    </div>
-
-    <div class="tile p12">
-      <img src="abreale4.jpg" alt="Abreale 4" decoding="async">
-    </div>
-
-    <div class="tile p13">
-      <img src="poles.jpg" alt="Poles" decoding="async">
-    </div>
-
-    <div class="tile p14">
-      <img src="light2.jpg" alt="Light 2" decoding="async">
-    </div>
-
-    <div class="tile p15">
-      <img src="abreale6.jpg" alt="Abreale 6" decoding="async">
-    </div>
-
-    <div class="tile p16">
-      <img src="amsterdam.jpg" alt="Amsterdam" decoding="async">
-    </div>
-
-    <div class="tile p17">
-      <img src="nyc.jpg" alt="NYC" decoding="async">
-    </div>
-
-    <div class="tile p18">
-      <img src="morris.jpg" alt="Morris" decoding="async">
-    </div>
-
-    <div class="tile p19">
-      <img src="abreale5.jpg" alt="Abreale 5" decoding="async">
-    </div>
-
-    <div class="tile p20">
-      <img src="ice.jpg" alt="Ice" decoding="async">
-    </div>
-
-    <div class="tile p21">
-      <img src="abreale7.jpg" alt="Abreale 7" decoding="async">
-    </div>
-
-  </div>
+  </section>
 
 </main>
 
@@ -288,25 +246,97 @@ body{
 "use strict";
 
 const intro=document.getElementById("intro");
-const title=document.getElementById("introTitle");
+const title=document.getElementById("title");
 const collage=document.getElementById("collage");
+const collageImages=document.getElementById("collageImages");
 const images=[...collage.querySelectorAll("img")];
+
+const RED="grayscale(1) sepia(1) saturate(9) hue-rotate(320deg) brightness(.93) contrast(1.1)";
+const BW="grayscale(1) sepia(0) saturate(1) brightness(1.04)";
+const BLUE="grayscale(1) sepia(.30) hue-rotate(165deg) saturate(.85) brightness(1.02)";
+const GREEN="grayscale(1) sepia(.38) hue-rotate(95deg) saturate(.9) brightness(.99)";
+const PURPLE="grayscale(1) sepia(.30) hue-rotate(235deg) saturate(.75) brightness(1)";
+const WARM="grayscale(1) sepia(.25) hue-rotate(0deg) saturate(.75) brightness(.98)";
+
+const colors=[
+  RED,BW,RED,BLUE,RED,GREEN,
+  RED,PURPLE,RED,WARM,RED
+];
+
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const ease=t=>{
+  t=clamp(t);
+  return t*t*(3-2*t);
+};
 
 let titleScale=1;
 let titleLeft=0;
-let scrollFrame=0;
-let redirectTimer=null;
-let navigating=false;
+let frame=0;
+let allReady=false;
+let requestedProgress=0;
+let visibleProgress=0;
+let colorStarted=false;
+let colorIndex=0;
+let colorTimer=null;
+let colorStartTimer=null;
 
-const clamp=(v,min=0,max=1)=>
-  Math.max(min,Math.min(max,v));
+/* IMAGE LOADING */
 
-function smoothstep(t){
-  t=clamp(t);
-  return t*t*(3-2*t);
+/*
+  Keep the opening visible until every
+  photograph has loaded and decoded.
+
+  Never reveal an incomplete collage.
+*/
+
+function prepareImage(img){
+  img.loading="eager";
+  img.decoding="async";
+  img.fetchPriority="high";
+
+  return new Promise(resolve=>{
+    function finish(){
+      if(!img.naturalWidth){
+        resolve(false);
+        return;
+      }
+
+      if(typeof img.decode==="function"){
+        img.decode()
+          .then(()=>resolve(true))
+          .catch(()=>resolve(true));
+      }else{
+        resolve(true);
+      }
+    }
+
+    if(img.complete){
+      finish();
+    }else{
+      img.addEventListener("load",finish,{once:true});
+      img.addEventListener(
+        "error",
+        ()=>resolve(false),
+        {once:true}
+      );
+    }
+  });
 }
 
-/* CENTER THE ACTUAL RENDERED TITLE */
+Promise.all(images.map(prepareImage)).then(results=>{
+  if(results.every(Boolean)){
+    allReady=true;
+    collage.style.visibility="visible";
+    updateScroll();
+  }else{
+    console.error(
+      "INTEGUMENTS: One or more photographs failed to load.",
+      images.filter(img=>!img.naturalWidth).map(img=>img.src)
+    );
+  }
+});
+
+/* TITLE CENTERING */
 
 function fitTitle(){
   title.style.transform="none";
@@ -325,96 +355,122 @@ function fitTitle(){
   updateScroll();
 }
 
-/* DIRECT SCROLL RESPONSE — NO DELAYED SMOOTHING */
+/* SCROLL PROGRESS */
 
 function getProgress(){
-  const maxScroll=Math.max(
+  const max=Math.max(
     1,
     document.documentElement.scrollHeight-
     window.innerHeight
   );
 
-  return clamp(window.scrollY/maxScroll);
+  return clamp(window.scrollY/max);
 }
+
+/*
+  The scroll is always recorded immediately.
+
+  The collage only becomes visible after
+  all 21 photographs are ready.
+*/
 
 function updateScroll(){
-  scrollFrame=0;
+  frame=0;
 
-  if(navigating)return;
+  requestedProgress=getProgress();
 
-  const progress=getProgress();
-
-  /* Reveal begins during scrolling, not afterward. */
-
-  const reveal=smoothstep(
-    clamp((progress-.035)/.90)
-  );
-
-  intro.style.opacity=String(1-reveal);
-  collage.style.opacity=String(reveal);
-
-  const scale=1.025-(reveal*.025);
-
-  collage.style.transform=`scale(${scale})`;
-
-  title.style.transform=
-    `translateY(${-progress*35}px) scaleX(${titleScale})`;
-
-  title.style.opacity=String(
-    1-smoothstep(clamp(progress/.76))
-  );
-
-  /*
-    Navigate only after reaching the bottom.
-    Cancel navigation if the visitor scrolls back.
-  */
-
-  if(progress>=.998){
-    if(redirectTimer===null){
-      redirectTimer=setTimeout(
-        goToPage2,
-        1050
-      );
-    }
-  }else{
-    if(redirectTimer!==null){
-      clearTimeout(redirectTimer);
-      redirectTimer=null;
-    }
-  }
-}
-
-function requestScrollUpdate(){
-  if(scrollFrame)return;
-
-  scrollFrame=requestAnimationFrame(updateScroll);
-}
-
-/* PAGE 2 HANDOFF */
-
-function goToPage2(){
-  if(navigating)return;
-
-  if(getProgress()<.998){
-    redirectTimer=null;
+  if(!allReady){
+    intro.style.opacity="1";
+    collage.style.opacity="0";
+    collage.style.pointerEvents="none";
+    stopColors();
     return;
   }
 
-  navigating=true;
+  visibleProgress=requestedProgress;
 
-  try{
-    sessionStorage.setItem(
-      "integuments-from-page1",
-      JSON.stringify({
-        time:Date.now()
-      })
-    );
-  }catch(error){}
+  const reveal=ease(
+    clamp((visibleProgress-.035)/.91)
+  );
 
-  window.location.replace("page2.html");
+  collage.style.opacity=String(reveal);
+  collage.style.transform=
+    `scale(${1.018-reveal*.018})`;
+
+  intro.style.opacity=String(1-reveal);
+
+  title.style.transform=
+    `translateY(${-visibleProgress*35}px) scaleX(${titleScale})`;
+
+  title.style.opacity=String(
+    1-ease(clamp(visibleProgress/.78))
+  );
+
+  const fullyOpen=visibleProgress>=.995;
+
+  collage.style.pointerEvents=
+    fullyOpen?"auto":"none";
+
+  if(fullyOpen){
+    startColors();
+  }else{
+    stopColors();
+  }
 }
 
-/* RESET INITIAL SCROLL */
+function onScroll(){
+  if(frame)return;
+  frame=requestAnimationFrame(updateScroll);
+}
+
+/* COLOR TRANSITIONS */
+
+function nextColor(){
+  colorIndex=(colorIndex+1)%colors.length;
+  collageImages.style.filter=colors[colorIndex];
+}
+
+function startColors(){
+  if(colorStarted)return;
+
+  colorStarted=true;
+  colorIndex=0;
+
+  collageImages.style.transition="none";
+  collageImages.style.filter=RED;
+
+  colorStartTimer=setTimeout(()=>{
+    if(!colorStarted)return;
+
+    collageImages.style.transition=
+      "filter 2000ms cubic-bezier(.45,0,.55,1)";
+
+    nextColor();
+
+    colorTimer=setInterval(
+      nextColor,
+      2300
+    );
+  },1700);
+}
+
+function stopColors(){
+  if(!colorStarted)return;
+
+  colorStarted=false;
+
+  clearTimeout(colorStartTimer);
+  clearInterval(colorTimer);
+
+  colorStartTimer=null;
+  colorTimer=null;
+
+  colorIndex=0;
+  collageImages.style.transition="none";
+  collageImages.style.filter=RED;
+}
+
+/* INITIALIZE */
 
 if("scrollRestoration" in history){
   history.scrollRestoration="manual";
@@ -424,7 +480,7 @@ window.scrollTo(0,0);
 
 window.addEventListener(
   "scroll",
-  requestScrollUpdate,
+  onScroll,
   {passive:true}
 );
 
@@ -434,33 +490,18 @@ window.addEventListener(
   {passive:true}
 );
 
-window.addEventListener(
-  "pageshow",
-  ()=>{
-    navigating=false;
-
-    if(redirectTimer!==null){
-      clearTimeout(redirectTimer);
-      redirectTimer=null;
-    }
-
-    window.scrollTo(0,0);
-    fitTitle();
-  }
-);
-
-/* PREPARE IMAGES FOR THE COLLAGE */
-
-images.forEach(img=>{
-  img.loading="eager";
-  img.decoding="async";
+window.addEventListener("pageshow",()=>{
+  fitTitle();
+  updateScroll();
 });
 
-/*
-  The scroll reveal does not wait for every
-  image to load. This prevents image loading
-  from blocking the page transition.
-*/
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){
+    stopColors();
+  }else{
+    updateScroll();
+  }
+});
 
 fitTitle();
 updateScroll();
