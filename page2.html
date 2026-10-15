@@ -9,8 +9,6 @@
 <style>
 :root{
   --red:#E60000;
-  --red-filter:grayscale(1) sepia(1) saturate(9)
-    hue-rotate(320deg) brightness(.93) contrast(1.1);
 }
 
 *{
@@ -47,8 +45,6 @@ html,body{
   opacity:0;
   visibility:hidden;
   pointer-events:none;
-  filter:var(--red-filter);
-  transition:none;
 }
 
 .collage.ready{
@@ -57,13 +53,31 @@ html,body{
   pointer-events:auto;
 }
 
+.color-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--red);
+}
+
+.color-layer.back{
+  z-index:1;
+  opacity:1;
+}
+
+.color-layer.front{
+  z-index:2;
+  opacity:0;
+  will-change:opacity;
+}
+
 .tile{
   position:absolute;
   display:block;
   overflow:hidden;
   background:var(--red);
-  text-decoration:none;
-  cursor:pointer;
 }
 
 .tile img{
@@ -77,10 +91,21 @@ html,body{
   -webkit-user-drag:none;
 }
 
-.tile:focus-visible{
+.click-layer{
+  position:absolute;
+  inset:0;
+  z-index:3;
+}
+
+.click-tile{
+  position:absolute;
+  display:block;
+  cursor:pointer;
+}
+
+.click-tile:focus-visible{
   outline:2px solid white;
   outline-offset:-2px;
-  z-index:30;
 }
 
 .p01{left:0%;top:0%;width:12.2%;height:27.5%}
@@ -115,8 +140,8 @@ html,body{
 }
 
 @media(prefers-reduced-motion:reduce){
-  .collage{
-    transition:none!important;
+  .color-layer.front{
+    will-change:auto;
   }
 }
 </style>
@@ -126,64 +151,126 @@ html,body{
 
 <main class="page2">
 
-  <div class="collage" id="collage">
+  <section class="collage" id="collage" aria-label="Photography catalogue">
 
-    <a class="tile p01" href="page2-1.html"><img src="guillem.jpg" alt="Guillem"></a>
-    <a class="tile p02" href="page2-2.html"><img src="body.jpg" alt="Body"></a>
-    <a class="tile p03" href="page2-3.html"><img src="jamie.jpg" alt="Jamie"></a>
-    <a class="tile p04" href="page2-4.html"><img src="abreale1.jpg" alt="Abreale 1"></a>
-    <a class="tile p05" href="page2-5.html"><img src="light1.jpg" alt="Light 1"></a>
+    <div class="color-layer back" id="backLayer"></div>
+    <div class="color-layer front" id="frontLayer"></div>
 
-    <a class="tile p06" href="page2-6.html"><img src="annecy.jpg" alt="Annecy"></a>
-    <a class="tile p07" href="page2-7.html"><img src="paris.jpg" alt="Paris"></a>
-    <a class="tile p08" href="page2-8.html"><img src="spiral.jpg" alt="Spiral"></a>
-    <a class="tile p09" href="page2-9.html"><img src="abreale2.jpg" alt="Abreale 2"></a>
-    <a class="tile p10" href="page2-10.html"><img src="soho.jpg" alt="Soho"></a>
-    <a class="tile p11" href="page2-11.html"><img src="abreale3.jpg" alt="Abreale 3"></a>
+    <nav class="click-layer" id="clickLayer" aria-label="Photography projects"></nav>
 
-    <a class="tile p12" href="page2-12.html"><img src="abreale4.jpg" alt="Abreale 4"></a>
-    <a class="tile p13" href="page2-13.html"><img src="poles.jpg" alt="Poles"></a>
-    <a class="tile p14" href="page2-15.html"><img src="light2.jpg" alt="Light 2"></a>
-    <a class="tile p15" href="page2-17.html"><img src="abreale6.jpg" alt="Abreale 6"></a>
-    <a class="tile p16" href="page2-19.html"><img src="amsterdam.jpg" alt="Amsterdam"></a>
-    <a class="tile p17" href="page2-21.html"><img src="nyc.jpg" alt="NYC"></a>
-
-    <a class="tile p18" href="page2-14.html"><img src="morris.jpg" alt="Morris"></a>
-    <a class="tile p19" href="page2-16.html"><img src="abreale5.jpg" alt="Abreale 5"></a>
-    <a class="tile p20" href="page2-18.html"><img src="ice.jpg" alt="Ice"></a>
-    <a class="tile p21" href="page2-20.html"><img src="abreale7.jpg" alt="Abreale 7"></a>
-
-  </div>
+  </section>
 
 </main>
 
 <script>
 "use strict";
 
-const collage=document.getElementById("collage");
-const images=[...collage.querySelectorAll("img")];
+const photographs=[
+  ["guillem.jpg","page2-1.html"],
+  ["body.jpg","page2-2.html"],
+  ["jamie.jpg","page2-3.html"],
+  ["abreale1.jpg","page2-4.html"],
+  ["light1.jpg","page2-5.html"],
+  ["annecy.jpg","page2-6.html"],
+  ["paris.jpg","page2-7.html"],
+  ["spiral.jpg","page2-8.html"],
+  ["abreale2.jpg","page2-9.html"],
+  ["soho.jpg","page2-10.html"],
+  ["abreale3.jpg","page2-11.html"],
+  ["abreale4.jpg","page2-12.html"],
+  ["poles.jpg","page2-13.html"],
+  ["light2.jpg","page2-15.html"],
+  ["abreale6.jpg","page2-17.html"],
+  ["amsterdam.jpg","page2-19.html"],
+  ["nyc.jpg","page2-21.html"],
+  ["morris.jpg","page2-14.html"],
+  ["abreale5.jpg","page2-16.html"],
+  ["ice.jpg","page2-18.html"],
+  ["abreale7.jpg","page2-20.html"]
+];
 
-const RED="grayscale(1) sepia(1) saturate(9) hue-rotate(320deg) brightness(.93) contrast(1.1)";
-const BW="grayscale(1) sepia(0) saturate(1) brightness(1.04)";
-const BLUE="grayscale(1) sepia(.30) hue-rotate(165deg) saturate(.85) brightness(1.02)";
-const GREEN="grayscale(1) sepia(.38) hue-rotate(95deg) saturate(.9) brightness(.99)";
-const PURPLE="grayscale(1) sepia(.30) hue-rotate(235deg) saturate(.75) brightness(1)";
-const WARM="grayscale(1) sepia(.25) hue-rotate(0deg) saturate(.75) brightness(.98)";
+const RED=
+  "grayscale(1) sepia(1) saturate(9) hue-rotate(320deg) brightness(.93) contrast(1.1)";
+
+const BW=
+  "grayscale(1) sepia(0) saturate(1) brightness(1.04)";
+
+const BLUE=
+  "grayscale(1) sepia(.30) hue-rotate(165deg) saturate(.85) brightness(1.02)";
+
+const GREEN=
+  "grayscale(1) sepia(.38) hue-rotate(95deg) saturate(.9) brightness(.99)";
+
+const PURPLE=
+  "grayscale(1) sepia(.30) hue-rotate(235deg) saturate(.75) brightness(1)";
+
+const WARM=
+  "grayscale(1) sepia(.25) hue-rotate(0deg) saturate(.75) brightness(.98)";
 
 const colors=[
   RED,BW,RED,BLUE,RED,GREEN,
   RED,PURPLE,RED,WARM,RED
 ];
 
+const collage=document.getElementById("collage");
+const backLayer=document.getElementById("backLayer");
+const frontLayer=document.getElementById("frontLayer");
+const clickLayer=document.getElementById("clickLayer");
+
 let colorIndex=0;
-let colorTimer=null;
-let startTimer=null;
-let started=false;
+let colorTimeout=null;
+let colorStarted=false;
+let activeFront=false;
+
+/* BUILD IMAGE LAYERS */
+
+function buildLayer(container){
+  photographs.forEach(([src],index)=>{
+    const tile=document.createElement("div");
+
+    tile.className=
+      `tile p${String(index+1).padStart(2,"0")}`;
+
+    const img=document.createElement("img");
+
+    img.src=src;
+    img.alt="";
+    img.loading="eager";
+    img.decoding="async";
+
+    tile.appendChild(img);
+    container.appendChild(tile);
+  });
+}
+
+buildLayer(backLayer);
+buildLayer(frontLayer);
+
+/* BUILD LINKS */
+
+photographs.forEach(([src,href],index)=>{
+  const link=document.createElement("a");
+
+  link.className=
+    `click-tile p${String(index+1).padStart(2,"0")}`;
+
+  link.href=href;
+  link.setAttribute(
+    "aria-label",
+    `Open photograph ${index+1}`
+  );
+
+  clickLayer.appendChild(link);
+});
+
+backLayer.style.filter=RED;
+frontLayer.style.filter=RED;
+
+/* LOAD AND DECODE ALL PHOTOGRAPHS */
 
 function prepareImage(img){
   img.loading="eager";
   img.decoding="async";
-  img.fetchPriority="high";
 
   return new Promise(resolve=>{
     function finish(){
@@ -214,42 +301,14 @@ function prepareImage(img){
   });
 }
 
-function nextColor(){
-  colorIndex=(colorIndex+1)%colors.length;
-  collage.style.filter=colors[colorIndex];
-}
-
-function startColors(){
-  if(started)return;
-
-  started=true;
-  colorIndex=0;
-
-  collage.style.transition="none";
-  collage.style.filter=RED;
-
-  startTimer=setTimeout(()=>{
-    collage.style.transition=
-      "filter 2000ms cubic-bezier(.45,0,.55,1)";
-
-    nextColor();
-
-    colorTimer=setInterval(
-      nextColor,
-      2300
-    );
-  },1700);
-}
-
-/*
-  The entire collage stays hidden until
-  every image has loaded and decoded.
-*/
+const images=[
+  ...document.querySelectorAll(".color-layer img")
+];
 
 Promise.all(images.map(prepareImage)).then(results=>{
   if(!results.every(Boolean)){
     console.error(
-      "INTEGUMENTS: Missing images:",
+      "INTEGUMENTS: Missing photographs",
       images.filter(img=>!img.naturalWidth).map(img=>img.src)
     );
     return;
@@ -264,18 +323,107 @@ Promise.all(images.map(prepareImage)).then(results=>{
   });
 });
 
-/* PAUSE ANIMATION WHEN TAB IS HIDDEN */
+/* SMOOTH OPACITY-BASED COLOR TRANSITIONS */
+
+function nextColor(){
+  if(!colorStarted)return;
+
+  colorIndex=(colorIndex+1)%colors.length;
+
+  const incoming=activeFront?backLayer:frontLayer;
+  const outgoing=activeFront?frontLayer:backLayer;
+
+  incoming.style.transition="none";
+  incoming.style.filter=colors[colorIndex];
+  incoming.style.opacity="0";
+  incoming.style.zIndex="2";
+
+  outgoing.style.opacity="1";
+  outgoing.style.zIndex="1";
+
+  void incoming.offsetWidth;
+
+  incoming.style.transition=
+    "opacity 1800ms cubic-bezier(.45,0,.55,1)";
+
+  incoming.style.opacity="1";
+
+  colorTimeout=setTimeout(()=>{
+    if(!colorStarted)return;
+
+    outgoing.style.transition="none";
+    outgoing.style.opacity="0";
+
+    incoming.style.zIndex="1";
+    outgoing.style.zIndex="2";
+
+    activeFront=!activeFront;
+
+    colorTimeout=setTimeout(
+      nextColor,
+      500
+    );
+  },1850);
+}
+
+function startColors(){
+  if(colorStarted)return;
+
+  colorStarted=true;
+  colorIndex=0;
+  activeFront=false;
+
+  backLayer.style.transition="none";
+  frontLayer.style.transition="none";
+
+  backLayer.style.filter=RED;
+  frontLayer.style.filter=RED;
+
+  backLayer.style.opacity="1";
+  frontLayer.style.opacity="0";
+
+  backLayer.style.zIndex="1";
+  frontLayer.style.zIndex="2";
+
+  colorTimeout=setTimeout(
+    nextColor,
+    1700
+  );
+}
+
+function stopColors(){
+  colorStarted=false;
+
+  clearTimeout(colorTimeout);
+  colorTimeout=null;
+
+  colorIndex=0;
+  activeFront=false;
+
+  backLayer.style.transition="none";
+  frontLayer.style.transition="none";
+
+  backLayer.style.filter=RED;
+  frontLayer.style.filter=RED;
+
+  backLayer.style.opacity="1";
+  frontLayer.style.opacity="0";
+
+  backLayer.style.zIndex="1";
+  frontLayer.style.zIndex="2";
+}
+
+/* PAUSE BACKGROUND ANIMATIONS */
 
 document.addEventListener("visibilitychange",()=>{
   if(document.hidden){
-    clearTimeout(startTimer);
-    clearInterval(colorTimer);
-    colorTimer=null;
-    started=false;
+    stopColors();
   }else if(collage.classList.contains("ready")){
     startColors();
   }
 });
+
+/* NO UNWANTED SCROLL RESTORATION */
 
 if("scrollRestoration" in history){
   history.scrollRestoration="manual";
