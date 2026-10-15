@@ -7,33 +7,130 @@
 <title>INTEGUMENTS — Photography</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
 html,body{
   margin:0;
   width:100%;
-  height:100%;
-  overflow:hidden;
+  min-height:100%;
   background:#1e1e1e;
 }
+
+html{
+  scroll-behavior:auto;
+  overscroll-behavior-y:none;
+}
+
+body{
+  height:240vh;
+  height:240dvh;
+  overflow-x:hidden;
+  overscroll-behavior-y:none;
+}
+
+/* FIXED FULL-SCREEN PAGE */
 .page2{
   position:fixed;
   inset:0;
   width:100%;
+  height:100vh;
   height:100dvh;
   overflow:hidden;
   background:#1e1e1e;
+  isolation:isolate;
 }
+
+/* RED INTRO — MATCHES INDEX.HTML */
+.intro{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  width:100%;
+  height:100%;
+  background:#E60000;
+  overflow:hidden;
+  will-change:opacity;
+}
+
+/* TITLE POSITION */
+.title-position{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:3%;
+  height:auto;
+  overflow:visible;
+  pointer-events:none;
+}
+
+/* LARGE MATTE EMBOSSED TITLE */
+.intro-title{
+  position:relative;
+  display:block;
+  width:max-content;
+  max-width:none;
+  margin:0;
+  padding:0;
+
+  font-family:
+    "Helvetica Neue Condensed Bold",
+    "HelveticaNeue-CondensedBold",
+    "Helvetica Neue",
+    "Arial Narrow",
+    Arial,
+    sans-serif;
+
+  font-weight:900;
+  font-stretch:condensed;
+  font-size:clamp(100px,18vw,400px);
+  line-height:.82;
+  letter-spacing:-.065em;
+  white-space:nowrap;
+
+  /* MATTE RED-ON-RED EMBOSS */
+  color:#a50000;
+
+  text-shadow:
+    0 -1px 0 rgba(75,0,0,.65),
+    0 -2px 1px rgba(90,0,0,.32),
+    -1px 0 0 rgba(100,0,0,.45),
+    1px 0 0 rgba(255,35,35,.25),
+    0 1px 0 rgba(255,48,48,.7),
+    0 2px 1px rgba(255,45,45,.38),
+    0 3px 3px rgba(90,0,0,.12);
+
+  transform-origin:top left;
+  user-select:none;
+  will-change:transform,opacity;
+}
+
+/* COLLAGE */
 .collage{
   position:absolute;
   inset:0;
+  z-index:10;
   width:100%;
   height:100%;
   overflow:hidden;
   visibility:hidden;
+  opacity:0;
   filter:none;
-  will-change:filter;
+  transform:scale(1.035);
+  transform-origin:center center;
+  will-change:filter,opacity,transform;
+  pointer-events:none;
 }
-.collage.is-ready{visibility:visible}
+
+.collage.is-ready{
+  visibility:visible;
+}
+
+.collage.is-interactive{
+  pointer-events:auto;
+}
+
 .tile{
   position:absolute;
   display:block;
@@ -41,6 +138,7 @@ html,body{
   text-decoration:none;
   cursor:pointer;
 }
+
 .tile img{
   display:block;
   width:100%;
@@ -52,8 +150,9 @@ html,body{
   user-select:none;
   -webkit-user-drag:none;
 }
+
 .tile:focus-visible{
-  outline:2px solid #ff0000;
+  outline:2px solid #E60000;
   outline-offset:-2px;
   z-index:10;
 }
@@ -87,7 +186,7 @@ html,body{
 .p20{left:59.1%;top:77.5%;width:18.1%;height:22.5%}
 .p21{left:77.2%;top:77.5%;width:10.2%;height:22.5%}
 
-/* CROPPING */
+/* ORIGINAL CROPPING */
 .p01 img{object-position:50% 50%}
 .p02 img{object-position:50% 45%}
 .p03 img{object-position:50% 50%}
@@ -115,82 +214,136 @@ html,body{
 <body>
 
 <main class="page2">
-<div class="collage" id="collage">
 
-<a class="tile p01" href="page2-1.html">
-  <img src="guillem.jpg" alt="Guillem">
-</a>
-<a class="tile p02" href="page2-2.html">
-  <img src="body.jpg" alt="Body">
-</a>
-<a class="tile p03" href="page2-3.html">
-  <img src="jamie.jpg" alt="Jamie">
-</a>
-<a class="tile p04" href="page2-4.html">
-  <img src="abreale1.jpg" alt="Abreale 1">
-</a>
-<a class="tile p05" href="page2-5.html">
-  <img src="light1.jpg" alt="Light 1">
-</a>
+  <!-- RED OPENING SCREEN -->
+  <section class="intro" id="intro">
+    <div class="title-position">
+      <h1 class="intro-title" id="introTitle">INTEGUMENTS</h1>
+    </div>
+  </section>
 
-<a class="tile p06" href="page2-6.html">
-  <img src="annecy.jpg" alt="Annecy">
-</a>
-<a class="tile p07" href="page2-7.html">
-  <img src="paris.jpg" alt="Paris">
-</a>
-<a class="tile p08" href="page2-8.html">
-  <img src="spiral.jpg" alt="Spiral">
-</a>
-<a class="tile p09" href="page2-9.html">
-  <img src="abreale2.jpg" alt="Abreale 2">
-</a>
-<a class="tile p10" href="page2-10.html">
-  <img src="soho.jpg" alt="Soho">
-</a>
-<a class="tile p11" href="page2-11.html">
-  <img src="abreale3.jpg" alt="Abreale 3">
-</a>
+  <!-- PHOTOGRAPHY COLLAGE -->
+  <div class="collage" id="collage">
 
-<a class="tile p12" href="page2-12.html">
-  <img src="abreale4.jpg" alt="Abreale 4">
-</a>
-<a class="tile p13" href="page2-13.html">
-  <img src="poles.jpg" alt="Poles">
-</a>
-<a class="tile p14" href="page2-15.html">
-  <img src="light2.jpg" alt="Light 2">
-</a>
-<a class="tile p15" href="page2-17.html">
-  <img src="abreale6.jpg" alt="Abreale 6">
-</a>
-<a class="tile p16" href="page2-19.html">
-  <img src="amsterdam.jpg" alt="Amsterdam">
-</a>
-<a class="tile p17" href="page2-21.html">
-  <img src="nyc.jpg" alt="NYC">
-</a>
+    <a class="tile p01" href="page2-1.html">
+      <img src="guillem.jpg" alt="Guillem">
+    </a>
+    <a class="tile p02" href="page2-2.html">
+      <img src="body.jpg" alt="Body">
+    </a>
+    <a class="tile p03" href="page2-3.html">
+      <img src="jamie.jpg" alt="Jamie">
+    </a>
+    <a class="tile p04" href="page2-4.html">
+      <img src="abreale1.jpg" alt="Abreale 1">
+    </a>
+    <a class="tile p05" href="page2-5.html">
+      <img src="light1.jpg" alt="Light 1">
+    </a>
 
-<a class="tile p18" href="page2-14.html">
-  <img src="morris.jpg" alt="Morris">
-</a>
-<a class="tile p19" href="page2-16.html">
-  <img src="abreale5.jpg" alt="Abreale 5">
-</a>
-<a class="tile p20" href="page2-18.html">
-  <img src="ice.jpg" alt="Ice">
-</a>
-<a class="tile p21" href="page2-20.html">
-  <img src="abreale7.jpg" alt="Abreale 7">
-</a>
+    <a class="tile p06" href="page2-6.html">
+      <img src="annecy.jpg" alt="Annecy">
+    </a>
+    <a class="tile p07" href="page2-7.html">
+      <img src="paris.jpg" alt="Paris">
+    </a>
+    <a class="tile p08" href="page2-8.html">
+      <img src="spiral.jpg" alt="Spiral">
+    </a>
+    <a class="tile p09" href="page2-9.html">
+      <img src="abreale2.jpg" alt="Abreale 2">
+    </a>
+    <a class="tile p10" href="page2-10.html">
+      <img src="soho.jpg" alt="Soho">
+    </a>
+    <a class="tile p11" href="page2-11.html">
+      <img src="abreale3.jpg" alt="Abreale 3">
+    </a>
 
-</div>
+    <a class="tile p12" href="page2-12.html">
+      <img src="abreale4.jpg" alt="Abreale 4">
+    </a>
+    <a class="tile p13" href="page2-13.html">
+      <img src="poles.jpg" alt="Poles">
+    </a>
+    <a class="tile p14" href="page2-15.html">
+      <img src="light2.jpg" alt="Light 2">
+    </a>
+    <a class="tile p15" href="page2-17.html">
+      <img src="abreale6.jpg" alt="Abreale 6">
+    </a>
+    <a class="tile p16" href="page2-19.html">
+      <img src="amsterdam.jpg" alt="Amsterdam">
+    </a>
+    <a class="tile p17" href="page2-21.html">
+      <img src="nyc.jpg" alt="NYC">
+    </a>
+
+    <a class="tile p18" href="page2-14.html">
+      <img src="morris.jpg" alt="Morris">
+    </a>
+    <a class="tile p19" href="page2-16.html">
+      <img src="abreale5.jpg" alt="Abreale 5">
+    </a>
+    <a class="tile p20" href="page2-18.html">
+      <img src="ice.jpg" alt="Ice">
+    </a>
+    <a class="tile p21" href="page2-20.html">
+      <img src="abreale7.jpg" alt="Abreale 7">
+    </a>
+
+  </div>
+
 </main>
 
 <script>
 const collage=document.getElementById("collage");
 const images=[...collage.querySelectorAll("img")];
+const intro=document.getElementById("intro");
+const introTitle=document.getElementById("introTitle");
 
+/* PRECISE LETTER CENTERING */
+let titleScale=1;
+let titleLeft=0;
+
+function fitIntroTitle(){
+  const style=getComputedStyle(introTitle);
+
+  const canvas=document.createElement("canvas");
+  const ctx=canvas.getContext("2d");
+
+  ctx.font=`
+    ${style.fontWeight}
+    ${style.fontSize}
+    ${style.fontFamily}
+  `;
+
+  const metrics=ctx.measureText("INTEGUMENTS");
+
+  const letterSpacing=parseFloat(style.letterSpacing)||0;
+  const spacingWidth=letterSpacing*("INTEGUMENTS".length-1);
+
+  const actualLeft=metrics.actualBoundingBoxLeft;
+  const actualRight=metrics.actualBoundingBoxRight;
+
+  const visibleWidth=
+    actualLeft+actualRight+spacingWidth;
+
+  const desiredWidth=window.innerWidth*.98;
+
+  titleScale=desiredWidth/visibleWidth;
+
+  const leftInkOffset=actualLeft*titleScale;
+
+  titleLeft=
+    (window.innerWidth-desiredWidth)/2+leftInkOffset;
+
+  introTitle.style.left=titleLeft+"px";
+
+  updateVisuals();
+}
+
+/* IMAGE LOADING */
 function waitForImage(img){
   return new Promise(resolve=>{
     if(img.complete){
@@ -202,27 +355,32 @@ function waitForImage(img){
   });
 }
 
-/* AUTOMATIC COLOR PALETTE */
+/* ORIGINAL COLOR PALETTES */
 const originalRed={
   grayscale:0,sepia:0,hue:0,
   saturation:1,brightness:1
 };
+
 const blackWhite={
   grayscale:1,sepia:0,hue:0,
   saturation:1,brightness:1.04
 };
+
 const icyBlue={
   grayscale:1,sepia:.30,hue:165,
   saturation:.85,brightness:1.02
 };
+
 const emerald={
   grayscale:1,sepia:.38,hue:95,
   saturation:.9,brightness:.99
 };
+
 const mutedPurple={
   grayscale:1,sepia:.30,hue:235,
   saturation:.75,brightness:1
 };
+
 const warmMonochrome={
   grayscale:1,sepia:.25,hue:0,
   saturation:.75,brightness:.98
@@ -245,14 +403,17 @@ const colorStages=[
 const transitionDuration=2000;
 let transitionStart=null;
 let currentStage=0;
+let colorCycleStarted=false;
 
 function lerp(a,b,t){
   return a+(b-a)*t;
 }
+
 function smoothstep(t){
   t=Math.max(0,Math.min(1,t));
   return t*t*(3-2*t);
 }
+
 function interpolateFilter(a,b,t){
   return {
     grayscale:lerp(a.grayscale,b.grayscale,t),
@@ -262,6 +423,7 @@ function interpolateFilter(a,b,t){
     brightness:lerp(a.brightness,b.brightness,t)
   };
 }
+
 function filterToCSS(f){
   return `
     grayscale(${f.grayscale})
@@ -272,7 +434,7 @@ function filterToCSS(f){
   `;
 }
 
-function animate(now){
+function animateColors(now){
   if(transitionStart===null){
     transitionStart=now;
   }
@@ -283,15 +445,18 @@ function animate(now){
     const completed=Math.floor(
       elapsed/transitionDuration
     );
+
     currentStage=(
       currentStage+completed
     )%colorStages.length;
+
     transitionStart+=completed*transitionDuration;
   }
 
   const progress=smoothstep(
     (now-transitionStart)/transitionDuration
   );
+
   const nextStage=(
     currentStage+1
   )%colorStages.length;
@@ -304,7 +469,18 @@ function animate(now){
     )
   );
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateColors);
+}
+
+function startColorCycle(){
+  if(colorCycleStarted)return;
+
+  colorCycleStarted=true;
+  transitionStart=null;
+  currentStage=0;
+
+  collage.style.filter=filterToCSS(originalRed);
+  requestAnimationFrame(animateColors);
 }
 
 /* SEAMLESS ARRIVAL */
@@ -318,7 +494,6 @@ function checkArrival(){
       "integuments-seamless-arrival"
     );
 
-    /* REMOVE OLD RETURN DATA */
     sessionStorage.removeItem(
       "integuments-return-flight"
     );
@@ -338,14 +513,131 @@ function checkArrival(){
 
 const arrivingFromFilm=checkArrival();
 
-/* DISPLAY COLLAGE AND RESUME COLOR CYCLE */
+/* SMOOTH SCROLL REVEAL */
+let targetProgress=0;
+let currentProgress=0;
+let lastFrameTime=0;
+let imagesReady=false;
+
+function clamp(value,min,max){
+  return Math.max(min,Math.min(max,value));
+}
+
+function getScrollProgress(){
+  const maxScroll=Math.max(
+    1,
+    document.documentElement.scrollHeight-window.innerHeight
+  );
+
+  return clamp(window.scrollY/maxScroll,0,1);
+}
+
+function updateVisuals(){
+  const p=smoothstep(currentProgress);
+
+  const reveal=smoothstep(
+    clamp((p-.04)/.94,0,1)
+  );
+
+  collage.style.opacity=reveal;
+
+  const collageScale=1.035-(reveal*.035);
+  collage.style.transform=`scale(${collageScale})`;
+
+  intro.style.opacity=1-reveal;
+
+  const titleMove=-currentProgress*35;
+
+  introTitle.style.transform=
+    `translateY(${titleMove}px) scaleX(${titleScale})`;
+
+  introTitle.style.opacity=
+    1-smoothstep(
+      clamp(currentProgress/.75,0,1)
+    );
+
+  const fullyRevealed=reveal>.995;
+
+  collage.classList.toggle(
+    "is-interactive",
+    fullyRevealed
+  );
+
+  intro.style.pointerEvents=
+    fullyRevealed?"none":"auto";
+
+  if(
+    fullyRevealed &&
+    imagesReady &&
+    !colorCycleStarted
+  ){
+    startColorCycle();
+  }
+}
+
+function render(now){
+  if(!lastFrameTime){
+    lastFrameTime=now;
+  }
+
+  const dt=Math.min(
+    (now-lastFrameTime)/1000,
+    .05
+  );
+
+  lastFrameTime=now;
+
+  targetProgress=getScrollProgress();
+
+  const smoothing=1-Math.exp(-dt*5.5);
+
+  currentProgress+=
+    (targetProgress-currentProgress)*smoothing;
+
+  if(Math.abs(targetProgress-currentProgress)<.0001){
+    currentProgress=targetProgress;
+  }
+
+  updateVisuals();
+
+  requestAnimationFrame(render);
+}
+
+/* INITIAL POSITION */
+if("scrollRestoration" in history){
+  history.scrollRestoration="manual";
+}
+
+if(arrivingFromFilm){
+  window.scrollTo(0,document.body.scrollHeight);
+  targetProgress=1;
+  currentProgress=1;
+}else{
+  window.scrollTo(0,0);
+  targetProgress=0;
+  currentProgress=0;
+}
+
+/* INITIAL RENDER */
+fitIntroTitle();
+updateVisuals();
+
+document.fonts.ready.then(fitIntroTitle);
+window.addEventListener("resize",fitIntroTitle);
+
+/* LOAD COLLAGE IN ORIGINAL RED */
 Promise.all(images.map(waitForImage)).then(()=>{
+  imagesReady=true;
+
   collage.style.filter=filterToCSS(originalRed);
   collage.classList.add("is-ready");
 
-  /* START AUTOMATIC 2-SECOND COLOR TRANSITIONS */
-  requestAnimationFrame(animate);
+  if(currentProgress>=.995){
+    startColorCycle();
+  }
 });
+
+requestAnimationFrame(render);
 </script>
 
 </body>
