@@ -4,66 +4,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INTEGUMENTS</title>
+<title>INTEGUMENTS — Opening</title>
 
 <style>
-:root{
-  --red:#E60000;
-}
-
 *{
   box-sizing:border-box;
 }
 
-html{
+html,body{
   margin:0;
-  background:var(--red);
+  width:100%;
+  min-height:100%;
+  background:#1e1e1e;
+}
+
+html{
   scroll-behavior:auto;
   overscroll-behavior-y:none;
 }
 
 body{
-  margin:0;
-  min-height:240vh;
-  min-height:240dvh;
+  height:240vh;
+  height:240dvh;
   overflow-x:hidden;
-  background:var(--red);
   overscroll-behavior-y:none;
 }
 
-.scene{
+/* FIXED FULL-SCREEN PAGE */
+
+.page1{
   position:fixed;
   inset:0;
   width:100%;
   height:100vh;
   height:100dvh;
   overflow:hidden;
+  background:#1e1e1e;
   isolation:isolate;
-  background:var(--red);
 }
 
-/* RED INTRODUCTION */
+/* ORIGINAL RED INTRO */
 
 .intro{
   position:absolute;
   inset:0;
   z-index:5;
-  background:var(--red);
-  opacity:1;
-  pointer-events:none;
+  width:100%;
+  height:100%;
+  background:#E60000;
+  overflow:hidden;
+  will-change:opacity;
 }
+
+/* ORIGINAL TITLE POSITION */
 
 .title-position{
   position:absolute;
   left:0;
   right:0;
   bottom:3%;
+  height:auto;
+  overflow:visible;
+  pointer-events:none;
 }
+
+/* ORIGINAL MATTE EMBOSSED TITLE */
 
 .intro-title{
   position:relative;
   display:block;
   width:max-content;
+  max-width:none;
   margin:0;
   padding:0;
 
@@ -81,6 +92,7 @@ body{
   line-height:.82;
   letter-spacing:-.065em;
   white-space:nowrap;
+
   color:#a50000;
 
   text-shadow:
@@ -97,51 +109,35 @@ body{
   will-change:transform,opacity;
 }
 
-/* COLLAGE REVEAL */
+/* ORIGINAL COLLAGE */
 
 .collage{
   position:absolute;
   inset:0;
   z-index:10;
-  overflow:hidden;
-  background:var(--red);
-
-  opacity:0;
-  visibility:hidden;
-  transform:scale(1.018);
-  transform-origin:center;
-
-  pointer-events:none;
-  will-change:opacity,transform;
-}
-
-/* TWO COLOR LAYERS */
-
-.color-layer{
-  position:absolute;
-  inset:0;
   width:100%;
   height:100%;
   overflow:hidden;
-  background:var(--red);
-}
-
-.color-layer.back{
-  z-index:1;
-  opacity:1;
-}
-
-.color-layer.front{
-  z-index:2;
+  visibility:hidden;
   opacity:0;
-  will-change:opacity;
+  filter:none;
+  transform:scale(1.035);
+  transform-origin:center center;
+  will-change:filter,opacity,transform;
+  pointer-events:none;
+}
+
+.collage.is-ready{
+  visibility:visible;
 }
 
 .tile{
   position:absolute;
   display:block;
   overflow:hidden;
-  background:var(--red);
+  text-decoration:none;
+  cursor:default;
+  pointer-events:none;
 }
 
 .tile img{
@@ -150,39 +146,21 @@ body{
   height:100%;
   object-fit:cover;
   object-position:center;
+  transform:none;
   border:0;
   user-select:none;
   -webkit-user-drag:none;
 }
 
-/* CLICKABLE LINKS SIT ABOVE COLOR LAYERS */
-
-.click-layer{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
-}
-
-.click-tile{
-  position:absolute;
-  display:block;
-  cursor:pointer;
-  pointer-events:auto;
-}
-
-.click-tile:focus-visible{
-  outline:2px solid white;
-  outline-offset:-2px;
-}
-
-/* EXACT ORIGINAL COLLAGE LAYOUT */
+/* ORIGINAL TOP ROW */
 
 .p01{left:0%;top:0%;width:12.2%;height:27.5%}
 .p02{left:12.2%;top:0%;width:23.4%;height:27.5%}
 .p03{left:35.6%;top:0%;width:12.2%;height:27.5%}
 .p04{left:47.8%;top:0%;width:27.8%;height:27.5%}
 .p05{left:75.6%;top:0%;width:24.4%;height:27.5%}
+
+/* ORIGINAL MIDDLE ROW */
 
 .p06{left:0%;top:27.5%;width:14.2%;height:33%}
 .p07{left:14.2%;top:27.5%;width:14.2%;height:33%}
@@ -191,6 +169,8 @@ body{
 .p10{left:53.8%;top:27.5%;width:29.2%;height:33%}
 .p11{left:83%;top:27.5%;width:17%;height:33%}
 
+/* ORIGINAL BOTTOM SECTION */
+
 .p12{left:0%;top:60.5%;width:32.6%;height:39.5%}
 .p13{left:32.6%;top:60.5%;width:14.6%;height:17%}
 .p14{left:47.2%;top:60.5%;width:14.4%;height:17%}
@@ -198,435 +178,518 @@ body{
 .p16{left:77.2%;top:60.5%;width:10.2%;height:17%}
 .p17{left:87.4%;top:60.5%;width:12.6%;height:39.5%}
 
+/* ORIGINAL BOTTOM STRIP */
+
 .p18{left:32.6%;top:77.5%;width:16%;height:22.5%}
 .p19{left:48.6%;top:77.5%;width:10.5%;height:22.5%}
 .p20{left:59.1%;top:77.5%;width:18.1%;height:22.5%}
 .p21{left:77.2%;top:77.5%;width:10.2%;height:22.5%}
 
-.p02 img,
-.p04 img,
-.p11 img{
-  object-position:50% 45%;
-}
+/* ORIGINAL IMAGE CROPPING */
 
-@media(prefers-reduced-motion:reduce){
-  .collage,
-  .intro-title,
-  .color-layer.front{
-    will-change:auto;
-  }
-}
+.p01 img{object-position:50% 50%}
+.p02 img{object-position:50% 45%}
+.p03 img{object-position:50% 50%}
+.p04 img{object-position:50% 45%}
+.p05 img{object-position:50% 50%}
+.p06 img{object-position:50% 50%}
+.p07 img{object-position:50% 50%}
+.p08 img{object-position:50% 50%}
+.p09 img{object-position:50% 50%}
+.p10 img{object-position:50% 50%}
+.p11 img{object-position:50% 45%}
+.p12 img{object-position:50% 50%}
+.p13 img{object-position:50% 50%}
+.p14 img{object-position:50% 50%}
+.p15 img{object-fit:cover;object-position:center center}
+.p16 img{object-position:50% 50%}
+.p17 img{object-position:50% 50%}
+.p18 img{object-position:50% 50%}
+.p19 img{object-position:50% 50%}
+.p20 img{object-position:50% 50%}
+.p21 img{object-fit:cover;object-position:center center}
+
 </style>
 </head>
 
 <body>
 
-<main class="scene">
+<main class="page1">
+
+  <!-- ORIGINAL RED OPENING SCREEN -->
 
   <section class="intro" id="intro">
     <div class="title-position">
-      <h1 class="intro-title" id="title">INTEGUMENTS</h1>
+      <h1 class="intro-title" id="introTitle">INTEGUMENTS</h1>
     </div>
   </section>
 
-  <section class="collage" id="collage" aria-label="Photography catalogue">
+  <!-- ORIGINAL PHOTOGRAPHY COLLAGE -->
 
-    <div class="color-layer back" id="backLayer"></div>
-    <div class="color-layer front" id="frontLayer"></div>
+  <div class="collage" id="collage">
 
-    <nav class="click-layer" id="clickLayer" aria-label="Photography projects"></nav>
+    <div class="tile p01">
+      <img src="guillem.jpg" alt="Guillem">
+    </div>
 
-  </section>
+    <div class="tile p02">
+      <img src="body.jpg" alt="Body">
+    </div>
+
+    <div class="tile p03">
+      <img src="jamie.jpg" alt="Jamie">
+    </div>
+
+    <div class="tile p04">
+      <img src="abreale1.jpg" alt="Abreale 1">
+    </div>
+
+    <div class="tile p05">
+      <img src="light1.jpg" alt="Light 1">
+    </div>
+
+    <div class="tile p06">
+      <img src="annecy.jpg" alt="Annecy">
+    </div>
+
+    <div class="tile p07">
+      <img src="paris.jpg" alt="Paris">
+    </div>
+
+    <div class="tile p08">
+      <img src="spiral.jpg" alt="Spiral">
+    </div>
+
+    <div class="tile p09">
+      <img src="abreale2.jpg" alt="Abreale 2">
+    </div>
+
+    <div class="tile p10">
+      <img src="soho.jpg" alt="Soho">
+    </div>
+
+    <div class="tile p11">
+      <img src="abreale3.jpg" alt="Abreale 3">
+    </div>
+
+    <div class="tile p12">
+      <img src="abreale4.jpg" alt="Abreale 4">
+    </div>
+
+    <div class="tile p13">
+      <img src="poles.jpg" alt="Poles">
+    </div>
+
+    <div class="tile p14">
+      <img src="light2.jpg" alt="Light 2">
+    </div>
+
+    <div class="tile p15">
+      <img src="abreale6.jpg" alt="Abreale 6">
+    </div>
+
+    <div class="tile p16">
+      <img src="amsterdam.jpg" alt="Amsterdam">
+    </div>
+
+    <div class="tile p17">
+      <img src="nyc.jpg" alt="NYC">
+    </div>
+
+    <div class="tile p18">
+      <img src="morris.jpg" alt="Morris">
+    </div>
+
+    <div class="tile p19">
+      <img src="abreale5.jpg" alt="Abreale 5">
+    </div>
+
+    <div class="tile p20">
+      <img src="ice.jpg" alt="Ice">
+    </div>
+
+    <div class="tile p21">
+      <img src="abreale7.jpg" alt="Abreale 7">
+    </div>
+
+  </div>
 
 </main>
 
 <script>
-"use strict";
 
-/* PHOTOGRAPHS AND LINKS */
+/* ELEMENTS */
 
-const photographs=[
-  ["guillem.jpg","page2-1.html"],
-  ["body.jpg","page2-2.html"],
-  ["jamie.jpg","page2-3.html"],
-  ["abreale1.jpg","page2-4.html"],
-  ["light1.jpg","page2-5.html"],
-  ["annecy.jpg","page2-6.html"],
-  ["paris.jpg","page2-7.html"],
-  ["spiral.jpg","page2-8.html"],
-  ["abreale2.jpg","page2-9.html"],
-  ["soho.jpg","page2-10.html"],
-  ["abreale3.jpg","page2-11.html"],
-  ["abreale4.jpg","page2-12.html"],
-  ["poles.jpg","page2-13.html"],
-  ["light2.jpg","page2-15.html"],
-  ["abreale6.jpg","page2-17.html"],
-  ["amsterdam.jpg","page2-19.html"],
-  ["nyc.jpg","page2-21.html"],
-  ["morris.jpg","page2-14.html"],
-  ["abreale5.jpg","page2-16.html"],
-  ["ice.jpg","page2-18.html"],
-  ["abreale7.jpg","page2-20.html"]
-];
-
-const RED=
-  "grayscale(1) sepia(1) saturate(9) hue-rotate(320deg) brightness(.93) contrast(1.1)";
-
-const BW=
-  "grayscale(1) sepia(0) saturate(1) brightness(1.04)";
-
-const BLUE=
-  "grayscale(1) sepia(.30) hue-rotate(165deg) saturate(.85) brightness(1.02)";
-
-const GREEN=
-  "grayscale(1) sepia(.38) hue-rotate(95deg) saturate(.9) brightness(.99)";
-
-const PURPLE=
-  "grayscale(1) sepia(.30) hue-rotate(235deg) saturate(.75) brightness(1)";
-
-const WARM=
-  "grayscale(1) sepia(.25) hue-rotate(0deg) saturate(.75) brightness(.98)";
-
-const colors=[
-  RED,BW,RED,BLUE,RED,GREEN,
-  RED,PURPLE,RED,WARM,RED
-];
-
-const intro=document.getElementById("intro");
-const title=document.getElementById("title");
 const collage=document.getElementById("collage");
-const backLayer=document.getElementById("backLayer");
-const frontLayer=document.getElementById("frontLayer");
-const clickLayer=document.getElementById("clickLayer");
+const images=[...collage.querySelectorAll("img")];
+const intro=document.getElementById("intro");
+const introTitle=document.getElementById("introTitle");
 
-const clamp=(v,a=0,b=1)=>
-  Math.max(a,Math.min(b,v));
+/* EXACT ORIGINAL TITLE CENTERING */
 
-const smoothstep=t=>{
-  t=clamp(t);
-  return t*t*(3-2*t);
-};
-
-let allReady=false;
-let targetProgress=0;
-let animatedProgress=0;
 let titleScale=1;
 let titleLeft=0;
 
-let lastTime=0;
-let colorStarted=false;
-let colorIndex=0;
-let colorTimeout=null;
-let activeFront=false;
-let colorTransitioning=false;
+function fitIntroTitle(){
+  const style=getComputedStyle(introTitle);
 
-/* BUILD BOTH COLOR LAYERS */
+  const canvas=document.createElement("canvas");
+  const ctx=canvas.getContext("2d");
 
-function buildLayer(container){
-  photographs.forEach(([src],index)=>{
-    const tile=document.createElement("div");
-    tile.className=`tile p${String(index+1).padStart(2,"0")}`;
+  ctx.font=`
+    ${style.fontWeight}
+    ${style.fontSize}
+    ${style.fontFamily}
+  `;
 
-    const img=document.createElement("img");
-    img.src=src;
-    img.alt="";
-    img.loading="eager";
-    img.decoding="async";
+  const metrics=ctx.measureText("INTEGUMENTS");
 
-    tile.appendChild(img);
-    container.appendChild(tile);
-  });
+  const letterSpacing=parseFloat(style.letterSpacing)||0;
+
+  const spacingWidth=
+    letterSpacing*("INTEGUMENTS".length-1);
+
+  const actualLeft=metrics.actualBoundingBoxLeft;
+  const actualRight=metrics.actualBoundingBoxRight;
+
+  const visibleWidth=
+    actualLeft+actualRight+spacingWidth;
+
+  const desiredWidth=window.innerWidth*.98;
+
+  titleScale=desiredWidth/visibleWidth;
+
+  const leftInkOffset=actualLeft*titleScale;
+
+  titleLeft=
+    (window.innerWidth-desiredWidth)/2+
+    leftInkOffset;
+
+  introTitle.style.left=titleLeft+"px";
+
+  updateVisuals();
 }
 
-buildLayer(backLayer);
-buildLayer(frontLayer);
+/* ORIGINAL IMAGE LOADING */
 
-/* BUILD CLICKABLE AREAS */
-
-photographs.forEach(([src,href],index)=>{
-  const link=document.createElement("a");
-
-  link.className=
-    `click-tile p${String(index+1).padStart(2,"0")}`;
-
-  link.href=href;
-  link.setAttribute(
-    "aria-label",
-    `Open photograph ${index+1}`
-  );
-
-  clickLayer.appendChild(link);
-});
-
-/*
-  Both layers share the same image URLs,
-  allowing the browser to reuse resources.
-*/
-
-backLayer.style.filter=RED;
-frontLayer.style.filter=RED;
-
-/* PREPARE ALL 21 PHOTOGRAPHS */
-
-function prepareImage(img){
-  img.loading="eager";
-  img.decoding="async";
-
+function waitForImage(img){
   return new Promise(resolve=>{
-    function finish(){
-      if(!img.naturalWidth){
-        resolve(false);
-        return;
-      }
-
-      if(typeof img.decode==="function"){
-        img.decode()
-          .then(()=>resolve(true))
-          .catch(()=>resolve(true));
-      }else{
-        resolve(true);
-      }
-    }
-
     if(img.complete){
-      finish();
-    }else{
-      img.addEventListener("load",finish,{once:true});
-      img.addEventListener(
-        "error",
-        ()=>resolve(false),
-        {once:true}
-      );
+      resolve();
+      return;
     }
+
+    img.addEventListener("load",resolve,{once:true});
+    img.addEventListener("error",resolve,{once:true});
   });
 }
 
-const allImages=[
-  ...document.querySelectorAll(".color-layer img")
+/* ORIGINAL COLOR PALETTES */
+
+const originalRed={
+  grayscale:0,
+  sepia:0,
+  hue:0,
+  saturation:1,
+  brightness:1
+};
+
+const blackWhite={
+  grayscale:1,
+  sepia:0,
+  hue:0,
+  saturation:1,
+  brightness:1.04
+};
+
+const icyBlue={
+  grayscale:1,
+  sepia:.30,
+  hue:165,
+  saturation:.85,
+  brightness:1.02
+};
+
+const emerald={
+  grayscale:1,
+  sepia:.38,
+  hue:95,
+  saturation:.9,
+  brightness:.99
+};
+
+const mutedPurple={
+  grayscale:1,
+  sepia:.30,
+  hue:235,
+  saturation:.75,
+  brightness:1
+};
+
+const warmMonochrome={
+  grayscale:1,
+  sepia:.25,
+  hue:0,
+  saturation:.75,
+  brightness:.98
+};
+
+const colorStages=[
+  originalRed,
+  blackWhite,
+  originalRed,
+  icyBlue,
+  originalRed,
+  emerald,
+  originalRed,
+  mutedPurple,
+  originalRed,
+  warmMonochrome,
+  originalRed
 ];
 
-Promise.all(allImages.map(prepareImage)).then(results=>{
-  if(!results.every(Boolean)){
-    console.error(
-      "INTEGUMENTS: Some photographs failed to load.",
-      allImages.filter(img=>!img.naturalWidth).map(img=>img.src)
-    );
-    return;
-  }
+const transitionDuration=2000;
 
-  allReady=true;
-  collage.style.visibility="visible";
-});
+let transitionStart=null;
+let currentStage=0;
+let colorCycleStarted=false;
 
-/* TITLE CENTERING */
-
-function fitTitle(){
-  title.style.transform="none";
-  title.style.left="0px";
-
-  const width=title.getBoundingClientRect().width;
-  if(!width)return;
-
-  const desired=window.innerWidth*.97;
-
-  titleScale=desired/width;
-  titleLeft=(window.innerWidth-desired)/2;
-
-  title.style.left=titleLeft+"px";
+function lerp(a,b,t){
+  return a+(b-a)*t;
 }
 
-/* SCROLL POSITION */
+function smoothstep(t){
+  t=Math.max(0,Math.min(1,t));
+  return t*t*(3-2*t);
+}
 
-function readScroll(){
-  const max=Math.max(
+function interpolateFilter(a,b,t){
+  return {
+    grayscale:lerp(a.grayscale,b.grayscale,t),
+    sepia:lerp(a.sepia,b.sepia,t),
+    hue:lerp(a.hue,b.hue,t),
+    saturation:lerp(a.saturation,b.saturation,t),
+    brightness:lerp(a.brightness,b.brightness,t)
+  };
+}
+
+function filterToCSS(f){
+  return `
+    grayscale(${f.grayscale})
+    sepia(${f.sepia})
+    hue-rotate(${f.hue}deg)
+    saturate(${f.saturation})
+    brightness(${f.brightness})
+  `;
+}
+
+/* ORIGINAL COLOR CYCLE */
+
+function animateColors(now){
+  if(transitionStart===null){
+    transitionStart=now;
+  }
+
+  const elapsed=now-transitionStart;
+
+  if(elapsed>=transitionDuration){
+    const completed=Math.floor(
+      elapsed/transitionDuration
+    );
+
+    currentStage=(
+      currentStage+completed
+    )%colorStages.length;
+
+    transitionStart+=completed*transitionDuration;
+  }
+
+  const progress=smoothstep(
+    (now-transitionStart)/transitionDuration
+  );
+
+  const nextStage=(
+    currentStage+1
+  )%colorStages.length;
+
+  collage.style.filter=filterToCSS(
+    interpolateFilter(
+      colorStages[currentStage],
+      colorStages[nextStage],
+      progress
+    )
+  );
+
+  requestAnimationFrame(animateColors);
+}
+
+function startColorCycle(){
+  if(colorCycleStarted)return;
+
+  colorCycleStarted=true;
+  transitionStart=null;
+  currentStage=0;
+
+  collage.style.filter=filterToCSS(originalRed);
+
+  requestAnimationFrame(animateColors);
+}
+
+/* ORIGINAL SMOOTH SCROLL REVEAL */
+
+let targetProgress=0;
+let currentProgress=0;
+let lastFrameTime=0;
+let imagesReady=false;
+
+/* NEW: TRANSITION TO COLLAGE PAGE */
+
+let handoffStarted=false;
+let handoffTimer=null;
+
+function clamp(value,min,max){
+  return Math.max(min,Math.min(max,value));
+}
+
+function getScrollProgress(){
+  const maxScroll=Math.max(
     1,
     document.documentElement.scrollHeight-
     window.innerHeight
   );
 
-  targetProgress=clamp(window.scrollY/max);
+  return clamp(window.scrollY/maxScroll,0,1);
 }
 
-window.addEventListener(
-  "scroll",
-  readScroll,
-  {passive:true}
-);
+function updateVisuals(){
 
-window.addEventListener(
-  "resize",
-  ()=>{
-    fitTitle();
-    readScroll();
-  },
-  {passive:true}
-);
+  /* SAME ORIGINAL EASING */
 
-/*
-  SMOOTH SCROLL CATCH-UP
-
-  The animation does not jump directly to
-  the scroll position after images load.
-*/
-
-function animate(time){
-  const dt=lastTime?
-    Math.min((time-lastTime)/1000,.05):
-    .016;
-
-  lastTime=time;
-
-  const desired=allReady?targetProgress:0;
-
-  const smoothing=1-Math.exp(-dt*5.5);
-
-  animatedProgress+=
-    (desired-animatedProgress)*smoothing;
-
-  if(Math.abs(desired-animatedProgress)<.0001){
-    animatedProgress=desired;
-  }
+  const p=smoothstep(currentProgress);
 
   const reveal=smoothstep(
-    clamp((animatedProgress-.035)/.91)
+    clamp((p-.04)/.94,0,1)
   );
 
-  collage.style.opacity=String(reveal);
+  collage.style.opacity=reveal;
+
+  const collageScale=
+    1.035-(reveal*.035);
 
   collage.style.transform=
-    `scale(${1.018-reveal*.018})`;
+    `scale(${collageScale})`;
 
-  intro.style.opacity=String(1-reveal);
+  intro.style.opacity=1-reveal;
 
-  title.style.transform=
-    `translateY(${-animatedProgress*35}px) scaleX(${titleScale})`;
+  const titleMove=-currentProgress*35;
 
-  title.style.opacity=String(
-    1-smoothstep(clamp(animatedProgress/.78))
-  );
+  introTitle.style.transform=
+    `translateY(${titleMove}px) scaleX(${titleScale})`;
 
-  const fullyVisible=
-    allReady &&
-    animatedProgress>=.995;
+  introTitle.style.opacity=
+    1-smoothstep(
+      clamp(currentProgress/.75,0,1)
+    );
 
-  collage.style.pointerEvents=
-    fullyVisible?"auto":"none";
+  const fullyRevealed=reveal>.995;
 
-  if(fullyVisible){
+  intro.style.pointerEvents=
+    fullyRevealed?"none":"auto";
+
+  /* KEEP ORIGINAL COLOR ANIMATION */
+
+  if(
+    fullyRevealed &&
+    imagesReady &&
+    !colorCycleStarted
+  ){
     startColorCycle();
-  }else{
-    stopColorCycle();
   }
 
-  requestAnimationFrame(animate);
-}
-
-/* OPACITY COLOR CROSSFADE */
-
-function crossfadeToNextColor(){
-  if(!colorStarted)return;
-
-  colorIndex=(colorIndex+1)%colors.length;
-
-  const nextColor=colors[colorIndex];
-
   /*
-    Whichever layer is currently hidden
-    receives the next color as a static
-    filter. Only opacity is animated.
+    NEW PAGE HANDOFF.
+
+    Wait until the original collage reveal
+    is completely finished before opening
+    page2.html.
+
+    The short delay allows the final collage
+    frame to settle visually.
   */
 
-  const incoming=activeFront?backLayer:frontLayer;
-  const outgoing=activeFront?frontLayer:backLayer;
+  if(
+    fullyRevealed &&
+    imagesReady &&
+    !handoffStarted
+  ){
+    handoffStarted=true;
 
-  incoming.style.transition="none";
-  incoming.style.filter=nextColor;
+    handoffTimer=setTimeout(()=>{
+      try{
+        sessionStorage.setItem(
+          "integuments-from-page1",
+          JSON.stringify({
+            time:Date.now()
+          })
+        );
+      }catch(error){}
 
-  incoming.style.opacity="0";
-  incoming.style.zIndex="2";
+      window.location.replace("page2.html");
+    },450);
+  }
 
-  outgoing.style.zIndex="1";
-  outgoing.style.opacity="1";
+  /*
+    If the visitor scrolls upward before
+    the reveal finishes, do not navigate.
+  */
 
-  void incoming.offsetWidth;
+  if(
+    !fullyRevealed &&
+    handoffStarted
+  ){
+    handoffStarted=false;
 
-  incoming.style.transition=
-    "opacity 1800ms cubic-bezier(.45,0,.55,1)";
-
-  incoming.style.opacity="1";
-
-  colorTransitioning=true;
-
-  colorTimeout=setTimeout(()=>{
-    if(!colorStarted)return;
-
-    outgoing.style.transition="none";
-    outgoing.style.opacity="0";
-
-    incoming.style.zIndex="1";
-    outgoing.style.zIndex="2";
-
-    activeFront=!activeFront;
-    colorTransitioning=false;
-
-    colorTimeout=setTimeout(
-      crossfadeToNextColor,
-      500
-    );
-  },1850);
+    if(handoffTimer!==null){
+      clearTimeout(handoffTimer);
+      handoffTimer=null;
+    }
+  }
 }
 
-function startColorCycle(){
-  if(colorStarted)return;
+/* ORIGINAL FRAME-BY-FRAME SCROLL SMOOTHING */
 
-  colorStarted=true;
-  colorIndex=0;
-  activeFront=false;
+function render(now){
+  if(!lastFrameTime){
+    lastFrameTime=now;
+  }
 
-  backLayer.style.transition="none";
-  frontLayer.style.transition="none";
-
-  backLayer.style.filter=RED;
-  frontLayer.style.filter=RED;
-
-  backLayer.style.opacity="1";
-  frontLayer.style.opacity="0";
-
-  backLayer.style.zIndex="1";
-  frontLayer.style.zIndex="2";
-
-  colorTimeout=setTimeout(
-    crossfadeToNextColor,
-    1700
+  const dt=Math.min(
+    (now-lastFrameTime)/1000,
+    .05
   );
+
+  lastFrameTime=now;
+
+  targetProgress=getScrollProgress();
+
+  const smoothing=
+    1-Math.exp(-dt*5.5);
+
+  currentProgress+=
+    (targetProgress-currentProgress)*smoothing;
+
+  if(
+    Math.abs(targetProgress-currentProgress)<.0001
+  ){
+    currentProgress=targetProgress;
+  }
+
+  updateVisuals();
+
+  requestAnimationFrame(render);
 }
 
-function stopColorCycle(){
-  if(!colorStarted)return;
-
-  colorStarted=false;
-  colorTransitioning=false;
-
-  clearTimeout(colorTimeout);
-  colorTimeout=null;
-
-  colorIndex=0;
-  activeFront=false;
-
-  backLayer.style.transition="none";
-  frontLayer.style.transition="none";
-
-  backLayer.style.filter=RED;
-  frontLayer.style.filter=RED;
-
-  backLayer.style.opacity="1";
-  frontLayer.style.opacity="0";
-
-  backLayer.style.zIndex="1";
-  frontLayer.style.zIndex="2";
-}
-
-/* INITIALIZATION */
+/* ORIGINAL INITIAL SCROLL POSITION */
 
 if("scrollRestoration" in history){
   history.scrollRestoration="manual";
@@ -634,21 +697,43 @@ if("scrollRestoration" in history){
 
 window.scrollTo(0,0);
 
-fitTitle();
-readScroll();
+targetProgress=0;
+currentProgress=0;
 
-document.fonts.ready.then(fitTitle);
+/* ORIGINAL INITIAL RENDER */
 
-document.addEventListener(
-  "visibilitychange",
-  ()=>{
-    if(document.hidden){
-      stopColorCycle();
-    }
-  }
+fitIntroTitle();
+updateVisuals();
+
+document.fonts.ready.then(fitIntroTitle);
+
+window.addEventListener(
+  "resize",
+  fitIntroTitle
 );
 
-requestAnimationFrame(animate);
+/* ORIGINAL IMAGE PRELOADING */
+
+Promise.all(
+  images.map(waitForImage)
+).then(()=>{
+
+  imagesReady=true;
+
+  collage.style.filter=
+    filterToCSS(originalRed);
+
+  collage.classList.add("is-ready");
+
+  if(currentProgress>=.995){
+    startColorCycle();
+  }
+
+});
+
+/* START ORIGINAL SCROLL ANIMATION */
+
+requestAnimationFrame(render);
 
 </script>
 
